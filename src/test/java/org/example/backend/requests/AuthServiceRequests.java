@@ -7,7 +7,7 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.example.backend.models.*;
 
-public class AuthServiceRequests {
+public class AuthServiceRequests extends BaseRequests {
 
     public static final String Auth_Service_Base_URL = "http://localhost:8001/";
     public static final String register_ENDPOIN = "register/";
@@ -17,48 +17,26 @@ public class AuthServiceRequests {
 
     private static RequestSpecification authRequest = new RequestSpecBuilder().setBaseUri(Auth_Service_Base_URL).setContentType(ContentType.JSON).build();
 
-    public static RegisterResponse registerUser(RegisterRequest request) {
+    public RegisterResponse registerUser(RegisterRequest request) {
 
-        return RestAssured.given(authRequest)
-               .basePath(register_ENDPOIN)
-               .body(request)
-               .when().post()
-               .then().log().all()
-               .extract().response().as(RegisterResponse.class);
-          }
-
-    public static LoginResponse postLogin(LoginRequest request) {
-        return RestAssured.given()
-                .baseUri(Auth_Service_Base_URL)
-                .basePath(login_ENDPOIN)
-                .contentType(ContentType.JSON)
-                .body(request)
-                .when().post()
-                .then().log().all()
-                .extract().response().as(LoginResponse.class);
+        return sendRequestPost(RestAssured.given(authRequest).body(request).basePath(register_ENDPOIN)).as(RegisterResponse.class);
     }
 
-    public static Response getPendingProducts (String accessToken){
-        return RestAssured.given()
-                .baseUri(Auth_Service_Base_URL)
+    public LoginResponse postLogin(LoginRequest request) {
+        return sendRequestPost(RestAssured.given(authRequest).body(request).basePath(login_ENDPOIN)).as(LoginResponse.class);
+    }
+
+    public Response getPendingProducts(String accessToken) {
+
+        return sendRequestGet(RestAssured.given(authRequest)
                 .basePath(GET_Pending_Product_ENDPOIN)
-                .header("Authorization", "bearer " + accessToken)
-                .contentType(ContentType.JSON).log().all()
-                .when().get()
-                .then().log().all()
-                .extract().response();
+                .header("Authorization", "bearer " + accessToken));
     }
 
-    public static UserTokenResponse getUserToken (String userId){
-        return RestAssured.given()
-                .baseUri(Auth_Service_Base_URL)
+    public UserTokenResponse getUserToken(String userId) {
+
+        return sendRequestGet(RestAssured.given(authRequest)
                 .basePath(getUserToken_ENDPOIN)
-                .pathParams("user_id", userId)
-                .contentType(ContentType.JSON).log().all()
-                .when().get()
-                .then().log().all()
-                .extract().response().as(UserTokenResponse.class);
+                .pathParams("user_id", userId)).as(UserTokenResponse.class);
     }
-
-
 }

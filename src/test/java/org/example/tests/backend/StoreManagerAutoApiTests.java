@@ -22,7 +22,7 @@ public class StoreManagerAutoApiTests extends BaseTest {
     void registerUser() {
         if (!isUserRegistered) { // Register only once
             RegisterRequest registerRequest = RegisterRequest.generate();
-            RegisterResponse registerResponse = AuthServiceRequests.registerUser(registerRequest);
+            RegisterResponse registerResponse = authServiceRequests.registerUser(registerRequest);
 
             assertEquals(registerResponse.getMessage(), "User successfully created");
             assertEquals(registerRequest.getEmail(), registerResponse.getUser().getEmail());
@@ -52,11 +52,11 @@ public class StoreManagerAutoApiTests extends BaseTest {
                 .password(registeredPassword)
                 .build();
 
-        LoginResponse loginResponse = postLogin(loginRequest);
+        LoginResponse loginResponse = authServiceRequests.postLogin(loginRequest);
 
         UsersQueries.setUserSuperAdminName(loginResponse.getUserId());
 
-        Response pendingProducts = getPendingProducts(loginResponse.getAccessToken());
+        Response pendingProducts = authServiceRequests.getPendingProducts(loginResponse.getAccessToken());
 
         assertEquals(200, pendingProducts.statusCode());
     }
@@ -73,9 +73,9 @@ public class StoreManagerAutoApiTests extends BaseTest {
                 .password(registeredPassword)
                 .build();
 
-        LoginResponse loginResponse = postLogin(loginRequest);
+        LoginResponse loginResponse = authServiceRequests.postLogin(loginRequest);
 
-        Response pendingProducts = getPendingProducts(loginResponse.getAccessToken());
+        Response pendingProducts = authServiceRequests.getPendingProducts(loginResponse.getAccessToken());
 
         assertEquals(403, pendingProducts.statusCode());
         assertEquals("Insufficient rights to view pending products", pendingProducts.jsonPath().get("detail"));
@@ -93,10 +93,10 @@ public class StoreManagerAutoApiTests extends BaseTest {
                 .password(registeredPassword)
                 .build();
 
-        LoginResponse loginResponse = postLogin(loginRequest);
+        LoginResponse loginResponse = authServiceRequests.postLogin(loginRequest);
 
         System.out.println("access token "+ (loginResponse.getAccessToken() != null ? loginResponse.getAccessToken() : "Token is null"));
 
-        UserTokenResponse userToken = getUserToken(loginResponse.getUserId());
+        UserTokenResponse userToken = authServiceRequests.getUserToken(loginResponse.getUserId());
     }
 }
