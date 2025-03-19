@@ -1,12 +1,8 @@
 package org.example.backend.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.example.tests.frontend.models.SupplierDataGenerator;
 
 @Data
@@ -14,6 +10,7 @@ import org.example.tests.frontend.models.SupplierDataGenerator;
 @AllArgsConstructor
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
+@EqualsAndHashCode(exclude = {"supplierId"})
 
 public class SupplierCreateModel {
 
@@ -32,7 +29,7 @@ public class SupplierCreateModel {
     private String country;
     private String city;
     private String website;
-    @JsonIgnore  // This will prevent supplierId from appearing in JSON
+    @JsonProperty("supplier_id")
     private String supplierId;
 
     public static SupplierCreateModel generate() {

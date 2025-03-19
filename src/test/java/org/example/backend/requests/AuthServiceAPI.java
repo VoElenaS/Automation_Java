@@ -7,23 +7,32 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.example.backend.models.*;
 
-public class AuthServiceRequests extends BaseRequests {
+public class AuthServiceAPI extends BaseAPI {
 
     public static final String Auth_Service_Base_URL = "http://localhost:8001/";
-    public static final String register_ENDPOIN = "register/";
-    public static final String getUserToken_ENDPOIN = "get-user-token/{user_id}/";
+    public static final String register_ENDPOINT = "register/";
+    public static final String getUserToken_ENDPOINT = "get-user-token/{user_id}/";
     public static final String login_ENDPOIN = "login/";
     public static final String GET_Pending_Product_ENDPOIN = "get-pending-products/";
 
-    private static RequestSpecification authRequest = new RequestSpecBuilder().setBaseUri(Auth_Service_Base_URL).setContentType(ContentType.JSON).build();
+    private static RequestSpecification authRequest = new RequestSpecBuilder()
+            .setBaseUri(Auth_Service_Base_URL)
+            .setContentType(ContentType.JSON)
+            .build();
 
     public RegisterResponse registerUser(RegisterRequest request) {
 
-        return sendRequestPost(RestAssured.given(authRequest).body(request).basePath(register_ENDPOIN)).as(RegisterResponse.class);
+        return sendRequestPost(RestAssured.given(authRequest)
+                .body(request)
+                .basePath(register_ENDPOINT))
+                .as(RegisterResponse.class);
     }
 
     public LoginResponse postLogin(LoginRequest request) {
-        return sendRequestPost(RestAssured.given(authRequest).body(request).basePath(login_ENDPOIN)).as(LoginResponse.class);
+        return sendRequestPost(RestAssured.given(authRequest)
+                .body(request)
+                .basePath(login_ENDPOIN))
+                .as(LoginResponse.class);
     }
 
     public Response getPendingProducts(String accessToken) {
@@ -36,7 +45,7 @@ public class AuthServiceRequests extends BaseRequests {
     public UserTokenResponse getUserToken(String userId) {
 
         return sendRequestGet(RestAssured.given(authRequest)
-                .basePath(getUserToken_ENDPOIN)
+                .basePath(getUserToken_ENDPOINT)
                 .pathParams("user_id", userId)).as(UserTokenResponse.class);
     }
 }

@@ -3,6 +3,7 @@ package org.example.tests.frontend.models;
 import java.util.Random;
 
 public class SupplierDataGenerator {
+
     private static final Random random = new Random();
     private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private static final String NUMERIC = "0123456789";

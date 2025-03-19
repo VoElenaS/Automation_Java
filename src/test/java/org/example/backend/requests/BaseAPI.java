@@ -3,8 +3,9 @@ package org.example.backend.requests;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
-public class BaseRequests {
-    public Response sendRequestPost(RequestSpecification request) {
+public class BaseAPI {
+
+    public static Response sendRequestPost(RequestSpecification request) {
 
         return request
                 .when().post()

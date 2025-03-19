@@ -1,6 +1,5 @@
 package org.example.tests.frontend;
 
-import org.example.backend.models.LoginRequest;
 import org.example.backend.models.RegisterRequest;
 import org.example.backend.models.SupplierCreateModel;
 import org.example.tests.BaseTest;
@@ -16,7 +15,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.time.Duration;
 
-import static org.example.backend.requests.ProductsServiceRequests.executePostCreateSupllier;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class StoreManagerAutoUiTests extends BaseTest {
@@ -53,12 +51,9 @@ public class StoreManagerAutoUiTests extends BaseTest {
     void deleteSupplierTest() {
 
 
-        String accessToken = authServiceRequests.postLogin(LoginRequest.builder()
-                .email(testUser.getEmail())
-                .password(testUser.getPassword())
-                .build()).getAccessToken();
+        // String accessToken = getAcccessToken();
 
-        SupplierCreateModel createdSupplier = executePostCreateSupllier(SupplierCreateModel.generate(), accessToken);
+        SupplierCreateModel createdSupplier = productsServiceAPI.createSupplier(SupplierCreateModel.generate(), accessToken);
 
         new LoginPage(driver).loginAs(testUser);
         new ProductPage(driver).clickSuppliersLink();
@@ -78,7 +73,7 @@ public class StoreManagerAutoUiTests extends BaseTest {
 
     private User registerTestUser() {
         RegisterRequest registerRequest = RegisterRequest.generate();
-        authServiceRequests.registerUser(registerRequest);
+        authServiceAPI.registerUser(registerRequest);
         return User.builder().email(registerRequest.getEmail()).password(registerRequest.getPassword()).build();
     }
 
