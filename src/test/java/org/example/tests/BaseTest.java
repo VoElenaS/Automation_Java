@@ -29,7 +29,7 @@ public abstract class BaseTest {
         AuthServiceAPI authServiceAPI = new AuthServiceAPI();
         RegisterRequest generateDataUserRequest = RegisterRequest.generate();
         authServiceAPI.registerUser(generateDataUserRequest);
-        LoginResponse loginResponse = authServiceAPI.postLogin(LoginRequest.builder().email(generateDataUserRequest.getEmail()).password(generateDataUserRequest.getPassword()).build());
+        LoginResponse loginResponse = authServiceAPI.loginUser(LoginRequest.builder().email(generateDataUserRequest.getEmail()).password(generateDataUserRequest.getPassword()).build());
 
         accessToken = loginResponse.getAccessToken();
 

@@ -13,7 +13,7 @@ public class AuthServiceAPI extends BaseAPI {
     public static final String register_ENDPOINT = "register/";
     public static final String getUserToken_ENDPOINT = "get-user-token/{user_id}/";
     public static final String login_ENDPOIN = "login/";
-    public static final String GET_Pending_Product_ENDPOIN = "get-pending-products/";
+    public static final String GET_Pending_Product_ENDPOINT = "get-pending-products/";
 
     private static RequestSpecification authRequest = new RequestSpecBuilder()
             .setBaseUri(Auth_Service_Base_URL)
@@ -21,14 +21,13 @@ public class AuthServiceAPI extends BaseAPI {
             .build();
 
     public RegisterResponse registerUser(RegisterRequest request) {
-
         return sendRequestPost(RestAssured.given(authRequest)
                 .body(request)
                 .basePath(register_ENDPOINT))
                 .as(RegisterResponse.class);
     }
 
-    public LoginResponse postLogin(LoginRequest request) {
+    public LoginResponse loginUser(LoginRequest request) {
         return sendRequestPost(RestAssured.given(authRequest)
                 .body(request)
                 .basePath(login_ENDPOIN))
@@ -36,14 +35,12 @@ public class AuthServiceAPI extends BaseAPI {
     }
 
     public Response getPendingProducts(String accessToken) {
-
         return sendRequestGet(RestAssured.given(authRequest)
-                .basePath(GET_Pending_Product_ENDPOIN)
+                .basePath(GET_Pending_Product_ENDPOINT)
                 .header("Authorization", "bearer " + accessToken));
     }
 
     public UserTokenResponse getUserToken(String userId) {
-
         return sendRequestGet(RestAssured.given(authRequest)
                 .basePath(getUserToken_ENDPOINT)
                 .pathParams("user_id", userId)).as(UserTokenResponse.class);

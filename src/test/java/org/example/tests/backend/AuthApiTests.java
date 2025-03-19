@@ -44,16 +44,12 @@ public class AuthApiTests extends BaseTest {
             registerUser(); // Ensure a user is registered before login
         }
 
-        // Use the stored credentials for login
         LoginRequest loginRequest = LoginRequest.builder()
                 .email(registeredEmail)
                 .password(registeredPassword)
                 .build();
-
-        LoginResponse loginResponse = authServiceAPI.postLogin(loginRequest);
-
+        LoginResponse loginResponse = authServiceAPI.loginUser(loginRequest);
         UsersQueries.setUserSuperAdminName(loginResponse.getUserId());
-
         Response pendingProducts = authServiceAPI.getPendingProducts(loginResponse.getAccessToken());
 
         assertEquals(200, pendingProducts.statusCode());
@@ -65,38 +61,31 @@ public class AuthApiTests extends BaseTest {
             registerUser(); // Ensure a user is registered before login
         }
 
-        // Use the stored credentials for login
         LoginRequest loginRequest = LoginRequest.builder()
                 .email(registeredEmail)
                 .password(registeredPassword)
                 .build();
 
-        LoginResponse loginResponse = authServiceAPI.postLogin(loginRequest);
-
+        LoginResponse loginResponse = authServiceAPI.loginUser(loginRequest);
+        UsersQueries.setUserSuperAdminName(loginResponse.getUserId());
         Response pendingProducts = authServiceAPI.getPendingProducts(loginResponse.getAccessToken());
 
         assertEquals(200, pendingProducts.statusCode());
-        //assertEquals("Insufficient rights to view pending products", pendingProducts.jsonPath().get("detail"));
     }
 
     @Test
     void getAccessToken() {
-
         if (!isUserRegistered) {
             registerUser(); // Ensure a user is registered before login
         }
-        // Use the stored credentials for login
+
         LoginRequest loginRequest = LoginRequest.builder()
                 .email(registeredEmail)
                 .password(registeredPassword)
                 .build();
-
-        LoginResponse loginResponse = authServiceAPI.postLogin(loginRequest);
-
+        LoginResponse loginResponse = authServiceAPI.loginUser(loginRequest);
         System.out.println("access token "+ (loginResponse.getAccessToken() != null ? loginResponse.getAccessToken() : "Token is null"));
-
         UserTokenResponse userToken = authServiceAPI.getUserToken(loginResponse.getUserId());
     }
-
 
 }

@@ -6,20 +6,16 @@ import io.restassured.specification.RequestSpecification;
 public class BaseAPI {
 
     public static Response sendRequestPost(RequestSpecification request) {
-
         return request
                 .when().post()
                 .then().log().all()
                 .extract().response();
-
     }
 
     public Response sendRequestGet(RequestSpecification request) {
-
         return request
                 .when().get()
                 .then().log().all()
                 .extract().response();
-
     }
 }

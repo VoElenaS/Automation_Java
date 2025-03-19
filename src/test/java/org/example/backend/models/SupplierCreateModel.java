@@ -15,16 +15,12 @@ import org.example.tests.frontend.models.SupplierDataGenerator;
 public class SupplierCreateModel {
 
     private String name;
-
     @JsonProperty("contact_name")
     private String contactName;
-
     @JsonProperty("contact_email")
     private String contactEmail;
-
     @JsonProperty("phone_number")
     private String phoneNumber;
-
     private String address;
     private String country;
     private String city;
@@ -33,7 +29,6 @@ public class SupplierCreateModel {
     private String supplierId;
 
     public static SupplierCreateModel generate() {
-
         return SupplierCreateModel.builder()
                 .name(SupplierDataGenerator.generateName())
                 .contactName(SupplierDataGenerator.generateContactName())
@@ -43,6 +38,14 @@ public class SupplierCreateModel {
                 .country(SupplierDataGenerator.generateCountry())
                 .city(SupplierDataGenerator.generateCity())
                 .website(SupplierDataGenerator.generateWebsite())
+                .build();
+    }
+
+    public static SupplierCreateModel generateOnlyMandatoryFields() {
+        return SupplierCreateModel.builder()
+                .name(SupplierDataGenerator.generateName())
+                .contactName(SupplierDataGenerator.generateContactName())
+                .contactEmail(SupplierDataGenerator.generateContactEmail())
                 .build();
     }
 }
