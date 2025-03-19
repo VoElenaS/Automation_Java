@@ -3,6 +3,7 @@ package org.example.backend.requests;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.example.backend.models.SupplierCreateModel;
 
@@ -17,9 +18,13 @@ public class ProductsServiceAPI extends BaseAPI {
 
     public SupplierCreateModel createSupplier(SupplierCreateModel request, String accessToken) {
 
+        return createSupplierWithResponse(request, accessToken).as(SupplierCreateModel.class);
+    }
+
+    public Response createSupplierWithResponse(SupplierCreateModel request, String accessToken) {
         return sendRequestPost(RestAssured.given(supplierRequest)
                 .basePath(SUPPLIER_ENDPOINT)
                 .header("Authorization", "Bearer " + accessToken)
-                .body(request)).as(SupplierCreateModel.class);
+                .body(request));
     }
 }
