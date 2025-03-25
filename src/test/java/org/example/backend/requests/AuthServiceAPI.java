@@ -15,7 +15,7 @@ public class AuthServiceAPI extends BaseAPI {
     public static final String login_ENDPOIN = "login/";
     public static final String GET_Pending_Product_ENDPOINT = "get-pending-products/";
 
-    private static RequestSpecification authRequest = new RequestSpecBuilder()
+    private static final RequestSpecification authRequest = new RequestSpecBuilder()
             .setBaseUri(Auth_Service_Base_URL)
             .setContentType(ContentType.JSON)
             .build();

@@ -84,7 +84,7 @@ public class AuthApiTests extends BaseTest {
                 .password(registeredPassword)
                 .build();
         LoginResponse loginResponse = authServiceAPI.loginUser(loginRequest);
-        System.out.println("access token "+ (loginResponse.getAccessToken() != null ? loginResponse.getAccessToken() : "Token is null"));
+        System.out.println("access token " + (loginResponse.getAccessToken() != null ? loginResponse.getAccessToken() : "Token is null"));
         UserTokenResponse userToken = authServiceAPI.getUserToken(loginResponse.getUserId());
     }
 

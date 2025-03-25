@@ -7,7 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 
 @Data
 
-public class WarehousesPage implements  HasNavigationBar {
+public class WarehousesPage implements HasNavigationBar {
 
     WebDriver driver;
 

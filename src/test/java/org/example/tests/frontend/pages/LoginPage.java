@@ -25,7 +25,6 @@ public class LoginPage {
     }
 
 
-
     public void loginAs(User user) {
 
         emailFiled.sendKeys(user.getEmail());

@@ -12,13 +12,13 @@ import lombok.NoArgsConstructor;
 @Builder
 
 public class LoginResponse {
-    @JsonProperty ("user_id")
+    @JsonProperty("user_id")
     String userId;
     String message;
-    @JsonProperty ("access_token")
+    @JsonProperty("access_token")
     String accessToken;
-    @JsonProperty ("refresh_token")
+    @JsonProperty("refresh_token")
     String refreshToken;
-    @JsonProperty ("token_type")
+    @JsonProperty("token_type")
     String tokenType;
 }

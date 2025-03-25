@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @Builder
 
 public class UserTokenResponse {
-    @JsonProperty ("access_token")
+    @JsonProperty("access_token")
     String accessToken;
-    @JsonProperty ("token_type")
+    @JsonProperty("token_type")
     String tokenType;
 }

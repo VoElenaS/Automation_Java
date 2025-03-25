@@ -11,7 +11,6 @@ public class ProductPage implements HasNavigationBar {
     WebDriver driver;
 
 
-
     public ProductPage(WebDriver driver) {
 
         this.driver = driver;

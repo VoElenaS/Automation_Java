@@ -58,4 +58,4 @@ public class SupplierPage implements HasNavigationBar {
     }
 
 
-   }
+}

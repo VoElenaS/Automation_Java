@@ -11,11 +11,10 @@ import org.junit.jupiter.api.BeforeAll;
 
 public abstract class BaseTest {
 
+    public static final String API_UI_URL = "http://localhost:8001/login";
+    public static String accessToken;
     public AuthServiceAPI authServiceAPI = new AuthServiceAPI();
     public ProductsServiceAPI productsServiceAPI = new ProductsServiceAPI();
-    public static String accessToken;
-
-    public static final String API_UI_URL = "http://localhost:8001/login";
 
     @AfterAll
 

@@ -33,4 +33,4 @@ public class RegisterRequest {
                 .build();
     }
 
-};
+}

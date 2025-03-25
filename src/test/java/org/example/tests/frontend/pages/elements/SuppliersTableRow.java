@@ -12,7 +12,7 @@ public class SuppliersTableRow {
         this.root = root;
     }
 
-    public  String getName() {
+    public String getName() {
         return root.findElement(By.xpath(".//td[1]")).getText();
     }
 
@@ -29,11 +29,11 @@ public class SuppliersTableRow {
                 .build();
     }
 
-    public void clickEditButton(){
+    public void clickEditButton() {
         root.findElement(By.cssSelector("button.btn-outline-warning")).click();
     }
 
-    public void clickDeleteButton(){
+    public void clickDeleteButton() {
         root.findElement(By.cssSelector("button.btn-outline-danger")).click();
     }
 }
