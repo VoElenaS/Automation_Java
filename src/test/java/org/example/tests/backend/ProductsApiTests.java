@@ -1,6 +1,7 @@
 package org.example.tests.backend;
 
 import io.restassured.response.Response;
+import org.example.backend.models.ProductCreateModel;
 import org.example.backend.models.SupplierCreateModel;
 import org.example.backend.models.SupplierDetailModel;
 import org.example.tests.BaseTest;
@@ -40,6 +41,19 @@ public class ProductsApiTests extends BaseTest {
         SupplierCreateModel response = productsServiceAPI.createSupplier(supplierOnlyMandatoryField, accessToken);
 
         assertNotNull(response.getSupplierId(), "Supplier is not created");
+    }
+
+    @Test
+    void creteProductWillAllFields() {
+        SupplierCreateModel supplier = SupplierCreateModel.generate();
+        SupplierCreateModel responseSupplier = productsServiceAPI.createSupplier(supplier, accessToken);
+
+        String supplierId = responseSupplier.getSupplierId();
+
+        ProductCreateModel product = ProductCreateModel.generate(supplierId);
+        ProductCreateModel responseProduct = productsServiceAPI.createProduct(product, accessToken);
+
+        assertNotNull(responseProduct.getSupplierId(), "Product is not created");
     }
 
     @Test

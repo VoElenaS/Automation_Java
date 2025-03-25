@@ -50,7 +50,6 @@ public class StoreManagerAutoUiTests extends BaseTest {
     @Test
     void deleteSupplierTest() {
 
-
         // String accessToken = getAcccessToken();
 
         SupplierCreateModel createdSupplier = productsServiceAPI.createSupplier(SupplierCreateModel.generate(), accessToken);
