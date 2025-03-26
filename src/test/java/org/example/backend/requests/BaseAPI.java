@@ -15,7 +15,7 @@ public class BaseAPI {
     }
 
     public Response sendRequestGet(RequestSpecification request) {
-        return request
+        return request.log().all()
                 .when().get()
                 .then().log().all()
                 .extract().response();

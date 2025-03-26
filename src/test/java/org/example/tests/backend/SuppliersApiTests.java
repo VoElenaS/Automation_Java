@@ -46,7 +46,7 @@ public class SuppliersApiTests extends BaseTest {
     void retrievingSuppliers() {
         Response response = suppliersServicesAPI.retrievingSuppliers(accessToken);
 
-        assertEquals(response.statusCode(), 200);
+        assertEquals(200, response.statusCode());
         assertNotNull(response.getBody(), "Suppliers list shouldn't be empty");
         List<Map<String, Object>> suppliers = response.jsonPath().getList("$");
         assertNotNull(suppliers, "Suppliers list shouldn't be null");

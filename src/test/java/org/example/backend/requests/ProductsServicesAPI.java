@@ -53,4 +53,10 @@ public class ProductsServicesAPI extends BaseAPI {
                 .as(ProductModel.class);
     }
 
+    public Response retrievingProducts(String accessToken) {
+        return sendRequestGet(RestAssured.given(baseRequest)
+                .basePath(PRODUCTS_ENDPOINT)
+                .header("Authorization", "Bearer " + accessToken));
+    }
+
 }

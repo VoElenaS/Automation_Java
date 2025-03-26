@@ -33,7 +33,6 @@ public abstract class BaseTest {
         LoginResponse loginResponse = authServiceAPI.loginUser(LoginRequest.builder().email(generateDataUserRequest.getEmail()).password(generateDataUserRequest.getPassword()).build());
 
         accessToken = loginResponse.getAccessToken();
-
     }
 
 }

@@ -1,5 +1,6 @@
 package org.example.tests.backend;
 
+import io.restassured.response.Response;
 import org.example.backend.models.PatchProductModel;
 import org.example.backend.models.ProductModel;
 import org.example.backend.models.SupplierCreateModel;
@@ -9,8 +10,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ProductsApiTests extends BaseTest {
@@ -36,8 +36,6 @@ public class ProductsApiTests extends BaseTest {
         productId = responseProduct.getProductId();
     }
 
-
-
     @Test
     void creteProductWillAllFields() {
 
@@ -49,16 +47,33 @@ public class ProductsApiTests extends BaseTest {
 
     @Test
     void updateProductWillAllFields() {
-
         ProductModel existingProduct = productsServicesAPI.getProduct(productId, accessToken);
-        PatchProductModel patchRequest = PatchProductModel.builder().isAvailable(!existingProduct.isAvailable()).build();
-
-        ProductModel updatedProduct = productsServicesAPI.updateProduct(patchRequest, productId, accessToken);
-
+        PatchProductModel patchRequest = PatchProductModel.builder()
+                .isAvailable(!existingProduct.isAvailable())
+                .build();
+        productsServicesAPI.updateProduct(patchRequest, productId, accessToken);
+        ProductModel updatedProduct = productsServicesAPI.getProduct(productId, accessToken);
 
         assertNotEquals(existingProduct.isAvailable(), updatedProduct.isAvailable(), "The product wasn't updated");
+        assertEquals(existingProduct.getProductId(), updatedProduct.getProductId(), "The product id was changed");
+        assertEquals(existingProduct.getName(), updatedProduct.getName(), "The name of the product was updated");
+        assertEquals(existingProduct.getSupplierId(), updatedProduct.getSupplierId(), "The supplier was updated for the product");
+        assertEquals(existingProduct.getPrice(), updatedProduct.getPrice(), "The price was updated for the product");
+        assertEquals(existingProduct.getStockQuantity(), updatedProduct.getStockQuantity(), "the quantity was updated for the product");
     }
 
+    @Test
+    void getProductById() {
+        ProductModel product = productsServicesAPI.getProduct(productId, accessToken);
+        assertNotNull(product.getProductId(), "Product not available");
+    }
 
+    @Test
+    void getAllProductsRegularUser() {
+        Response response = productsServicesAPI.retrievingProducts(accessToken);
+
+        assertNotNull(response.getBody(), "The products list shouldn't be empty");
+
+    }
 
 }
