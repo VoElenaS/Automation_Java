@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
-//@EqualsAndHashCode(exclude = {"supplierId", "detail"})
+
 
 public class SupplierDetailModel {
 

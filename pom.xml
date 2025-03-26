@@ -28,7 +28,6 @@
     <dependencies>
 
         <!-- JUnit Jupiter API & Engine: Used for writing and executing unit tests in Java. -->
-
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -42,7 +41,6 @@
         </dependency>
 
         <!-- Selenium Java: Used for automating web applications. -->
-
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
@@ -50,7 +48,6 @@
         </dependency>
 
         <!-- REST Assured: Helps in testing RESTful APIs in Java. -->
-
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
@@ -58,7 +55,6 @@
         </dependency>
 
         <!-- Jackson Core: Used for parsing JSON data. -->
-
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
@@ -66,7 +62,6 @@
         </dependency>
 
         <!-- Lombok: Reduces boilerplate code (e.g., getter/setter generation) -->
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -99,13 +94,10 @@
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
         </dependency>
-
     </dependencies>
 
     <build>
-
         <!-- Maven Surefire Plugin runs unit tests. -->
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

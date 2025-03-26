@@ -17,31 +17,31 @@ public class SupplierDataGenerator {
     }
 
     public static String generateName() {
-        return generateRandomString(ALPHABET, 10) + " Ltd"; // Ensuring length between 3 and 100
+        return generateRandomString(ALPHABET, 10) + " Ltd";  
     }
 
     public static String generateContactName() {
-        return generateRandomString(ALPHABET, 10); // Max length 100
+        return generateRandomString(ALPHABET, 10);  
     }
 
     public static String generateContactEmail() {
-        return generateRandomString(ALPHABET, 8) + "@test.com"; // Max length 20
+        return generateRandomString(ALPHABET, 8) + "@test.com";  
     }
 
     public static String generatePhoneNumber() {
-        return "+" + generateRandomString(NUMERIC, random.nextInt(10) + 5); // Between 5-15 chars
+        return "+" + generateRandomString(NUMERIC, random.nextInt(10) + 5);  
     }
 
     public static String generateAddress() {
-        return generateRandomString(ALPHABET + NUMERIC + " ", 20); // Max 200, simplified
+        return generateRandomString(ALPHABET + NUMERIC + " ", 20);  
     }
 
     public static String generateCountry() {
-        return generateRandomString(ALPHABET, 7); // Max 50, only letters
+        return generateRandomString(ALPHABET, 7);  
     }
 
     public static String generateCity() {
-        return generateRandomString(ALPHABET, 7); // Max 50, only letters
+        return generateRandomString(ALPHABET, 7);  
     }
 
     public static String generateWebsite() {

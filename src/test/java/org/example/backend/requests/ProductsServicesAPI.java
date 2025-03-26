@@ -6,33 +6,19 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.example.backend.models.ProductCreateModel;
-import org.example.backend.models.SupplierCreateModel;
 
-public class ProductsServiceAPI extends BaseAPI {
+public class ProductsServicesAPI extends BaseAPI {
 
     public static final String Product_service_Base_URL = "http://localhost:8002/";
-    public static final String SUPPLIER_ENDPOINT = "suppliers/";
-    public static final String RETRIEVING_SUPPLIERS_ENDPOINT = "suppliers/";
     public static final String PRODUCTS_ENDPOINT = "products/";
 
     public static RequestSpecification baseRequest = new RequestSpecBuilder()
             .setBaseUri(Product_service_Base_URL)
             .setContentType(ContentType.JSON).build();
 
-    public SupplierCreateModel createSupplier(SupplierCreateModel request, String accessToken) {
-        return createSupplierWithResponse(request, accessToken).as(SupplierCreateModel.class);
-    }
 
     public ProductCreateModel createProduct(ProductCreateModel request, String accessToken) {
         return createProductWithResponse(request, accessToken).as(ProductCreateModel.class);
-    }
-
-
-    public Response createSupplierWithResponse(SupplierCreateModel request, String accessToken) {
-        return sendRequestPost(RestAssured.given(baseRequest)
-                .basePath(SUPPLIER_ENDPOINT)
-                .header("Authorization", "Bearer " + accessToken)
-                .body(request));
     }
 
     public Response createProductWithResponse(ProductCreateModel request, String accessToken) {
@@ -42,9 +28,12 @@ public class ProductsServiceAPI extends BaseAPI {
                 .body(request));
     }
 
-    public Response retrievingSuppliers(String accessToken) {
-        return sendRequestGet(RestAssured.given(baseRequest)
-                .basePath(RETRIEVING_SUPPLIERS_ENDPOINT)
-                .header("Authorization", "Bearer " + accessToken));
+    public Response updateProductWithResponse(ProductCreateModel request, String accessToken) {
+        return sendRequestPost(RestAssured.given(baseRequest)
+                .basePath(PRODUCTS_ENDPOINT)
+                .header("Authorization", "Bearer " + accessToken)
+                .body(request));
     }
+
+
 }

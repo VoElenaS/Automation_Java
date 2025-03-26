@@ -16,25 +16,27 @@ import org.example.tests.frontend.models.ProductDataGenerator;
 
 public class ProductCreateModel {
 
-    private String name; // Product name, required and should be 3-100 characters, only letters and numbers.
-    private String description; // Optional. Product description up to 500 characters.
-    private String category; // Optional. Product category up to 50 characters, only letters and numbers.
-    private String price; // Required. Positive number with 2 decimals, max 10 digits including decimals.
+    private String name;
+    private String description;
+    private String category;
+    private String price;  
     @JsonProperty("stock_quantity")
-    private int stockQuantity; // Required. Whole number, at least 0.
+    private int stockQuantity;  
     @JsonProperty("supplier_id")
-    private String supplierId; // Required. Valid UUID, should match an existing supplier ID in the database.
+    private String supplierId;  
     @JsonProperty("is_available")
-    private boolean isAvailable; // Optional. Boolean flag to indicate availability.
+    private boolean isAvailable;  
     @JsonProperty("created_at")
-    private String createdAt; // Required. Timestamp when the product was created.
+    private String createdAt;  
     @JsonProperty("updated_at")
-    private String updatedAt; // Required. Timestamp when the product was last updated.
+    private String updatedAt;  
     @JsonProperty("image_url")
-    private String imageUrl; // Optional. URL of the product image, max 255 characters, supports png, jpeg, jpg.
-    private String weight; // Optional. Positive number with a decimal point. Max 6 digits (2 decimals).
-    private String dimensions; // Optional. Max 100 characters. Format: whole numbers with "x" symbol allowed.
-    private String manufacturer; // Optional. Max 100 characters, only letters and numbers.
+    private String imageUrl;
+    private String weight;
+    private String dimensions;
+    private String manufacturer;
+    @JsonProperty("product_id")
+    private String productId;
 
 
     public static ProductCreateModel generate(String supplierId) {
@@ -44,7 +46,7 @@ public class ProductCreateModel {
                 .category(ProductDataGenerator.generateCategory())
                 .price(ProductDataGenerator.generatePrice())
                 .stockQuantity(ProductDataGenerator.generateStockQuantity())
-                .supplierId(supplierId) // Ensuring supplierId is provided.
+                .supplierId(supplierId)  
                 .isAvailable(ProductDataGenerator.generateIsAvailable())
                 .imageUrl(ProductDataGenerator.generateImageUrl())
                 .weight(ProductDataGenerator.generateWeight())

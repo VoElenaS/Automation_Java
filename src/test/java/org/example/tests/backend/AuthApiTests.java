@@ -18,7 +18,7 @@ public class AuthApiTests extends BaseTest {
 
     @Test
     void registerUser() {
-        if (!isUserRegistered) { // Register only once
+        if (!isUserRegistered) {  
             RegisterRequest registerRequest = RegisterRequest.generate();
             RegisterResponse registerResponse = authServiceAPI.registerUser(registerRequest);
 
@@ -41,7 +41,7 @@ public class AuthApiTests extends BaseTest {
     @Test
     void getPendingProductsSuperAdminTest() {
         if (!isUserRegistered) {
-            registerUser(); // Ensure a user is registered before login
+            registerUser();  
         }
 
         LoginRequest loginRequest = LoginRequest.builder()
@@ -58,7 +58,7 @@ public class AuthApiTests extends BaseTest {
     @Test
     void getPendingProductsRegularUser() {
         if (!isUserRegistered) {
-            registerUser(); // Ensure a user is registered before login
+            registerUser();  
         }
 
         LoginRequest loginRequest = LoginRequest.builder()
@@ -76,7 +76,7 @@ public class AuthApiTests extends BaseTest {
     @Test
     void getAccessToken() {
         if (!isUserRegistered) {
-            registerUser(); // Ensure a user is registered before login
+            registerUser();  
         }
 
         LoginRequest loginRequest = LoginRequest.builder()
