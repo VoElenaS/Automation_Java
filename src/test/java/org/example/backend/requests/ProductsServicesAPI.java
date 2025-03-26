@@ -5,9 +5,8 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.example.backend.models.ProductCreateModel;
-
-import java.util.Map;
+import org.example.backend.models.PatchProductModel;
+import org.example.backend.models.ProductModel;
 
 public class ProductsServicesAPI extends BaseAPI {
 
@@ -20,19 +19,19 @@ public class ProductsServicesAPI extends BaseAPI {
             .setContentType(ContentType.JSON).build();
 
 
-    public ProductCreateModel createProduct(ProductCreateModel request, String accessToken) {
+    public ProductModel createProduct(ProductModel request, String accessToken) {
         Response response = createProductWithResponse(request, accessToken);
-        return validaResponse(response, ProductCreateModel.class);
+        return validaResponse(response, ProductModel.class);
     }
 
-    public Response createProductWithResponse(ProductCreateModel request, String accessToken) {
+    public Response createProductWithResponse(ProductModel request, String accessToken) {
         return sendRequestPost(RestAssured.given(baseRequest)
                 .basePath(PRODUCTS_ENDPOINT)
                 .header("Authorization", "Bearer " + accessToken)
                 .body(request));
     }
 
-    public Response updateProductWithResponse(Map<String, Object> request, String productId, String accessToken) {
+    public Response updateProductWithResponse(PatchProductModel request, String productId, String accessToken) {
         return sendRequestPatch(RestAssured.given(baseRequest)
                 .basePath(PRODUCTS_ENDPOINT_WITH_PRODUCT_ID)
                 .pathParams("productId", productId)
@@ -40,9 +39,18 @@ public class ProductsServicesAPI extends BaseAPI {
                 .body(request));
     }
 
-    public ProductCreateModel updateProduct(Map<String, Object> request, String productId, String accessToken) {
+    public ProductModel updateProduct(PatchProductModel request, String productId, String accessToken) {
         Response response = updateProductWithResponse(request, productId, accessToken);
-        return validaResponse(response, ProductCreateModel.class);
+        return validaResponse(response, ProductModel.class);
+    }
+
+    public ProductModel getProduct(String productId, String accessToken) {
+        return sendRequestGet(RestAssured.given(baseRequest)
+                .basePath(PRODUCTS_ENDPOINT_WITH_PRODUCT_ID)
+                .pathParams("productId", productId)
+                .header("Authorization", "Bearer " + accessToken)
+        )
+                .as(ProductModel.class);
     }
 
 }

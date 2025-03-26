@@ -14,7 +14,7 @@ import org.example.tests.frontend.models.ProductDataGenerator;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 
-public class ProductCreateModel {
+public class ProductModel {
 
     private String name;
     private String description;
@@ -39,8 +39,8 @@ public class ProductCreateModel {
     private String productId;
 
 
-    public static ProductCreateModel generate(String supplierId) {
-        return ProductCreateModel.builder()
+    public static ProductModel generate(String supplierId) {
+        return ProductModel.builder()
                 .name(ProductDataGenerator.generateName())
                 .description(ProductDataGenerator.generateDescription())
                 .category(ProductDataGenerator.generateCategory())

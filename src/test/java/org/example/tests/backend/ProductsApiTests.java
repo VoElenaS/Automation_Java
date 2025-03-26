@@ -1,6 +1,7 @@
 package org.example.tests.backend;
 
-import org.example.backend.models.ProductCreateModel;
+import org.example.backend.models.PatchProductModel;
+import org.example.backend.models.ProductModel;
 import org.example.backend.models.SupplierCreateModel;
 import org.example.tests.BaseTest;
 import org.junit.jupiter.api.MethodOrderer;
@@ -8,8 +9,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import java.util.Map;
-
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -30,8 +30,8 @@ public class ProductsApiTests extends BaseTest {
     @Test
     @Order(1)
     void createDefaultProduct() {
-        ProductCreateModel product = ProductCreateModel.generate(supplierId);
-        ProductCreateModel responseProduct = productsServicesAPI.createProduct(product, accessToken);
+        ProductModel product = ProductModel.generate(supplierId);
+        ProductModel responseProduct = productsServicesAPI.createProduct(product, accessToken);
         assertNotNull(responseProduct.getProductId(), "The product wasn't created");
         productId = responseProduct.getProductId();
     }
@@ -41,8 +41,8 @@ public class ProductsApiTests extends BaseTest {
     @Test
     void creteProductWillAllFields() {
 
-        ProductCreateModel product = ProductCreateModel.generate(supplierId);
-        ProductCreateModel responseProduct = productsServicesAPI.createProduct(product, accessToken);
+        ProductModel product = ProductModel.generate(supplierId);
+        ProductModel responseProduct = productsServicesAPI.createProduct(product, accessToken);
 
         assertNotNull(responseProduct.getSupplierId(), "Product is not created");
     }
@@ -50,9 +50,13 @@ public class ProductsApiTests extends BaseTest {
     @Test
     void updateProductWillAllFields() {
 
-        ProductCreateModel newNameSupler = productsServicesAPI.updateProduct(Map.of("name", ProductCreateModel.generate(supplierId).getName()), productId, accessToken);
+        ProductModel existingProduct = productsServicesAPI.getProduct(productId, accessToken);
+        PatchProductModel patchRequest = PatchProductModel.builder().isAvailable(!existingProduct.isAvailable()).build();
 
-        assertNotNull(newNameSupler, "Product wasn't updated");
+        ProductModel updatedProduct = productsServicesAPI.updateProduct(patchRequest, productId, accessToken);
+
+
+        assertNotEquals(existingProduct.isAvailable(), updatedProduct.isAvailable(), "The product wasn't updated");
     }
 
 
