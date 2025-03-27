@@ -47,21 +47,25 @@ public class SuppliersApiTests extends BaseTest {
         Response response = suppliersServicesAPI.retrievingSuppliers(accessToken);
 
         assertEquals(200, response.statusCode());
-        assertNotNull(response.getBody(), "Suppliers list shouldn't be empty");
+        assertNotNull(response.getBody(), "Expected a non-null response body");
         List<Map<String, Object>> suppliers = response.jsonPath().getList("$");
         assertNotNull(suppliers, "Suppliers list shouldn't be null");
 
         if (suppliers.isEmpty()) {
             System.out.println("The list is [] - it's expected the DB is empty ");
-            return;
         }
 
         Set<String> supplierIds = new HashSet<>();
+        Set<String> supplierNames = new HashSet<>();
+
 
         for (Map<String, Object> supplier : suppliers) {
             String supplierId = (String) supplier.get("supplier_id");
+            String supplierName = ((String) supplier.get("name")).toLowerCase();
 
             assertFalse(supplierIds.contains(supplierId), "Duplicate supplier ID found " + supplierId);
+            assertFalse(supplierNames.contains(supplierName), "Duplicate supplier name found " + supplierName);
+
             assertNotNull(supplierId, "Supplier_Id Shouldn't be null");
             assertTrue(supplier.containsKey("name"), "The name is mandatory field");
             assertNotNull(supplier.get("name"), "The name field should not be null");
@@ -72,6 +76,7 @@ public class SuppliersApiTests extends BaseTest {
             assertTrue(supplier.containsKey("supplier_id"), "Each supplier should have a 'supplier_id'");
 
             supplierIds.add(supplierId);
+            supplierNames.add(supplierName);
 
         }
     }

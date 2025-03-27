@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -72,7 +74,15 @@ public class ProductsApiTests extends BaseTest {
     void getAllProductsRegularUser() {
         Response response = productsServicesAPI.retrievingProducts(accessToken);
 
-        assertNotNull(response.getBody(), "The products list shouldn't be empty");
+        assertEquals(200, response.statusCode());
+        assertNotNull(response.getBody(), "Expected a non-null response body");
+        List<ProductModel> products = response.jsonPath().getList("$", ProductModel.class);
+        assertNotNull(products, "Products list shouldn't be NULL");
+
+        if (products.isEmpty()) {
+            System.out.println("The list is [] - it's expected, the DB is empty");
+        }
+
 
     }
 
