@@ -47,11 +47,19 @@ public class ProductModel {
                 .price(ProductDataGenerator.generatePrice())
                 .stockQuantity(ProductDataGenerator.generateStockQuantity())
                 .supplierId(supplierId)  
-                .isAvailable(ProductDataGenerator.generateIsAvailable())
                 .imageUrl(ProductDataGenerator.generateImageUrl())
                 .weight(ProductDataGenerator.generateWeight())
                 .dimensions(ProductDataGenerator.generateDimensions())
                 .manufacturer(ProductDataGenerator.generateManufacturer())
+                .build();
+    }
+
+    public static ProductModel generateOnlyMandatoryFields(String supplierId) {
+        return ProductModel.builder()
+                .name(ProductDataGenerator.generateName())
+                .price(ProductDataGenerator.generatePrice())
+                .stockQuantity(ProductDataGenerator.generateStockQuantity())
+                .supplierId(supplierId)
                 .build();
     }
 }

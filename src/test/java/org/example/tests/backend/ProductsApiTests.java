@@ -10,7 +10,9 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -39,7 +41,7 @@ public class ProductsApiTests extends BaseTest {
     }
 
     @Test
-    void creteProductWillAllFields() {
+    void createProductWillAllFields() {
 
         ProductModel product = ProductModel.generate(supplierId);
         ProductModel responseProduct = productsServicesAPI.createProduct(product, accessToken);
@@ -48,7 +50,16 @@ public class ProductsApiTests extends BaseTest {
     }
 
     @Test
-    void updateProductWillAllFields() {
+    void createProductWillMandatoryFields() {
+
+        ProductModel product = ProductModel.generateOnlyMandatoryFields(supplierId);
+        ProductModel responseProduct = productsServicesAPI.createProduct(product, accessToken);
+
+        assertNotNull(responseProduct.getSupplierId(), "Product is not created");
+    }
+
+    @Test
+    void updateProductIsAvailable() {
         ProductModel existingProduct = productsServicesAPI.getProduct(productId, accessToken);
         PatchProductModel patchRequest = PatchProductModel.builder()
                 .isAvailable(!existingProduct.isAvailable())
@@ -71,7 +82,7 @@ public class ProductsApiTests extends BaseTest {
     }
 
     @Test
-    void getAllProductsRegularUser() {
+    void getAllProducts() {
         Response response = productsServicesAPI.retrievingProducts(accessToken);
 
         assertEquals(200, response.statusCode());
@@ -83,7 +94,20 @@ public class ProductsApiTests extends BaseTest {
             System.out.println("The list is [] - it's expected, the DB is empty");
         }
 
+        Set<String> productNames = new HashSet<>();
 
+        for (ProductModel product : products) {
+
+            String productName = product.getName().toLowerCase();
+            boolean containsDuplicate = productNames.contains(productName);
+
+            assertFalse(containsDuplicate, "Duplicted name was found " + productName);
+            assertNotNull(product.getName(), "The name shouldn't be empty");
+            assertNotNull(product.getSupplierId(), "The supplier shouldn't be empty");
+            assertNotNull(product.getPrice(), "The price shouldn't be empty");
+            assertNotNull(product.getStockQuantity(), "The Stock quantity shouldn't be empty");
+
+            productNames.add(productName);
+        }
     }
-
 }
