@@ -1,6 +1,6 @@
 package org.example.tests.frontend.pages.elements;
 
-import org.example.backend.models.SupplierCreateModel;
+import org.example.backend.models.SupplierModel;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -16,8 +16,8 @@ public class SuppliersTableRow {
         return root.findElement(By.xpath(".//td[1]")).getText();
     }
 
-    public SupplierCreateModel getSupplierCreateModel() {
-        return SupplierCreateModel.builder()
+    public SupplierModel getSupplierCreateModel() {
+        return SupplierModel.builder()
                 .name(root.findElement(By.xpath(".//td[1]")).getText())
                 .contactName(root.findElement(By.xpath(".//td[2]")).getText())
                 .contactEmail(root.findElement(By.xpath(".//td[3]")).getText())

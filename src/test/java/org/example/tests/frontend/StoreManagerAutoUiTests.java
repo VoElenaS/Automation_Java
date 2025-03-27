@@ -1,7 +1,7 @@
 package org.example.tests.frontend;
 
 import org.example.backend.models.RegisterRequest;
-import org.example.backend.models.SupplierCreateModel;
+import org.example.backend.models.SupplierModel;
 import org.example.tests.BaseTest;
 import org.example.tests.frontend.models.User;
 import org.example.tests.frontend.pages.LoginPage;
@@ -51,13 +51,13 @@ public class StoreManagerAutoUiTests extends BaseTest {
     void deleteSupplierTest() {
 
 
-        SupplierCreateModel createdSupplier = suppliersServicesAPI.createSupplier(SupplierCreateModel.generate(), accessToken);
+        SupplierModel createdSupplier = suppliersServicesAPI.createSupplier(SupplierModel.generate(), accessToken);
 
         new LoginPage(driver).loginAs(testUser);
         new ProductPage(driver).clickSuppliersLink();
 
         SupplierPage supplierPage = new SupplierPage(driver);
-        SupplierCreateModel actualSuppllier = supplierPage.getTableRowByName(createdSupplier.getName()).getSupplierCreateModel();
+        SupplierModel actualSuppllier = supplierPage.getTableRowByName(createdSupplier.getName()).getSupplierCreateModel();
 
         assertEquals(createdSupplier, actualSuppllier);
 

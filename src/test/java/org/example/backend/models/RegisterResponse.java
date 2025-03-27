@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 
 public class RegisterResponse {
     String message;
-    UserResp user;
+    UserResponse user;
 }

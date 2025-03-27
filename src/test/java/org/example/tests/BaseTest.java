@@ -7,6 +7,7 @@ import org.example.backend.models.RegisterRequest;
 import org.example.backend.requests.AuthServiceAPI;
 import org.example.backend.requests.ProductsServicesAPI;
 import org.example.backend.requests.SuppliersServicesAPI;
+import org.example.backend.requests.WarehousesServicesAPI;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
@@ -17,6 +18,7 @@ public abstract class BaseTest {
     public AuthServiceAPI authServiceAPI = new AuthServiceAPI();
     public SuppliersServicesAPI suppliersServicesAPI = new SuppliersServicesAPI();
     public ProductsServicesAPI productsServicesAPI = new ProductsServicesAPI();
+    public WarehousesServicesAPI warehousesServicesAPI = new WarehousesServicesAPI();
 
     @AfterAll
 

@@ -1,9 +1,9 @@
 package org.example.tests.backend;
 
 import io.restassured.response.Response;
-import org.example.backend.models.PatchProductModel;
 import org.example.backend.models.ProductModel;
-import org.example.backend.models.SupplierCreateModel;
+import org.example.backend.models.ProductPatchModel;
+import org.example.backend.models.SupplierModel;
 import org.example.backend.requests.ProductsServicesAPI;
 import org.example.tests.BaseTest;
 import org.example.tests.frontend.models.ProductDataGenerator;
@@ -24,8 +24,8 @@ public class ProductsApiTests extends BaseTest {
     @Test
     @Order(0)
     void createSupplier() {
-        SupplierCreateModel supplier = SupplierCreateModel.generate();
-        SupplierCreateModel responseSupplier = suppliersServicesAPI.createSupplier(supplier, accessToken);
+        SupplierModel supplier = SupplierModel.generate();
+        SupplierModel responseSupplier = suppliersServicesAPI.createSupplier(supplier, accessToken);
         assertNotNull(responseSupplier.getSupplierId(), "The supplier wasn't created");
         supplierId = responseSupplier.getSupplierId();
     }
@@ -58,7 +58,7 @@ public class ProductsApiTests extends BaseTest {
     @Test
     void updateProductIsAvailable() {
         ProductModel existingProduct = productsServicesAPI.getProduct(productId, accessToken);
-        PatchProductModel patchRequest = PatchProductModel.builder()
+        ProductPatchModel patchRequest = ProductPatchModel.builder()
                 .isAvailable(!existingProduct.isAvailable())
                 .build();
         productsServicesAPI.updateProductIsAvailable(patchRequest, productId, accessToken);
@@ -94,7 +94,6 @@ public class ProductsApiTests extends BaseTest {
         assertNotEquals(product.getStockQuantity(), response.getStockQuantity());
         assertNotEquals(product.getPrice(), response.getPrice());
         assertNotEquals(product.getCategory(), response.getCategory());
-
     }
 
     @Test
@@ -144,7 +143,7 @@ public class ProductsApiTests extends BaseTest {
 
     @Test
     void retrievingProductByName() {
-        String name = productsServicesAPI.getProduct(productId, accessToken).getName();
+        String name = productsServicesAPI.getProduct(productId, accessToken).getName().toLowerCase();
         Response response = productsServicesAPI.retrievingProductByName(name, accessToken);
 
         assertEquals(200, response.statusCode());

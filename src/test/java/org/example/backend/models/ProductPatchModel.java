@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 
-public class PatchProductModel {
+public class ProductPatchModel {
 
     @JsonProperty("is_available")
     private boolean isAvailable;

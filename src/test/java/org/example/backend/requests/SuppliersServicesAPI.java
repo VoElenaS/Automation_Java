@@ -5,7 +5,7 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.example.backend.models.SupplierCreateModel;
+import org.example.backend.models.SupplierModel;
 
 public class SuppliersServicesAPI extends BaseAPI {
 
@@ -14,13 +14,14 @@ public class SuppliersServicesAPI extends BaseAPI {
 
     public static RequestSpecification baseRequest = new RequestSpecBuilder()
             .setBaseUri(Product_service_Base_URL)
-            .setContentType(ContentType.JSON).build();
+            .setContentType(ContentType.JSON)
+            .build();
 
-    public SupplierCreateModel createSupplier(SupplierCreateModel request, String accessToken) {
-        return createSupplierWithResponse(request, accessToken).as(SupplierCreateModel.class);
+    public SupplierModel createSupplier(SupplierModel request, String accessToken) {
+        return createSupplierWithResponse(request, accessToken).as(SupplierModel.class);
     }
 
-    public Response createSupplierWithResponse(SupplierCreateModel request, String accessToken) {
+    public Response createSupplierWithResponse(SupplierModel request, String accessToken) {
         return sendRequestPost(RestAssured.given(baseRequest)
                 .basePath(SUPPLIER_ENDPOINT)
                 .header("Authorization", "Bearer " + accessToken)

@@ -12,7 +12,7 @@ import org.example.tests.frontend.models.SupplierDataGenerator;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @EqualsAndHashCode(exclude = {"supplierId"})
 
-public class SupplierCreateModel {
+public class SupplierModel {
 
     private String name;
     @JsonProperty("contact_name")
@@ -28,8 +28,8 @@ public class SupplierCreateModel {
     @JsonProperty("supplier_id")
     private String supplierId;
 
-    public static SupplierCreateModel generate() {
-        return SupplierCreateModel.builder()
+    public static SupplierModel generate() {
+        return SupplierModel.builder()
                 .name(SupplierDataGenerator.generateName())
                 .contactName(SupplierDataGenerator.generateContactName())
                 .contactEmail(SupplierDataGenerator.generateContactEmail())
@@ -41,8 +41,8 @@ public class SupplierCreateModel {
                 .build();
     }
 
-    public static SupplierCreateModel generateOnlyMandatoryFields() {
-        return SupplierCreateModel.builder()
+    public static SupplierModel generateOnlyMandatoryFields() {
+        return SupplierModel.builder()
                 .name(SupplierDataGenerator.generateName())
                 .contactName(SupplierDataGenerator.generateContactName())
                 .contactEmail(SupplierDataGenerator.generateContactEmail())

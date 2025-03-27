@@ -1,8 +1,8 @@
 package org.example.tests.backend;
 
 import io.restassured.response.Response;
-import org.example.backend.models.SupplierCreateModel;
 import org.example.backend.models.SupplierDetailModel;
+import org.example.backend.models.SupplierModel;
 import org.example.tests.BaseTest;
 import org.junit.jupiter.api.Test;
 
@@ -17,16 +17,16 @@ public class SuppliersApiTests extends BaseTest {
 
     @Test
     void createSupplierWithAllFields() {
-        SupplierCreateModel supplier = SupplierCreateModel.generate();
-        SupplierCreateModel response = suppliersServicesAPI.createSupplier(supplier, accessToken);
+        SupplierModel supplier = SupplierModel.generate();
+        SupplierModel response = suppliersServicesAPI.createSupplier(supplier, accessToken);
 
         assertNotNull(response.getSupplierId(), "Supplier is not created");
     }
 
     @Test
     void duplicateSupplierName() {
-        SupplierCreateModel supplier = SupplierCreateModel.generate();
-        SupplierCreateModel response = suppliersServicesAPI.createSupplier(supplier, accessToken);
+        SupplierModel supplier = SupplierModel.generate();
+        SupplierModel response = suppliersServicesAPI.createSupplier(supplier, accessToken);
 
         Response responseDuplicateName = suppliersServicesAPI.createSupplierWithResponse(supplier, accessToken);
 
@@ -36,8 +36,8 @@ public class SuppliersApiTests extends BaseTest {
 
     @Test
     void createSupplierWithOnlyMandatoryField() {
-        SupplierCreateModel supplierOnlyMandatoryField = SupplierCreateModel.generateOnlyMandatoryFields();
-        SupplierCreateModel response = suppliersServicesAPI.createSupplier(supplierOnlyMandatoryField, accessToken);
+        SupplierModel supplierOnlyMandatoryField = SupplierModel.generateOnlyMandatoryFields();
+        SupplierModel response = suppliersServicesAPI.createSupplier(supplierOnlyMandatoryField, accessToken);
 
         assertNotNull(response.getSupplierId(), "Supplier is not created");
     }

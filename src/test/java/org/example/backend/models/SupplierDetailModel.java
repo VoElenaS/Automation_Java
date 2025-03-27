@@ -14,7 +14,5 @@ import lombok.NoArgsConstructor;
 
 
 public class SupplierDetailModel {
-
     private String detail;
-
 }
