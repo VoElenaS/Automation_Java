@@ -35,6 +35,13 @@ public class BaseAPI {
                 .extract().response();
     }
 
+    public Response sendRequestDelete(RequestSpecification request) {
+        return request.log().all()
+                .when().delete()
+                .then().log().all()
+                .extract().response();
+    }
+
     public <T> T validaResponse(Response response, Class<T> clazz) {
         assertTrue(response.statusCode() < 400, "Error status code " + response.statusCode());
         return response.as(clazz);

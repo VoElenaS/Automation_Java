@@ -13,6 +13,7 @@ public class ProductsServicesAPI extends BaseAPI {
     public static final String Product_service_Base_URL = "http://localhost:8002/";
     public static final String PRODUCTS_ENDPOINT = "products/";
     public static final String PRODUCTS_ENDPOINT_WITH_PRODUCT_ID = "products/{productId}";
+    public static final String PRODUCTS_ENDPOINT_WITH_PRODUCT_NAME = "search_products/";
 
     public static RequestSpecification baseRequest = new RequestSpecBuilder()
             .setBaseUri(Product_service_Base_URL)
@@ -65,6 +66,20 @@ public class ProductsServicesAPI extends BaseAPI {
                 .pathParams("productId", productId)
                 .header("Authorization", "Bearer " + accessToken)
                 .body(request)).as(ProductModel.class);
+    }
+
+    public Response deleteProduct(String productId, String accessToken) {
+        return sendRequestDelete(RestAssured.given(baseRequest)
+                .basePath(PRODUCTS_ENDPOINT_WITH_PRODUCT_ID)
+                .pathParams("productId", productId)
+                .header("Authorization", "Bearer " + accessToken));
+    }
+
+    public Response retrievingProductByName(String name, String accessToken) {
+        return sendRequestGet(RestAssured.given(baseRequest)
+                .basePath(PRODUCTS_ENDPOINT_WITH_PRODUCT_NAME)
+                .header("Authorization", "Bearer " + accessToken)
+                .queryParam("name", name));
     }
 
 }

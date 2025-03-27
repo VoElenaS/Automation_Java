@@ -16,21 +16,13 @@ public class RegisterRequest {
     String password;
 
     public static RegisterRequest generate() {
-
-
         String name = RandomStringUtils.randomAlphabetic(3, 50);
-
-
         String email = "user_" + name.toLowerCase() + "@mail.ru";
-
-
         String password = RandomStringUtils.randomAlphanumeric(8, 16);
-
         return RegisterRequest.builder()
                 .email(email)
                 .name(name)
                 .password(password)
                 .build();
     }
-
 }

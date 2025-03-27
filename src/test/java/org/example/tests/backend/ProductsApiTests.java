@@ -4,12 +4,10 @@ import io.restassured.response.Response;
 import org.example.backend.models.PatchProductModel;
 import org.example.backend.models.ProductModel;
 import org.example.backend.models.SupplierCreateModel;
+import org.example.backend.requests.ProductsServicesAPI;
 import org.example.tests.BaseTest;
 import org.example.tests.frontend.models.ProductDataGenerator;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -43,7 +41,6 @@ public class ProductsApiTests extends BaseTest {
 
     @Test
     void createProductWillAllFields() {
-
         ProductModel product = ProductModel.generate(supplierId);
         ProductModel responseProduct = productsServicesAPI.createProduct(product, accessToken);
 
@@ -52,7 +49,6 @@ public class ProductsApiTests extends BaseTest {
 
     @Test
     void createProductWillMandatoryFields() {
-
         ProductModel product = ProductModel.generateOnlyMandatoryFields(supplierId);
         ProductModel responseProduct = productsServicesAPI.createProduct(product, accessToken);
 
@@ -78,27 +74,26 @@ public class ProductsApiTests extends BaseTest {
 
     @Test
     void updateProductById() {
-
         ProductModel product = productsServicesAPI.getProduct(productId, accessToken);
-
         ProductModel updatedProduct = ProductModel.builder()
-                .name("Updated" + product.getName())
+                .name(ProductDataGenerator.generateName())
                 .stockQuantity(ProductDataGenerator.generateStockQuantity())
                 .dimensions(product.getDimensions())
-                .price(product.getPrice())
+                .price(ProductDataGenerator.generatePrice())
                 .manufacturer(product.getManufacturer())
                 .weight(product.getWeight())
-                .category(product.getCategory())
+                .category(ProductDataGenerator.generateCategory())
                 .description(product.getDescription())
                 .imageUrl(product.getImageUrl())
                 .supplierId(product.getSupplierId())
                 .isAvailable(true)
                 .build();
-
         ProductModel response = productsServicesAPI.updateProductById(updatedProduct, product.getProductId(), accessToken);
 
         assertNotEquals(product.getName(), response.getName());
-
+        assertNotEquals(product.getStockQuantity(), response.getStockQuantity());
+        assertNotEquals(product.getPrice(), response.getPrice());
+        assertNotEquals(product.getCategory(), response.getCategory());
 
     }
 
@@ -122,9 +117,7 @@ public class ProductsApiTests extends BaseTest {
         }
 
         Set<String> productNames = new HashSet<>();
-
         for (ProductModel product : products) {
-
             String productName = product.getName().toLowerCase();
             boolean containsDuplicate = productNames.contains(productName);
 
@@ -136,5 +129,31 @@ public class ProductsApiTests extends BaseTest {
 
             productNames.add(productName);
         }
+    }
+
+    @Test
+    void deleteProduct() {
+        ProductModel product = ProductModel.generate(supplierId);
+        ProductsServicesAPI productsService = new ProductsServicesAPI();
+        ProductModel createdProduct = productsService.createProduct(product, accessToken);
+        Response response = productsServicesAPI.deleteProduct(createdProduct.getProductId(), accessToken);
+
+        assertEquals(200, response.statusCode());
+        assertEquals("Product deleted", response.jsonPath().getString("message"));
+    }
+
+    @Test
+    void retrievingProductByName() {
+        String name = productsServicesAPI.getProduct(productId, accessToken).getName();
+        Response response = productsServicesAPI.retrievingProductByName(name, accessToken);
+
+        assertEquals(200, response.statusCode());
+        assertNotNull(response.getBody());
+    }
+
+    @AfterAll
+    static void tearDown() {
+        ProductsServicesAPI productsServices = new ProductsServicesAPI();
+
     }
 }
