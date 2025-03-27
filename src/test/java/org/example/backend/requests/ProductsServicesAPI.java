@@ -39,7 +39,7 @@ public class ProductsServicesAPI extends BaseAPI {
                 .body(request));
     }
 
-    public ProductModel updateProduct(PatchProductModel request, String productId, String accessToken) {
+    public ProductModel updateProductIsAvailable(PatchProductModel request, String productId, String accessToken) {
         Response response = updateProductWithResponse(request, productId, accessToken);
         return validaResponse(response, ProductModel.class);
     }
@@ -57,6 +57,14 @@ public class ProductsServicesAPI extends BaseAPI {
         return sendRequestGet(RestAssured.given(baseRequest)
                 .basePath(PRODUCTS_ENDPOINT)
                 .header("Authorization", "Bearer " + accessToken));
+    }
+
+    public ProductModel updateProductById(ProductModel request, String productId, String accessToken) {
+        return sendRequestPut(RestAssured.given(baseRequest)
+                .basePath(PRODUCTS_ENDPOINT_WITH_PRODUCT_ID)
+                .pathParams("productId", productId)
+                .header("Authorization", "Bearer " + accessToken)
+                .body(request)).as(ProductModel.class);
     }
 
 }

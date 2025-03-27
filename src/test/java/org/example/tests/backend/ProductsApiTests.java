@@ -5,6 +5,7 @@ import org.example.backend.models.PatchProductModel;
 import org.example.backend.models.ProductModel;
 import org.example.backend.models.SupplierCreateModel;
 import org.example.tests.BaseTest;
+import org.example.tests.frontend.models.ProductDataGenerator;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -64,7 +65,7 @@ public class ProductsApiTests extends BaseTest {
         PatchProductModel patchRequest = PatchProductModel.builder()
                 .isAvailable(!existingProduct.isAvailable())
                 .build();
-        productsServicesAPI.updateProduct(patchRequest, productId, accessToken);
+        productsServicesAPI.updateProductIsAvailable(patchRequest, productId, accessToken);
         ProductModel updatedProduct = productsServicesAPI.getProduct(productId, accessToken);
 
         assertNotEquals(existingProduct.isAvailable(), updatedProduct.isAvailable(), "The product wasn't updated");
@@ -73,6 +74,32 @@ public class ProductsApiTests extends BaseTest {
         assertEquals(existingProduct.getSupplierId(), updatedProduct.getSupplierId(), "The supplier was updated for the product");
         assertEquals(existingProduct.getPrice(), updatedProduct.getPrice(), "The price was updated for the product");
         assertEquals(existingProduct.getStockQuantity(), updatedProduct.getStockQuantity(), "the quantity was updated for the product");
+    }
+
+    @Test
+    void updateProductById() {
+
+        ProductModel product = productsServicesAPI.getProduct(productId, accessToken);
+
+        ProductModel updatedProduct = ProductModel.builder()
+                .name("Updated" + product.getName())
+                .stockQuantity(ProductDataGenerator.generateStockQuantity())
+                .dimensions(product.getDimensions())
+                .price(product.getPrice())
+                .manufacturer(product.getManufacturer())
+                .weight(product.getWeight())
+                .category(product.getCategory())
+                .description(product.getDescription())
+                .imageUrl(product.getImageUrl())
+                .supplierId(product.getSupplierId())
+                .isAvailable(true)
+                .build();
+
+        ProductModel response = productsServicesAPI.updateProductById(updatedProduct, product.getProductId(), accessToken);
+
+        assertNotEquals(product.getName(), response.getName());
+
+
     }
 
     @Test

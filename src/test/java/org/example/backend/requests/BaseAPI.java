@@ -30,7 +30,7 @@ public class BaseAPI {
 
     public Response sendRequestPut(RequestSpecification request) {
         return request.log().all()
-                .when().patch()
+                .when().put()
                 .then().log().all()
                 .extract().response();
     }
