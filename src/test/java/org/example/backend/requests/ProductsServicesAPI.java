@@ -6,7 +6,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.example.backend.models.ProductModel;
-import org.example.backend.models.ProductPatchModel;
+import org.example.backend.models.request.ProductPatchModel;
 
 public class ProductsServicesAPI extends BaseAPI {
 

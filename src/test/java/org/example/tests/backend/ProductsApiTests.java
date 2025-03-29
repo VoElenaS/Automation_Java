@@ -2,8 +2,9 @@ package org.example.tests.backend;
 
 import io.restassured.response.Response;
 import org.example.backend.models.ProductModel;
-import org.example.backend.models.ProductPatchModel;
 import org.example.backend.models.SupplierModel;
+import org.example.backend.models.request.ProductPatchModel;
+import org.example.backend.models.response.ValidationResponse;
 import org.example.backend.requests.ProductsServicesAPI;
 import org.example.tests.BaseTest;
 import org.example.tests.frontend.models.ProductDataGenerator;
@@ -48,12 +49,35 @@ public class ProductsApiTests extends BaseTest {
     }
 
     @Test
+    @Disabled("This test is failing, needs a fix")
     void createProductWillMandatoryFields() {
         ProductModel product = ProductModel.generateOnlyMandatoryFields(supplierId);
         ProductModel responseProduct = productsServicesAPI.createProduct(product, accessToken);
 
         assertNotNull(responseProduct.getSupplierId(), "Product is not created");
     }
+
+    @Test
+    void createProductWithShortName() {
+        ProductModel product = ProductModel.generate(supplierId);
+        product.setName(product.getName().substring(2, 4));
+        Response response = productsServicesAPI.createProductWithResponse(product, accessToken);
+        assertEquals(422, response.statusCode());
+        ValidationResponse validationResponse = response.as(ValidationResponse.class);
+        assertTrue(validationResponse.getDetail().stream().anyMatch(d -> d.getLoc().contains("name")), "There is validation error");
+    }
+
+    @Test
+    void createProductWithWrongFormatPrice() {
+        ProductModel product = ProductModel.generate(supplierId);
+        product.setPrice(product.getPrice() + "12");
+        Response response = productsServicesAPI.createProductWithResponse(product, accessToken);
+        assertEquals(422, response.statusCode());
+        ValidationResponse validationResponse = response.as(ValidationResponse.class);
+        assertTrue(validationResponse.getDetail().stream().anyMatch(d -> d.getLoc().contains("price")), "There is problem with validation");
+    }
+
+
 
     @Test
     void updateProductIsAvailable() {

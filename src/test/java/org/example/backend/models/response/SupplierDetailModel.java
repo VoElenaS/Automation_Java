@@ -1,4 +1,4 @@
-package org.example.backend.models;
+package org.example.backend.models.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;

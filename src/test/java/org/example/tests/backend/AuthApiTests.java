@@ -3,7 +3,11 @@ package org.example.tests.backend;
 import io.restassured.response.Response;
 import org.example.DB.UsersQueries;
 import org.example.DB.models.UserDB;
-import org.example.backend.models.*;
+import org.example.backend.models.request.LoginRequest;
+import org.example.backend.models.request.RegisterRequest;
+import org.example.backend.models.response.LoginResponse;
+import org.example.backend.models.response.RegisterResponse;
+import org.example.backend.models.response.UserTokenResponse;
 import org.example.tests.BaseTest;
 import org.junit.jupiter.api.Test;
 

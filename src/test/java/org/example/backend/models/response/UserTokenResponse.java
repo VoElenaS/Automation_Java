@@ -1,4 +1,4 @@
-package org.example.backend.models;
+package org.example.backend.models.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -11,14 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 
-public class LoginResponse {
-    @JsonProperty("user_id")
-    String userId;
-    String message;
+public class UserTokenResponse {
     @JsonProperty("access_token")
     String accessToken;
-    @JsonProperty("refresh_token")
-    String refreshToken;
     @JsonProperty("token_type")
     String tokenType;
 }

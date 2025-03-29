@@ -5,7 +5,11 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.example.backend.models.*;
+import org.example.backend.models.request.LoginRequest;
+import org.example.backend.models.request.RegisterRequest;
+import org.example.backend.models.response.LoginResponse;
+import org.example.backend.models.response.RegisterResponse;
+import org.example.backend.models.response.UserTokenResponse;
 
 public class AuthServiceAPI extends BaseAPI {
 

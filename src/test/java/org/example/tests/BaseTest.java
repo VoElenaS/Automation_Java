@@ -1,9 +1,9 @@
 package org.example.tests;
 
 import org.example.DB.DBUtils;
-import org.example.backend.models.LoginRequest;
-import org.example.backend.models.LoginResponse;
-import org.example.backend.models.RegisterRequest;
+import org.example.backend.models.request.LoginRequest;
+import org.example.backend.models.request.RegisterRequest;
+import org.example.backend.models.response.LoginResponse;
 import org.example.backend.requests.AuthServiceAPI;
 import org.example.backend.requests.ProductsServicesAPI;
 import org.example.backend.requests.SuppliersServicesAPI;
