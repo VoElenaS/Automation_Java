@@ -75,6 +75,5 @@ public class WarehouseDataGenerator {
         return randomString.toString();
     }
 
-
 }
 

@@ -16,6 +16,7 @@ public class WarehousesApiTests extends BaseTest {
         WarehouseModel warehouse = WarehouseModel.generate();
         Response response = warehousesServicesAPI.createWarehouse(warehouse, accessToken);
         assertEquals(200, response.statusCode());
-
     }
+
+
 }

@@ -77,8 +77,6 @@ public class ProductsApiTests extends BaseTest {
         assertTrue(validationResponse.getDetail().stream().anyMatch(d -> d.getLoc().contains("price")), "There is problem with validation");
     }
 
-
-
     @Test
     void updateProductIsAvailable() {
         ProductModel existingProduct = productsServicesAPI.getProduct(productId, accessToken);
@@ -177,6 +175,5 @@ public class ProductsApiTests extends BaseTest {
     @AfterAll
     static void tearDown() {
         ProductsServicesAPI productsServices = new ProductsServicesAPI();
-
     }
 }
