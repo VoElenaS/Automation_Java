@@ -1,5 +1,6 @@
 package org.example.tests.frontend.models;
 
+import org.example.backend.models.request.AddMessageOnChatRequest;
 import org.example.backend.models.request.ChatRequest;
 
 import java.util.List;
@@ -10,10 +11,6 @@ public class ChatDataGenerator {
     private static final Random random = new Random();
 
     public static String generateName() {
-        return generateRandomAlphanumericString(3, 100);
-    }
-
-    public static String generateManufacturer() {
         return generateRandomAlphanumericString(3, 100);
     }
 
@@ -28,12 +25,20 @@ public class ChatDataGenerator {
         return stringBuilder.toString();
     }
 
-    public static ChatRequest generate() {
+    public static ChatRequest generate(String owner) {
 
         String name = generateName();
         boolean isGroup = true;
-        List<String> participants = List.of("384edaba-11e4-4330-bd7e-d0ad77672a20", "384edaba-11e4-4330-bd7e-d0ad77672a20");
+        List<String> participants = List.of(owner, "384edaba-11e4-4330-bd7e-d0ad77672a20");
 
         return ChatRequest.builder().name(name).isGroup(isGroup).participants(participants).build();
     }
+
+    public static AddMessageOnChatRequest ContentGeneration(String chatId) {
+
+        String content = generateName();
+
+        return new AddMessageOnChatRequest(chatId, content);
+    }
+
 }
