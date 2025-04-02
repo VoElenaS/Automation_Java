@@ -1,6 +1,6 @@
 package org.example.tests.frontend.pages.elements;
 
-import org.example.backend.models.SupplierModel;
+import org.example.models.SupplierModel;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 

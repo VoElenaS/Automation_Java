@@ -1,7 +1,7 @@
 package org.example.tests.frontend;
 
-import org.example.backend.models.SupplierModel;
-import org.example.backend.models.request.RegisterRequest;
+import org.example.models.SupplierModel;
+import org.example.models.request.RegisterRequest;
 import org.example.tests.BaseTest;
 import org.example.tests.frontend.models.User;
 import org.example.tests.frontend.pages.LoginPage;

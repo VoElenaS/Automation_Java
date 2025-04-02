@@ -1,7 +1,7 @@
 package org.example.tests.frontend.models;
 
-import org.example.backend.models.request.AddMessageOnChatRequest;
-import org.example.backend.models.request.ChatRequest;
+import org.example.models.request.AddMessageOnChatRequest;
+import org.example.models.request.ChatRequest;
 
 import java.util.List;
 import java.util.Random;

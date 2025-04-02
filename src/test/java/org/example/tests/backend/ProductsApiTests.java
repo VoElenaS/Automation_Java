@@ -1,11 +1,11 @@
 package org.example.tests.backend;
 
 import io.restassured.response.Response;
-import org.example.backend.models.ProductModel;
-import org.example.backend.models.SupplierModel;
-import org.example.backend.models.request.ProductPatchModel;
-import org.example.backend.models.response.ValidationResponse;
-import org.example.backend.requests.ProductsServicesAPI;
+import org.example.models.ProductModel;
+import org.example.models.SupplierModel;
+import org.example.models.request.ProductPatchModel;
+import org.example.models.response.ValidationResponse;
+import org.example.services.ProductsServicesAPI;
 import org.example.tests.BaseTest;
 import org.example.tests.frontend.models.ProductDataGenerator;
 import org.junit.jupiter.api.*;

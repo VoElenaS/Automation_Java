@@ -1,10 +1,10 @@
 package org.example.tests;
 
-import org.example.DB.DBUtils;
-import org.example.backend.models.request.LoginRequest;
-import org.example.backend.models.request.RegisterRequest;
-import org.example.backend.models.response.LoginResponse;
-import org.example.backend.requests.*;
+import org.example.db.DBUtils;
+import org.example.models.request.LoginRequest;
+import org.example.models.request.RegisterRequest;
+import org.example.models.response.LoginResponse;
+import org.example.services.*;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 

@@ -1,7 +1,7 @@
 package org.example.tests.backend;
 
 import io.restassured.response.Response;
-import org.example.backend.models.WarehouseModel;
+import org.example.models.WarehouseModel;
 import org.example.tests.BaseTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
