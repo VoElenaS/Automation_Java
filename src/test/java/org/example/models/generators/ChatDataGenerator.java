@@ -4,40 +4,24 @@ import org.example.models.request.AddMessageOnChatRequest;
 import org.example.models.request.ChatRequest;
 
 import java.util.List;
-import java.util.Random;
-import java.util.stream.IntStream;
+
+import static org.example.models.generators.BaseGenerator.generateRandomAlphanumericString;
 
 public class ChatDataGenerator {
-    private static final Random random = new Random();
 
     public static String generateName() {
         return generateRandomAlphanumericString(3, 100);
     }
 
-    private static String generateRandomAlphanumericString(int minLength, int maxLength) {
-        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        int length = random.nextInt(maxLength - minLength + 1) + minLength;
-        StringBuilder stringBuilder = new StringBuilder(length);
-        IntStream.range(0, length).forEach(i -> {
-            char charsRandom = chars.charAt(random.nextInt(chars.length()));
-            stringBuilder.append(charsRandom);
-        });
-        return stringBuilder.toString();
-    }
-
     public static ChatRequest generate(String owner) {
-
         String name = generateName();
         boolean isGroup = true;
         List<String> participants = List.of(owner, "384edaba-11e4-4330-bd7e-d0ad77672a20");
-
         return ChatRequest.builder().name(name).isGroup(isGroup).participants(participants).build();
     }
 
     public static AddMessageOnChatRequest ContentGeneration(String chatId) {
-
         String content = generateName();
-
         return new AddMessageOnChatRequest(chatId, content);
     }
 

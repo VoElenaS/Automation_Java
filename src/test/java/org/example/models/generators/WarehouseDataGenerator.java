@@ -1,10 +1,9 @@
 package org.example.models.generators;
 
-import java.util.Random;
-import java.util.stream.IntStream;
+import static org.apache.commons.lang3.RandomUtils.nextBoolean;
+import static org.example.models.generators.BaseGenerator.*;
 
 public class WarehouseDataGenerator {
-    private static final Random random = new Random();
 
     public static String generateLocation() {
         return generateRandomAlphanumericString(1, 255);
@@ -15,11 +14,11 @@ public class WarehouseDataGenerator {
     }
 
     public static Integer generateCapacity() {
-        return random.nextInt(100);
+        return nextInt(100);
     }
 
     public static Integer generateCurrentStock() {
-        return random.nextInt(100);
+        return nextInt(100);
     }
 
     public static String generateContactNumber() {
@@ -31,49 +30,12 @@ public class WarehouseDataGenerator {
     }
 
     public static Boolean generateIsActive() {
-        return random.nextBoolean();
+        return nextBoolean();
     }
 
     public static String generateAreaSize() {
-        double area = Math.round((random.nextDouble() * 9999.99) * 100) / 100.0;
+        double area = Math.round((nextDouble() * 9999.99) * 100) / 100.0;
         return String.format("%.2f", area);
     }
-
-    private static String generateRandomAlphanumericString(int minLength, int maxLength) {
-        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        int length = random.nextInt(maxLength - minLength + 1) + minLength;
-        StringBuilder randomString = new StringBuilder(length);
-
-        IntStream.range(0, length).forEach(i -> {
-            char randomChar = chars.charAt(random.nextInt(chars.length()));
-            randomString.append(randomChar);
-        });
-        return randomString.toString();
-    }
-
-    private static String generateRandomAlphaString(int minLength, int maxLength) {
-        String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-        int length = random.nextInt(maxLength - minLength + 1) + minLength;
-        StringBuilder randomString = new StringBuilder(length);
-
-        IntStream.range(0, length).forEach(i -> {
-            char randomAlpha = alpha.charAt(random.nextInt(alpha.length()));
-            randomString.append(randomAlpha);
-        });
-        return randomString.toString();
-    }
-
-    private static String generateRandomNumericString(int minLength, int maxLength) {
-        String numeric = "0123456789";
-        int length = random.nextInt(maxLength - minLength + 1) + minLength;
-        StringBuilder randomString = new StringBuilder(length);
-
-        IntStream.range(0, length).forEach(i -> {
-            char randomNumeric = numeric.charAt(random.nextInt(numeric.length()));
-            randomString.append(randomNumeric);
-        });
-        return randomString.toString();
-    }
-
 }
 
