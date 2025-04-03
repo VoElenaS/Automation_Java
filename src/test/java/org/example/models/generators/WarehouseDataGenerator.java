@@ -1,4 +1,4 @@
-package org.example.tests.frontend.models;
+package org.example.models.generators;
 
 import java.util.Random;
 import java.util.stream.IntStream;

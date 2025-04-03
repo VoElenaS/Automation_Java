@@ -10,9 +10,7 @@ public class ProductPage implements HasNavigationBar {
 
     WebDriver driver;
 
-
     public ProductPage(WebDriver driver) {
-
         this.driver = driver;
         PageFactory.initElements(this.driver, this);
     }

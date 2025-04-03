@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.tests.frontend.models.ProductDataGenerator;
+import org.example.models.generators.ProductDataGenerator;
 
 @Data
 @NoArgsConstructor

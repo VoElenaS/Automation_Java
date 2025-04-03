@@ -1,4 +1,4 @@
-package org.example.tests.frontend.models;
+package org.example.models.generators;
 
 import org.example.models.request.AddMessageOnChatRequest;
 import org.example.models.request.ChatRequest;
