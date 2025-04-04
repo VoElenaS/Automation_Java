@@ -47,13 +47,13 @@ public class SupplierPage implements HasNavigationBar {
                 .toList().contains(name);
     }
 
-    public boolean isDeletedSupplirNotoficationDisplaied() {   
+    public boolean isDeletedSupplirNotoficationDisplaied() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         try {
             wait.until(ExpectedConditions.visibilityOf(deleteSupplierNotification));
             return deleteSupplierNotification.isDisplayed();
         } catch (Exception e) {
-            return false;   
+            return false;
         }
     }
 

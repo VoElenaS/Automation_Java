@@ -13,7 +13,6 @@ import org.example.models.generators.SupplierDataGenerator;
 @EqualsAndHashCode(exclude = {"supplierId"})
 
 public class SupplierModel {
-
     private String name;
     @JsonProperty("contact_name")
     private String contactName;

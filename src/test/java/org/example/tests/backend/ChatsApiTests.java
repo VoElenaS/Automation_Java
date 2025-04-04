@@ -33,7 +33,7 @@ public class ChatsApiTests extends BaseTest {
 
     @Test
     @Order(1)
-    //@RepeatedTest(51)
+        //@RepeatedTest(51)
     void addMessageToChat() {
         IntStream.range(0, 50).forEach(i ->
                 chatServiceAPI.addMessageOnChat(chatResponse.getId(), ChatDataGenerator.ContentGeneration(chatResponse.getId()), userRespons.getAccessToken()));

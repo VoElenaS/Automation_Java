@@ -1,6 +1,5 @@
 package org.example.tests.frontend.pages;
 
-
 import org.example.tests.frontend.models.User;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,17 +18,14 @@ public class LoginPage {
     WebElement submitButton;
 
     public LoginPage(WebDriver driver) {
-
         this.driver = driver;
         PageFactory.initElements(this.driver, this);
     }
 
 
     public void loginAs(User user) {
-
         emailFiled.sendKeys(user.getEmail());
         passwordFiled.sendKeys(user.getPassword());
         submitButton.click();
-
     }
 }

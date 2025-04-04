@@ -13,7 +13,6 @@ import org.example.models.generators.WarehouseDataGenerator;
 @EqualsAndHashCode(exclude = {"warehouseId"})
 
 public class WarehouseModel {
-
     private String location;
     @JsonProperty("manager_name")
     private String managerName;

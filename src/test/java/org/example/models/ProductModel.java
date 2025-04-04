@@ -15,21 +15,20 @@ import org.example.models.generators.ProductDataGenerator;
 @JsonIgnoreProperties(ignoreUnknown = true)
 
 public class ProductModel {
-
     private String name;
     private String description;
     private String category;
-    private String price;  
+    private String price;
     @JsonProperty("stock_quantity")
-    private int stockQuantity;  
+    private int stockQuantity;
     @JsonProperty("supplier_id")
-    private String supplierId;  
+    private String supplierId;
     @JsonProperty("is_available")
-    private boolean isAvailable;  
+    private boolean isAvailable;
     @JsonProperty("created_at")
-    private String createdAt;  
+    private String createdAt;
     @JsonProperty("updated_at")
-    private String updatedAt;  
+    private String updatedAt;
     @JsonProperty("image_url")
     private String imageUrl;
     private String weight;
@@ -38,7 +37,6 @@ public class ProductModel {
     @JsonProperty("product_id")
     private String productId;
 
-
     public static ProductModel generate(String supplierId) {
         return ProductModel.builder()
                 .name(ProductDataGenerator.generateName())
@@ -46,7 +44,7 @@ public class ProductModel {
                 .category(ProductDataGenerator.generateCategory())
                 .price(ProductDataGenerator.generatePrice())
                 .stockQuantity(ProductDataGenerator.generateStockQuantity())
-                .supplierId(supplierId)  
+                .supplierId(supplierId)
                 .imageUrl(ProductDataGenerator.generateImageUrl())
                 .weight(ProductDataGenerator.generateWeight())
                 .dimensions(ProductDataGenerator.generateDimensions())

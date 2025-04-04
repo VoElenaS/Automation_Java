@@ -22,6 +22,11 @@ public class ProductsApiTests extends BaseTest {
     private static String supplierId;
     private static String productId;
 
+    @AfterAll
+    static void tearDown() {
+        ProductsServicesAPI productsServices = new ProductsServicesAPI();
+    }
+
     @Test
     @Order(0)
     void createSupplier() {
@@ -170,10 +175,5 @@ public class ProductsApiTests extends BaseTest {
 
         assertEquals(200, response.statusCode());
         assertNotNull(response.getBody());
-    }
-
-    @AfterAll
-    static void tearDown() {
-        ProductsServicesAPI productsServices = new ProductsServicesAPI();
     }
 }
