@@ -1,17 +1,17 @@
-package org.example.models;
+package org.example.models.request;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@JsonIgnoreProperties(ignoreUnknown = true)
-@EqualsAndHashCode(exclude = {"supplierId"})
 
-public class SupplierModel {
+public class SupplierRequest {
     private String name;
     @JsonProperty("contact_name")
     private String contactName;
@@ -23,7 +23,4 @@ public class SupplierModel {
     private String country;
     private String city;
     private String website;
-    @JsonProperty("supplier_id")
-    private String supplierId;
-
 }

@@ -1,11 +1,13 @@
 package org.example.tests.backend;
 
 import io.restassured.response.Response;
-import org.example.models.ProductModel;
-import org.example.models.SupplierModel;
 import org.example.models.generators.ProductDataGenerator;
 import org.example.models.generators.SupplierDataGenerator;
 import org.example.models.request.ProductPatchModel;
+import org.example.models.request.ProductRequest;
+import org.example.models.request.SupplierRequest;
+import org.example.models.response.ProductResponse;
+import org.example.models.response.SupplierResponse;
 import org.example.models.response.ValidationResponse;
 import org.example.services.ProductsServicesAPI;
 import org.example.tests.BaseTest;
@@ -31,8 +33,8 @@ public class ProductsApiTests extends BaseTest {
     @Test
     @Order(0)
     void createSupplier() {
-        SupplierModel supplier = SupplierDataGenerator.generate();
-        SupplierModel responseSupplier = suppliersServicesAPI.createSupplier(supplier, accessToken);
+        SupplierRequest supplier = SupplierDataGenerator.generate();
+        SupplierResponse responseSupplier = suppliersServicesAPI.createSupplier(supplier, accessToken);
         assertNotNull(responseSupplier.getSupplierId(), "The supplier wasn't created");
         supplierId = responseSupplier.getSupplierId();
     }
@@ -40,32 +42,31 @@ public class ProductsApiTests extends BaseTest {
     @Test
     @Order(1)
     void createDefaultProduct() {
-        ProductModel product = ProductDataGenerator.generate(supplierId);
-        ProductModel responseProduct = productsServicesAPI.createProduct(product, accessToken);
+        ProductRequest product = ProductDataGenerator.generate(supplierId);
+        ProductResponse responseProduct = productsServicesAPI.createProduct(product, accessToken);
         assertNotNull(responseProduct.getProductId(), "The product wasn't created");
         productId = responseProduct.getProductId();
     }
 
     @Test
     void createProductWillAllFields() {
-        ProductModel product = ProductDataGenerator.generate(supplierId);
-        ProductModel responseProduct = productsServicesAPI.createProduct(product, accessToken);
+        ProductRequest product = ProductDataGenerator.generate(supplierId);
+        ProductResponse responseProduct = productsServicesAPI.createProduct(product, accessToken);
 
         assertNotNull(responseProduct.getSupplierId(), "Product is not created");
     }
 
     @Test
-    @Disabled("This test is failing, needs a fix")
     void createProductWillMandatoryFields() {
-        ProductModel product = ProductDataGenerator.generateOnlyMandatoryFields(supplierId);
-        ProductModel responseProduct = productsServicesAPI.createProduct(product, accessToken);
+        ProductRequest product = ProductDataGenerator.generateOnlyMandatoryFields(supplierId);
+        ProductResponse responseProduct = productsServicesAPI.createProduct(product, accessToken);
 
         assertNotNull(responseProduct.getSupplierId(), "Product is not created");
     }
 
     @Test
     void createProductWithShortName() {
-        ProductModel product = ProductDataGenerator.generate(supplierId);
+        ProductRequest product = ProductDataGenerator.generate(supplierId);
         product.setName(product.getName().substring(2, 4));
         Response response = productsServicesAPI.createProductWithResponse(product, accessToken);
         assertEquals(422, response.statusCode());
@@ -75,7 +76,7 @@ public class ProductsApiTests extends BaseTest {
 
     @Test
     void createProductWithWrongFormatPrice() {
-        ProductModel product = ProductDataGenerator.generate(supplierId);
+        ProductRequest product = ProductDataGenerator.generate(supplierId);
         product.setPrice(product.getPrice() + "12");
         Response response = productsServicesAPI.createProductWithResponse(product, accessToken);
         assertEquals(422, response.statusCode());
@@ -85,12 +86,12 @@ public class ProductsApiTests extends BaseTest {
 
     @Test
     void updateProductIsAvailable() {
-        ProductModel existingProduct = productsServicesAPI.getProduct(productId, accessToken);
+        ProductResponse existingProduct = productsServicesAPI.getProduct(productId, accessToken);
         ProductPatchModel patchRequest = ProductPatchModel.builder()
                 .isAvailable(!existingProduct.isAvailable())
                 .build();
         productsServicesAPI.updateProductIsAvailable(patchRequest, productId, accessToken);
-        ProductModel updatedProduct = productsServicesAPI.getProduct(productId, accessToken);
+        ProductResponse updatedProduct = productsServicesAPI.getProduct(productId, accessToken);
 
         assertNotEquals(existingProduct.isAvailable(), updatedProduct.isAvailable(), "The product wasn't updated");
         assertEquals(existingProduct.getProductId(), updatedProduct.getProductId(), "The product id was changed");
@@ -102,8 +103,8 @@ public class ProductsApiTests extends BaseTest {
 
     @Test
     void updateProductById() {
-        ProductModel product = productsServicesAPI.getProduct(productId, accessToken);
-        ProductModel updatedProduct = ProductModel.builder()
+        ProductResponse product = productsServicesAPI.getProduct(productId, accessToken);
+        ProductRequest updatedProduct = ProductRequest.builder()
                 .name(ProductDataGenerator.generateName())
                 .stockQuantity(ProductDataGenerator.generateStockQuantity())
                 .dimensions(product.getDimensions())
@@ -116,7 +117,7 @@ public class ProductsApiTests extends BaseTest {
                 .supplierId(product.getSupplierId())
                 .isAvailable(true)
                 .build();
-        ProductModel response = productsServicesAPI.updateProductById(updatedProduct, product.getProductId(), accessToken);
+        ProductResponse response = productsServicesAPI.updateProductById(updatedProduct, product.getProductId(), accessToken);
 
         assertNotEquals(product.getName(), response.getName());
         assertNotEquals(product.getStockQuantity(), response.getStockQuantity());
@@ -126,7 +127,7 @@ public class ProductsApiTests extends BaseTest {
 
     @Test
     void getProductById() {
-        ProductModel product = productsServicesAPI.getProduct(productId, accessToken);
+        ProductResponse product = productsServicesAPI.getProduct(productId, accessToken);
         assertNotNull(product.getProductId(), "Product not available");
     }
 
@@ -136,7 +137,7 @@ public class ProductsApiTests extends BaseTest {
 
         assertEquals(200, response.statusCode());
         assertNotNull(response.getBody(), "Expected a non-null response body");
-        List<ProductModel> products = response.jsonPath().getList("$", ProductModel.class);
+        List<ProductRequest> products = response.jsonPath().getList("$", ProductRequest.class);
         assertNotNull(products, "Products list shouldn't be NULL");
 
         if (products.isEmpty()) {
@@ -144,7 +145,7 @@ public class ProductsApiTests extends BaseTest {
         }
 
         Set<String> productNames = new HashSet<>();
-        for (ProductModel product : products) {
+        for (ProductRequest product : products) {
             String productName = product.getName().toLowerCase();
             boolean containsDuplicate = productNames.contains(productName);
 
@@ -160,9 +161,9 @@ public class ProductsApiTests extends BaseTest {
 
     @Test
     void deleteProduct() {
-        ProductModel product = ProductDataGenerator.generate(supplierId);
+        ProductRequest product = ProductDataGenerator.generate(supplierId);
         ProductsServicesAPI productsService = new ProductsServicesAPI();
-        ProductModel createdProduct = productsService.createProduct(product, accessToken);
+        ProductResponse createdProduct = productsService.createProduct(product, accessToken);
         Response response = productsServicesAPI.deleteProduct(createdProduct.getProductId(), accessToken);
 
         assertEquals(200, response.statusCode());

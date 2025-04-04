@@ -1,4 +1,4 @@
-package org.example.models;
+package org.example.models.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 
-public class ProductModel {
+public class ProductRequest {
     private String name;
     private String description;
     private String category;
@@ -24,15 +24,9 @@ public class ProductModel {
     private String supplierId;
     @JsonProperty("is_available")
     private boolean isAvailable;
-    @JsonProperty("created_at")
-    private String createdAt;
-    @JsonProperty("updated_at")
-    private String updatedAt;
     @JsonProperty("image_url")
     private String imageUrl;
     private String weight;
     private String dimensions;
     private String manufacturer;
-    @JsonProperty("product_id")
-    private String productId;
 }

@@ -1,6 +1,6 @@
 package org.example.models.generators;
 
-import org.example.models.ProductModel;
+import org.example.models.request.ProductRequest;
 
 import static org.example.models.generators.BaseGenerator.*;
 
@@ -46,8 +46,8 @@ public class ProductDataGenerator {
         return generateRandomAlphanumericString(3, 100);
     }
 
-    public static ProductModel generate(String supplierId) {
-        return ProductModel.builder()
+    public static ProductRequest generate(String supplierId) {
+        return ProductRequest.builder()
                 .name(generateName())
                 .description(generateDescription())
                 .category(generateCategory())
@@ -61,8 +61,8 @@ public class ProductDataGenerator {
                 .build();
     }
 
-    public static ProductModel generateOnlyMandatoryFields(String supplierId) {
-        return ProductModel.builder()
+    public static ProductRequest generateOnlyMandatoryFields(String supplierId) {
+        return ProductRequest.builder()
                 .name(generateName())
                 .price(generatePrice())
                 .stockQuantity(generateStockQuantity())

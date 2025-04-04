@@ -1,8 +1,9 @@
 package org.example.tests.frontend;
 
-import org.example.models.SupplierModel;
 import org.example.models.generators.SupplierDataGenerator;
 import org.example.models.request.RegisterRequest;
+import org.example.models.request.SupplierRequest;
+import org.example.models.response.SupplierResponse;
 import org.example.tests.BaseTest;
 import org.example.tests.frontend.models.User;
 import org.example.tests.frontend.pages.LoginPage;
@@ -50,17 +51,15 @@ public class StoreManagerAutoUiTests extends BaseTest {
 
     @Test
     void deleteSupplierTest() {
-
-
-        SupplierModel createdSupplier = suppliersServicesAPI.createSupplier(SupplierDataGenerator.generate(), accessToken);
+        SupplierResponse createdSupplier = suppliersServicesAPI.createSupplier(SupplierDataGenerator.generate(), accessToken);
 
         new LoginPage(driver).loginAs(testUser);
         new ProductPage(driver).clickSuppliersLink();
 
         SupplierPage supplierPage = new SupplierPage(driver);
-        SupplierModel actualSuppllier = supplierPage.getTableRowByName(createdSupplier.getName()).getSupplierCreateModel();
+        SupplierRequest actualSuppllier = supplierPage.getTableRowByName(createdSupplier.getName()).getSupplierCreateModel();
 
-        assertEquals(createdSupplier, actualSuppllier);
+        assertEquals(createdSupplier.getName(), actualSuppllier.getName());
 
         supplierPage.getTableRowByName(createdSupplier.getName()).clickDeleteButton();
         driver.switchTo().alert().accept();

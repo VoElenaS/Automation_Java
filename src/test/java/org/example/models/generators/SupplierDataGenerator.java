@@ -1,6 +1,6 @@
 package org.example.models.generators;
 
-import org.example.models.SupplierModel;
+import org.example.models.request.SupplierRequest;
 
 import static org.example.models.generators.BaseGenerator.*;
 
@@ -38,8 +38,8 @@ public class SupplierDataGenerator {
         return "https://www." + generateRandomLowerCaseString(5) + ".com";
     }
 
-    public static SupplierModel generate() {
-        return SupplierModel.builder()
+    public static SupplierRequest generate() {
+        return SupplierRequest.builder()
                 .name(generateName())
                 .contactName(generateContactName())
                 .contactEmail(generateContactEmail())
@@ -51,8 +51,8 @@ public class SupplierDataGenerator {
                 .build();
     }
 
-    public static SupplierModel generateOnlyMandatoryFields() {
-        return SupplierModel.builder()
+    public static SupplierRequest generateOnlyMandatoryFields() {
+        return SupplierRequest.builder()
                 .name(generateName())
                 .contactName(generateContactName())
                 .contactEmail(generateContactEmail())

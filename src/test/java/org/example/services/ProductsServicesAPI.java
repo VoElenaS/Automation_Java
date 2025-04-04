@@ -5,8 +5,9 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.example.models.ProductModel;
 import org.example.models.request.ProductPatchModel;
+import org.example.models.request.ProductRequest;
+import org.example.models.response.ProductResponse;
 
 public class ProductsServicesAPI extends BaseAPI {
 
@@ -20,12 +21,12 @@ public class ProductsServicesAPI extends BaseAPI {
             .setContentType(ContentType.JSON).build();
 
 
-    public ProductModel createProduct(ProductModel request, String accessToken) {
+    public ProductResponse createProduct(ProductRequest request, String accessToken) {
         Response response = createProductWithResponse(request, accessToken);
-        return validaResponse(response, ProductModel.class);
+        return validaResponse(response, ProductResponse.class);
     }
 
-    public Response createProductWithResponse(ProductModel request, String accessToken) {
+    public Response createProductWithResponse(ProductRequest request, String accessToken) {
         return sendRequestPost(RestAssured.given(baseRequest)
                 .basePath(PRODUCTS_ENDPOINT)
                 .header("Authorization", "Bearer " + accessToken)
@@ -40,18 +41,18 @@ public class ProductsServicesAPI extends BaseAPI {
                 .body(request));
     }
 
-    public ProductModel updateProductIsAvailable(ProductPatchModel request, String productId, String accessToken) {
+    public ProductResponse updateProductIsAvailable(ProductPatchModel request, String productId, String accessToken) {
         Response response = updateProductWithResponse(request, productId, accessToken);
-        return validaResponse(response, ProductModel.class);
+        return validaResponse(response, ProductResponse.class);
     }
 
-    public ProductModel getProduct(String productId, String accessToken) {
+    public ProductResponse getProduct(String productId, String accessToken) {
         return sendRequestGet(RestAssured.given(baseRequest)
                 .basePath(PRODUCTS_ENDPOINT_WITH_PRODUCT_ID)
                 .pathParams("productId", productId)
                 .header("Authorization", "Bearer " + accessToken)
         )
-                .as(ProductModel.class);
+                .as(ProductResponse.class);
     }
 
     public Response retrievingProducts(String accessToken) {
@@ -60,12 +61,12 @@ public class ProductsServicesAPI extends BaseAPI {
                 .header("Authorization", "Bearer " + accessToken));
     }
 
-    public ProductModel updateProductById(ProductModel request, String productId, String accessToken) {
+    public ProductResponse updateProductById(ProductRequest request, String productId, String accessToken) {
         return sendRequestPut(RestAssured.given(baseRequest)
                 .basePath(PRODUCTS_ENDPOINT_WITH_PRODUCT_ID)
                 .pathParams("productId", productId)
                 .header("Authorization", "Bearer " + accessToken)
-                .body(request)).as(ProductModel.class);
+                .body(request)).as(ProductResponse.class);
     }
 
     public Response deleteProduct(String productId, String accessToken) {
