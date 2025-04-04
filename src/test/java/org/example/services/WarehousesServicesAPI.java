@@ -5,7 +5,8 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.example.models.WarehouseModel;
+import org.example.models.request.WarehouseRequest;
+import org.example.models.response.WarehouseResponse;
 
 public class WarehousesServicesAPI extends BaseAPI {
     public static final String PRODUCT_SERVICE_BASE_URL = "http://localhost:8002/";
@@ -16,10 +17,22 @@ public class WarehousesServicesAPI extends BaseAPI {
             .setContentType(ContentType.JSON)
             .build();
 
-    public Response createWarehouse(WarehouseModel request, String accessToken) {
+    public WarehouseResponse createWarehouse(WarehouseRequest request, String accessToken) {
+        return createWarehouseWithResponse(request, accessToken).as(WarehouseResponse.class);
+    }
+
+
+    public Response createWarehouseWithResponse(WarehouseRequest request, String accessToken) {
         return sendRequestPost(RestAssured.given(baseRequest)
                 .basePath(WAREHOUSE_ENDPOINT)
                 .header("Authorization", "Bearer " + accessToken)
                 .body(request));
     }
+
+    public Response retrievingWarehouses(String accessToken) {
+        return sendRequestGet(RestAssured.given(baseRequest)
+                .basePath(WAREHOUSE_ENDPOINT)
+                .header("Authorization", "Bearer " + accessToken));
+    }
+
 }

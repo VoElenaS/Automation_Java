@@ -1,6 +1,6 @@
 package org.example.models.generators;
 
-import org.example.models.WarehouseModel;
+import org.example.models.request.WarehouseRequest;
 
 import static org.apache.commons.lang3.RandomUtils.nextBoolean;
 import static org.example.models.generators.BaseGenerator.*;
@@ -40,8 +40,8 @@ public class WarehouseDataGenerator {
         return String.format("%.2f", area);
     }
 
-    public static WarehouseModel generate() {
-        return WarehouseModel.builder()
+    public static WarehouseRequest generate() {
+        return WarehouseRequest.builder()
                 .location(generateLocation())
                 .managerName(generateManagerName())
                 .capacity(generateCapacity())

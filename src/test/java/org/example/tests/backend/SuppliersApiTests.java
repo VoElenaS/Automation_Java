@@ -31,8 +31,8 @@ public class SuppliersApiTests extends BaseTest {
 
         Response responseDuplicateName = suppliersServicesAPI.createSupplierWithResponse(supplier, accessToken);
 
-        assertEquals(responseDuplicateName.statusCode(), 422, "The duplicated supplier was created");
-        assertEquals(responseDuplicateName.as(SupplierDetailModel.class).getDetail(), "This supplier is already existed", "The details doesn't match");
+        assertEquals(422, responseDuplicateName.statusCode(), "The duplicated supplier was created");
+        assertEquals("This supplier is already existed", responseDuplicateName.as(SupplierDetailModel.class).getDetail(), "The details doesn't match");
     }
 
     @Test
