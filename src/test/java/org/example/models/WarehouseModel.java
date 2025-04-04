@@ -3,7 +3,6 @@ package org.example.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import org.example.models.generators.WarehouseDataGenerator;
 
 @Data
 @NoArgsConstructor
@@ -28,17 +27,4 @@ public class WarehouseModel {
     private String areaSize;
     @JsonProperty("warehouse_id")
     private String warehouseId;
-
-    public static WarehouseModel generate() {
-        return WarehouseModel.builder()
-                .location(WarehouseDataGenerator.generateLocation())
-                .managerName(WarehouseDataGenerator.generateManagerName())
-                .capacity(WarehouseDataGenerator.generateCapacity())
-                .currentStock(WarehouseDataGenerator.generateCurrentStock())
-                .contactNumber(WarehouseDataGenerator.generateContactNumber())
-                .email(WarehouseDataGenerator.generateEmail())
-                .isActive(WarehouseDataGenerator.generateIsActive())
-                .areaSize(WarehouseDataGenerator.generateAreaSize())
-                .build();
-    }
 }

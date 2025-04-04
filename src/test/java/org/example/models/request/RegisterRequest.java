@@ -3,7 +3,7 @@ package org.example.models.request;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.apache.commons.lang3.RandomStringUtils;
+import org.example.models.generators.UserDataGenerator;
 
 @Data
 @AllArgsConstructor
@@ -16,13 +16,10 @@ public class RegisterRequest {
     String password;
 
     public static RegisterRequest generate() {
-        String name = RandomStringUtils.randomAlphabetic(3, 50);
-        String email = "user_" + name.toLowerCase() + "@mail.ru";
-        String password = RandomStringUtils.randomAlphanumeric(8, 16);
         return RegisterRequest.builder()
-                .email(email)
-                .name(name)
-                .password(password)
+                .email(UserDataGenerator.generateEmail())
+                .name(UserDataGenerator.generateName())
+                .password(UserDataGenerator.generatePassword())
                 .build();
     }
 }

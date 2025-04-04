@@ -2,6 +2,7 @@ package org.example.tests.backend;
 
 import io.restassured.response.Response;
 import org.example.models.SupplierModel;
+import org.example.models.generators.SupplierDataGenerator;
 import org.example.models.response.SupplierDetailModel;
 import org.example.tests.BaseTest;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,7 @@ public class SuppliersApiTests extends BaseTest {
 
     @Test
     void createSupplierWithAllFields() {
-        SupplierModel supplier = SupplierModel.generate();
+        SupplierModel supplier = SupplierDataGenerator.generate();
         SupplierModel response = suppliersServicesAPI.createSupplier(supplier, accessToken);
 
         assertNotNull(response.getSupplierId(), "Supplier is not created");
@@ -25,7 +26,7 @@ public class SuppliersApiTests extends BaseTest {
 
     @Test
     void duplicateSupplierName() {
-        SupplierModel supplier = SupplierModel.generate();
+        SupplierModel supplier = SupplierDataGenerator.generate();
         SupplierModel response = suppliersServicesAPI.createSupplier(supplier, accessToken);
 
         Response responseDuplicateName = suppliersServicesAPI.createSupplierWithResponse(supplier, accessToken);
@@ -36,7 +37,7 @@ public class SuppliersApiTests extends BaseTest {
 
     @Test
     void createSupplierWithOnlyMandatoryField() {
-        SupplierModel supplierOnlyMandatoryField = SupplierModel.generateOnlyMandatoryFields();
+        SupplierModel supplierOnlyMandatoryField = SupplierDataGenerator.generateOnlyMandatoryFields();
         SupplierModel response = suppliersServicesAPI.createSupplier(supplierOnlyMandatoryField, accessToken);
 
         assertNotNull(response.getSupplierId(), "Supplier is not created");

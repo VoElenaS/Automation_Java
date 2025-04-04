@@ -1,5 +1,7 @@
 package org.example.models.generators;
 
+import org.example.models.WarehouseModel;
+
 import static org.apache.commons.lang3.RandomUtils.nextBoolean;
 import static org.example.models.generators.BaseGenerator.*;
 
@@ -36,6 +38,19 @@ public class WarehouseDataGenerator {
     public static String generateAreaSize() {
         double area = Math.round((nextDouble() * 9999.99) * 100) / 100.0;
         return String.format("%.2f", area);
+    }
+
+    public static WarehouseModel generate() {
+        return WarehouseModel.builder()
+                .location(generateLocation())
+                .managerName(generateManagerName())
+                .capacity(generateCapacity())
+                .currentStock(generateCurrentStock())
+                .contactNumber(generateContactNumber())
+                .email(generateEmail())
+                .isActive(generateIsActive())
+                .areaSize(generateAreaSize())
+                .build();
     }
 }
 

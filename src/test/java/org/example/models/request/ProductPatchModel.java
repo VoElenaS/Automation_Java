@@ -14,8 +14,6 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 
 public class ProductPatchModel {
-
     @JsonProperty("is_available")
     private boolean isAvailable;
-
 }

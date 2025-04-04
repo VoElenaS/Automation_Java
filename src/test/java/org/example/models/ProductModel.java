@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.models.generators.ProductDataGenerator;
 
 @Data
 @NoArgsConstructor
@@ -36,28 +35,4 @@ public class ProductModel {
     private String manufacturer;
     @JsonProperty("product_id")
     private String productId;
-
-    public static ProductModel generate(String supplierId) {
-        return ProductModel.builder()
-                .name(ProductDataGenerator.generateName())
-                .description(ProductDataGenerator.generateDescription())
-                .category(ProductDataGenerator.generateCategory())
-                .price(ProductDataGenerator.generatePrice())
-                .stockQuantity(ProductDataGenerator.generateStockQuantity())
-                .supplierId(supplierId)
-                .imageUrl(ProductDataGenerator.generateImageUrl())
-                .weight(ProductDataGenerator.generateWeight())
-                .dimensions(ProductDataGenerator.generateDimensions())
-                .manufacturer(ProductDataGenerator.generateManufacturer())
-                .build();
-    }
-
-    public static ProductModel generateOnlyMandatoryFields(String supplierId) {
-        return ProductModel.builder()
-                .name(ProductDataGenerator.generateName())
-                .price(ProductDataGenerator.generatePrice())
-                .stockQuantity(ProductDataGenerator.generateStockQuantity())
-                .supplierId(supplierId)
-                .build();
-    }
 }

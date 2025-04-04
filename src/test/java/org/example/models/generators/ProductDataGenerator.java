@@ -1,5 +1,7 @@
 package org.example.models.generators;
 
+import org.example.models.ProductModel;
+
 import static org.example.models.generators.BaseGenerator.*;
 
 public class ProductDataGenerator {
@@ -44,4 +46,27 @@ public class ProductDataGenerator {
         return generateRandomAlphanumericString(3, 100);
     }
 
+    public static ProductModel generate(String supplierId) {
+        return ProductModel.builder()
+                .name(generateName())
+                .description(generateDescription())
+                .category(generateCategory())
+                .price(generatePrice())
+                .stockQuantity(generateStockQuantity())
+                .supplierId(supplierId)
+                .imageUrl(generateImageUrl())
+                .weight(generateWeight())
+                .dimensions(generateDimensions())
+                .manufacturer(generateManufacturer())
+                .build();
+    }
+
+    public static ProductModel generateOnlyMandatoryFields(String supplierId) {
+        return ProductModel.builder()
+                .name(generateName())
+                .price(generatePrice())
+                .stockQuantity(generateStockQuantity())
+                .supplierId(supplierId)
+                .build();
+    }
 }

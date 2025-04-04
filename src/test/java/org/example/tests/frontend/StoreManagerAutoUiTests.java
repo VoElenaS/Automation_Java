@@ -1,6 +1,7 @@
 package org.example.tests.frontend;
 
 import org.example.models.SupplierModel;
+import org.example.models.generators.SupplierDataGenerator;
 import org.example.models.request.RegisterRequest;
 import org.example.tests.BaseTest;
 import org.example.tests.frontend.models.User;
@@ -51,7 +52,7 @@ public class StoreManagerAutoUiTests extends BaseTest {
     void deleteSupplierTest() {
 
 
-        SupplierModel createdSupplier = suppliersServicesAPI.createSupplier(SupplierModel.generate(), accessToken);
+        SupplierModel createdSupplier = suppliersServicesAPI.createSupplier(SupplierDataGenerator.generate(), accessToken);
 
         new LoginPage(driver).loginAs(testUser);
         new ProductPage(driver).clickSuppliersLink();

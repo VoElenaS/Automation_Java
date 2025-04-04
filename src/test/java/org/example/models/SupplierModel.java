@@ -3,7 +3,6 @@ package org.example.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import org.example.models.generators.SupplierDataGenerator;
 
 @Data
 @NoArgsConstructor
@@ -27,24 +26,4 @@ public class SupplierModel {
     @JsonProperty("supplier_id")
     private String supplierId;
 
-    public static SupplierModel generate() {
-        return SupplierModel.builder()
-                .name(SupplierDataGenerator.generateName())
-                .contactName(SupplierDataGenerator.generateContactName())
-                .contactEmail(SupplierDataGenerator.generateContactEmail())
-                .phoneNumber(SupplierDataGenerator.generatePhoneNumber())
-                .address(SupplierDataGenerator.generateAddress())
-                .country(SupplierDataGenerator.generateCountry())
-                .city(SupplierDataGenerator.generateCity())
-                .website(SupplierDataGenerator.generateWebsite())
-                .build();
-    }
-
-    public static SupplierModel generateOnlyMandatoryFields() {
-        return SupplierModel.builder()
-                .name(SupplierDataGenerator.generateName())
-                .contactName(SupplierDataGenerator.generateContactName())
-                .contactEmail(SupplierDataGenerator.generateContactEmail())
-                .build();
-    }
 }
