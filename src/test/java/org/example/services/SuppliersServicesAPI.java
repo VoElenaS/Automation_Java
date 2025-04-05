@@ -7,14 +7,15 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.example.models.request.SupplierRequest;
 import org.example.models.response.SupplierResponse;
+import org.example.utils.TestProperties;
 
 public class SuppliersServicesAPI extends BaseAPI {
 
-    public static final String Product_service_Base_URL = "http://localhost:8002/";
-    public static final String SUPPLIER_ENDPOINT = "suppliers/";
+    public static final String PRODUCT_SERVICE_BASE_URL = TestProperties.properties.getProperty("product_service_base_url");
+    public static final String SUPPLIER_ENDPOINT = TestProperties.properties.getProperty("supplier_endpoint");
 
     public static RequestSpecification baseRequest = new RequestSpecBuilder()
-            .setBaseUri(Product_service_Base_URL)
+            .setBaseUri(PRODUCT_SERVICE_BASE_URL)
             .setContentType(ContentType.JSON)
             .build();
 

@@ -8,11 +8,12 @@ import org.example.models.request.AddMessageOnChatRequest;
 import org.example.models.request.ChatRequest;
 import org.example.models.response.AddMessageOnChatResponse;
 import org.example.models.response.ChatResponse;
+import org.example.utils.TestProperties;
 
 public class ChatsServicesAPI extends BaseAPI {
-    public static final String CHAT_BASE_URL = "http://localhost:8004/";
-    public static final String CHATS_ENDPOINT = "chats/";
-    public static final String MESSAGES_ENDPOINT = "chats/{chatId}/messages";
+    public static final String CHAT_BASE_URL = TestProperties.properties.getProperty("chat_base_url");
+    public static final String CHATS_ENDPOINT = TestProperties.properties.getProperty("chats_endpoint");
+    public static final String MESSAGES_ENDPOINT = TestProperties.properties.getProperty("messages_endpoint");
 
     RequestSpecification chatsServiceRequest = new RequestSpecBuilder()
             .setBaseUri(CHAT_BASE_URL)

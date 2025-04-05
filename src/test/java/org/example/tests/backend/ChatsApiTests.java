@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
 
 public class ChatsApiTests extends BaseTest {
     public static ChatResponse chatResponse;
-    private static LoginResponse userRespons;
+    private static LoginResponse userRespons, participanteResponse;
 
     @Test
     @Order(0)
@@ -24,10 +24,13 @@ public class ChatsApiTests extends BaseTest {
 
         RegisterRequest user = RegisterRequest.generate();
         RegisterResponse response = authServiceAPI.registerUser(user);
+        RegisterRequest participante = RegisterRequest.generate();
+        RegisterResponse responseParticipante = authServiceAPI.registerUser(participante);
         UsersQueries.setUserSuperAdminName(response.getUser().getId());
 
         userRespons = authServiceAPI.loginUser(LoginRequest.builder().email(user.getEmail()).password(user.getPassword()).build());
-        ChatRequest chatRequest = ChatDataGenerator.generate(userRespons.getUserId());
+        participanteResponse = authServiceAPI.loginUser(LoginRequest.builder().email(participante.getEmail()).password(participante.getPassword()).build());
+        ChatRequest chatRequest = ChatDataGenerator.generate(userRespons.getUserId(), participanteResponse.getUserId());
         chatResponse = chatServiceAPI.createChat(chatRequest, userRespons.getAccessToken());
     }
 

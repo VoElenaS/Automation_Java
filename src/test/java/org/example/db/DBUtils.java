@@ -1,6 +1,7 @@
 package org.example.db;
 
 import lombok.*;
+import org.example.utils.TestProperties;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,11 +13,11 @@ public class DBUtils {
 
     private static Connection createConnection() throws SQLException, ClassNotFoundException {
 
-        String HOST = "localhost";
-        int PORT = 5435;
-        String DB_NAME = "strg_users_db";
-        String USER = "storage_admin";
-        String PASSWORD = "THw7l0bxvPPkWUhP";
+        String HOST = TestProperties.properties.getProperty("host");
+        int PORT = Integer.parseInt(TestProperties.properties.getProperty("port"));
+        String DB_NAME = TestProperties.properties.getProperty("db_name");
+        String USER = TestProperties.properties.getProperty("user");
+        String PASSWORD = TestProperties.properties.getProperty("password");
         String TABLE = "users";
 
         String url = "jdbc:postgresql://" + HOST + ":" + PORT + "/" + DB_NAME;

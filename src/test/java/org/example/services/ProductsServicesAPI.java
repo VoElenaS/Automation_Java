@@ -8,13 +8,14 @@ import io.restassured.specification.RequestSpecification;
 import org.example.models.request.ProductPatchModel;
 import org.example.models.request.ProductRequest;
 import org.example.models.response.ProductResponse;
+import org.example.utils.TestProperties;
 
 public class ProductsServicesAPI extends BaseAPI {
 
-    public static final String PRODUCT_SERVICE_BASE_URL = "http://localhost:8002/";
-    public static final String PRODUCTS_ENDPOINT = "products/";
-    public static final String PRODUCTS_ENDPOINT_WITH_PRODUCT_ID = "products/{productId}";
-    public static final String PRODUCTS_ENDPOINT_WITH_PRODUCT_NAME = "search_products/";
+    public static final String PRODUCT_SERVICE_BASE_URL = TestProperties.properties.getProperty("product_service_base_url");
+    public static final String PRODUCTS_ENDPOINT = TestProperties.properties.getProperty("products_endpoint");
+    public static final String PRODUCTS_ENDPOINT_WITH_PRODUCT_ID = TestProperties.properties.getProperty("products_endpoint_with_product_id");
+    public static final String PRODUCTS_ENDPOINT_WITH_PRODUCT_NAME = TestProperties.properties.getProperty("products_endpoint_with_product_name");
 
     public static RequestSpecification baseRequest = new RequestSpecBuilder()
             .setBaseUri(PRODUCT_SERVICE_BASE_URL)
