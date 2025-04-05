@@ -52,5 +52,14 @@ public class WarehouseDataGenerator {
                 .areaSize(generateAreaSize())
                 .build();
     }
+
+    public static WarehouseRequest generateOnlyMandatoryFields() {
+        return WarehouseRequest.builder()
+                .location(generateLocation())
+                .capacity(generateCapacity())
+                .currentStock(generateCurrentStock())
+                .isActive(generateIsActive())
+                .build();
+    }
 }
 

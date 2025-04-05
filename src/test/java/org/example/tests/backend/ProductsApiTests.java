@@ -71,7 +71,7 @@ public class ProductsApiTests extends BaseTest {
         Response response = productsServicesAPI.createProductWithResponse(product, accessToken);
         assertEquals(422, response.statusCode());
         ValidationResponse validationResponse = response.as(ValidationResponse.class);
-        assertTrue(validationResponse.getDetail().stream().anyMatch(d -> d.getLoc().contains("name")), "There is validation error");
+        assertTrue(validationResponse.getDetail().stream().anyMatch(d -> d.getLoc().contains("name")), "There is an error of validation");
     }
 
     @Test

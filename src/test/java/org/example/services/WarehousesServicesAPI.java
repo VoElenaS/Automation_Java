@@ -11,6 +11,7 @@ import org.example.models.response.WarehouseResponse;
 public class WarehousesServicesAPI extends BaseAPI {
     public static final String PRODUCT_SERVICE_BASE_URL = "http://localhost:8002/";
     public static final String WAREHOUSE_ENDPOINT = "warehouses/";
+    public static final String WAREHOUSE_PRODUCT_ENDPOIN = "productinwarehouses";
 
     public static RequestSpecification baseRequest = new RequestSpecBuilder()
             .setBaseUri(PRODUCT_SERVICE_BASE_URL)
@@ -23,16 +24,31 @@ public class WarehousesServicesAPI extends BaseAPI {
 
 
     public Response createWarehouseWithResponse(WarehouseRequest request, String accessToken) {
-        return sendRequestPost(RestAssured.given(baseRequest)
+        RequestSpecification specification = RestAssured.given(baseRequest)
                 .basePath(WAREHOUSE_ENDPOINT)
                 .header("Authorization", "Bearer " + accessToken)
-                .body(request));
+                .body(request);
+
+        return sendRequestPost(specification);
     }
 
     public Response retrievingWarehouses(String accessToken) {
-        return sendRequestGet(RestAssured.given(baseRequest)
+        RequestSpecification specification = RestAssured.given(baseRequest)
                 .basePath(WAREHOUSE_ENDPOINT)
-                .header("Authorization", "Bearer " + accessToken));
+                .header("Authorization", "Bearer " + accessToken);
+
+        return sendRequestGet(specification);
+    }
+
+    public Response addProductInWarehouse(String accessToken, String warehouseId, String productId, int quantity) {
+        RequestSpecification specification = RestAssured.given(baseRequest)
+                .basePath(WAREHOUSE_PRODUCT_ENDPOIN)
+                .queryParam("warehouse_id", warehouseId)
+                .queryParam("product_id", productId)
+                .queryParam("quantity", quantity)
+                .header("Authorization", "Bearer " + accessToken);
+
+        return sendRequestPost(specification);
     }
 
 }
