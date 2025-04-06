@@ -28,7 +28,6 @@ public class ProductsApiTests extends BaseTest {
     private static String supplierId;
     private static String productId;
 
-
     @Test
     @Order(0)
     void createSupplier() {

@@ -13,6 +13,7 @@ public class SuppliersServicesAPI extends BaseAPI {
 
     public static final String PRODUCT_SERVICE_BASE_URL = TestProperties.properties.getProperty("product_service_base_url");
     public static final String SUPPLIER_ENDPOINT = TestProperties.properties.getProperty("supplier_endpoint");
+    public static final String SUPPLIER_ENDPOINT_WITH_SUPPLIER_ID = TestProperties.properties.getProperty("supplier_endpoint_with_supplier_id");
 
     public static RequestSpecification baseRequest = new RequestSpecBuilder()
             .setBaseUri(PRODUCT_SERVICE_BASE_URL)
@@ -34,6 +35,14 @@ public class SuppliersServicesAPI extends BaseAPI {
     public Response retrievingSuppliers(String accessToken) {
         RequestSpecification specification = RestAssured.given(baseRequest)
                 .basePath(SUPPLIER_ENDPOINT)
+                .header("Authorization", "Bearer " + accessToken);
+        return sendRequestGet(specification);
+    }
+
+    public Response retrievingSuppliersById(String supplierId, String accessToken) {
+        RequestSpecification specification = RestAssured.given(baseRequest)
+                .basePath(SUPPLIER_ENDPOINT_WITH_SUPPLIER_ID)
+                .pathParams("supplierId", supplierId)
                 .header("Authorization", "Bearer " + accessToken);
         return sendRequestGet(specification);
     }

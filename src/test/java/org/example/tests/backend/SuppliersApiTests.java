@@ -6,6 +6,8 @@ import org.example.models.request.SupplierRequest;
 import org.example.models.response.SupplierDetailModel;
 import org.example.models.response.SupplierResponse;
 import org.example.tests.BaseTest;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
@@ -18,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SuppliersApiTests extends BaseTest {
 
     @Test
+    @Order(1)
     void createSupplierWithAllFields() {
         SupplierRequest supplier = SupplierDataGenerator.generate();
         SupplierResponse response = suppliersServicesAPI.createSupplier(supplier, accessToken);
@@ -77,5 +80,15 @@ public class SuppliersApiTests extends BaseTest {
             supplierIds.add(supplierId);
             supplierNames.add(supplierName);
         }
+    }
+
+    @Test
+    @DisplayName("Retrieving supplier by Id")
+    void retrievingSupplierBuId() {
+        SupplierRequest supplier = SupplierDataGenerator.generate();
+        SupplierResponse response = suppliersServicesAPI.createSupplier(supplier, accessToken);
+
+        Response responseGet = suppliersServicesAPI.retrievingSuppliersById(response.getSupplierId(), accessToken);
+        assertEquals(200, responseGet.statusCode(), "The supplier wasn't found");
     }
 }
