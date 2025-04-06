@@ -36,7 +36,6 @@ public class ChatsServicesAPI extends BaseAPI {
                 .pathParam("chatId", chatId)  // Set the chatId as a path parameter
                 .header("Authorization", "Bearer " + accessToken)
                 .body(messageOnChatRequest);
-
         return sendRequestPost(request).as(AddMessageOnChatResponse.class);  // Ensure correct response class
     }
 

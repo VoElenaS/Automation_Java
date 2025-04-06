@@ -20,7 +20,7 @@ public class SuppliersServicesAPI extends BaseAPI {
             .build();
 
     public SupplierResponse createSupplier(SupplierRequest request, String accessToken) {
-        return createSupplierWithResponse(request, accessToken).as(SupplierResponse.class);
+        return validaResponse(createSupplierWithResponse(request, accessToken), SupplierResponse.class);
     }
 
     public Response createSupplierWithResponse(SupplierRequest request, String accessToken) {

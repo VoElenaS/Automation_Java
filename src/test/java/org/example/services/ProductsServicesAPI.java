@@ -54,7 +54,7 @@ public class ProductsServicesAPI extends BaseAPI {
                 .basePath(PRODUCTS_ENDPOINT_WITH_PRODUCT_ID)
                 .pathParams("productId", productId)
                 .header("Authorization", "Bearer " + accessToken);
-        return sendRequestGet(specification).as(ProductResponse.class);
+        return validaResponse(sendRequestGet(specification), ProductResponse.class);
     }
 
     public Response retrievingProducts(String accessToken) {
@@ -70,7 +70,7 @@ public class ProductsServicesAPI extends BaseAPI {
                 .pathParams("productId", productId)
                 .header("Authorization", "Bearer " + accessToken)
                 .body(request);
-        return sendRequestPut(specification).as(ProductResponse.class);
+        return validaResponse(sendRequestPut(specification), ProductResponse.class);
     }
 
     public Response deleteProduct(String productId, String accessToken) {

@@ -22,7 +22,7 @@ public class WarehousesServicesAPI extends BaseAPI {
             .build();
 
     public WarehouseResponse createWarehouse(WarehouseRequest request, String accessToken) {
-        return createWarehouseWithResponse(request, accessToken).as(WarehouseResponse.class);
+        return validaResponse(createWarehouseWithResponse(request, accessToken), WarehouseResponse.class);
     }
 
     public Response createWarehouseWithResponse(WarehouseRequest request, String accessToken) {
@@ -45,9 +45,8 @@ public class WarehousesServicesAPI extends BaseAPI {
                 .basePath(WAREHOUSE_PRODUCT_WITH_ID_ENDPOINT)
                 .pathParams("warehouseId", warehouseId)
                 .header("Authorization", "Bearer " + accessToken);
-        return sendRequestGet(specification).as(WarehouseResponse.class);
+        return validaResponse(sendRequestGet(specification), WarehouseResponse.class);
     }
-
 
     public Response addProductInWarehouseWithResponse(String accessToken, String warehouseId, String productId, int quantity) {
         RequestSpecification specification = RestAssured.given(baseRequest)
@@ -62,5 +61,4 @@ public class WarehousesServicesAPI extends BaseAPI {
     public ProductsInWarehouseResponse addProductInWarehouse(String accessToken, String warehouseId, String productId, int quantity) {
         return addProductInWarehouseWithResponse(accessToken, warehouseId, productId, quantity).as(ProductsInWarehouseResponse.class);
     }
-
 }
