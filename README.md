@@ -19,7 +19,9 @@ TestProperties: For handling test configurations.
 
 UserQueries: For interacting with test data during automation.
 
-Structure: The testing framework ensures that each API service is isolated and easy to test. Each service has:
+Structure: The testing framework ensures that each API service is isolated and easy to test. 
+
+Each service has:
 
 A separate request and response model.
 
