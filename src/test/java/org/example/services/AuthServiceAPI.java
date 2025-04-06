@@ -52,6 +52,6 @@ public class AuthServiceAPI extends BaseAPI {
         RequestSpecification specification = RestAssured.given(authRequest)
                 .basePath(GET_USER_TOKEN_ENDPOINT)
                 .pathParams("user_id", userId);
-        return sendRequestGet(specification).as(UserTokenResponse.class);
+        return validaResponse(sendRequestGet(specification), UserTokenResponse.class);
     }
 }
