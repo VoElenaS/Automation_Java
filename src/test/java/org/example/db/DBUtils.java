@@ -1,6 +1,6 @@
 package org.example.db;
 
-import lombok.*;
+import lombok.SneakyThrows;
 import org.example.utils.TestProperties;
 
 import java.sql.Connection;
@@ -11,14 +11,13 @@ public class DBUtils {
 
     public static Connection connection;
 
-    private static Connection createConnection() throws SQLException, ClassNotFoundException {
+    private static Connection createConnection() throws SQLException {
 
         String HOST = TestProperties.properties.getProperty("host");
         int PORT = Integer.parseInt(TestProperties.properties.getProperty("port"));
         String DB_NAME = TestProperties.properties.getProperty("db_name");
         String USER = TestProperties.properties.getProperty("user");
         String PASSWORD = TestProperties.properties.getProperty("password");
-        String TABLE = "users";
 
         String url = "jdbc:postgresql://" + HOST + ":" + PORT + "/" + DB_NAME;
         return DriverManager.getConnection(url, USER, PASSWORD);
@@ -34,22 +33,10 @@ public class DBUtils {
 
     @SneakyThrows
     public static void closeConnection() {
-        if (connection != null)
+        if (connection != null) {
             connection.close();
-
-    }
-
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Builder
-
-    public static class User {
-        String id;
-        String name;
-        String email;
-        String hashedPassword;
-        boolean isSuperadmin;
+            connection = null;
+        }
     }
 }
 

@@ -43,11 +43,10 @@ public class SupplierPage implements HasNavigationBar {
 
         return suppliersTabelRows.stream()
                 .map(SuppliersTableRow::new)
-                .map(row -> row.getName().equals(name))
-                .toList().contains(name);
+                .anyMatch(row -> row.getName().equals(name));
     }
 
-    public boolean isDeletedSupplirNotoficationDisplaied() {
+    public boolean isDeletedSupplierNotificationDisplayed() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         try {
             wait.until(ExpectedConditions.visibilityOf(deleteSupplierNotification));

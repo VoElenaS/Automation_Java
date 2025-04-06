@@ -1,6 +1,7 @@
 package org.example.tests.frontend;
 
 import org.example.models.generators.SupplierDataGenerator;
+import org.example.models.generators.UserDataGenerator;
 import org.example.models.request.RegisterRequest;
 import org.example.models.request.SupplierRequest;
 import org.example.models.response.SupplierResponse;
@@ -57,20 +58,20 @@ public class StoreManagerAutoUiTests extends BaseTest {
         new ProductPage(driver).clickSuppliersLink();
 
         SupplierPage supplierPage = new SupplierPage(driver);
-        SupplierRequest actualSuppllier = supplierPage.getTableRowByName(createdSupplier.getName()).getSupplierCreateModel();
+        SupplierRequest actualSupplier = supplierPage.getTableRowByName(createdSupplier.getName()).getSupplierCreateModel();
 
-        assertEquals(createdSupplier.getName(), actualSuppllier.getName());
+        assertEquals(createdSupplier.getName(), actualSupplier.getName());
 
         supplierPage.getTableRowByName(createdSupplier.getName()).clickDeleteButton();
         driver.switchTo().alert().accept();
-        assertTrue(supplierPage.isDeletedSupplirNotoficationDisplaied());
+        assertTrue(supplierPage.isDeletedSupplierNotificationDisplayed());
 
         assertFalse(supplierPage.isSupplierExistOnThePage(createdSupplier.getName()));
 
     }
 
     private User registerTestUser() {
-        RegisterRequest registerRequest = RegisterRequest.generate();
+        RegisterRequest registerRequest = UserDataGenerator.generate();
         authServiceAPI.registerUser(registerRequest);
         return User.builder().email(registerRequest.getEmail()).password(registerRequest.getPassword()).build();
     }

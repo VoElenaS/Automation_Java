@@ -11,7 +11,10 @@ import org.example.models.response.SupplierResponse;
 import org.example.models.response.ValidationResponse;
 import org.example.services.ProductsServicesAPI;
 import org.example.tests.BaseTest;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.HashSet;
 import java.util.List;
@@ -25,10 +28,6 @@ public class ProductsApiTests extends BaseTest {
     private static String supplierId;
     private static String productId;
 
-    @AfterAll
-    static void tearDown() {
-        ProductsServicesAPI productsServices = new ProductsServicesAPI();
-    }
 
     @Test
     @Order(0)
@@ -149,7 +148,7 @@ public class ProductsApiTests extends BaseTest {
             String productName = product.getName().toLowerCase();
             boolean containsDuplicate = productNames.contains(productName);
 
-            assertFalse(containsDuplicate, "Duplicted name was found " + productName);
+            assertFalse(containsDuplicate, "Duplicated name was found " + productName);
             assertNotNull(product.getName(), "The name shouldn't be empty");
             assertNotNull(product.getSupplierId(), "The supplier shouldn't be empty");
             assertNotNull(product.getPrice(), "The price shouldn't be empty");

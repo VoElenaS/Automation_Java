@@ -13,10 +13,10 @@ public class ChatDataGenerator {
         return generateRandomAlphanumericString(3, 100);
     }
 
-    public static ChatRequest generate(String owner, String participante) {
+    public static ChatRequest generate(String owner, String participant) {
         String name = generateName();
         boolean isGroup = true;
-        List<String> participants = List.of(owner, participante);
+        List<String> participants = List.of(owner, participant);
         return ChatRequest.builder().name(name).isGroup(isGroup).participants(participants).build();
     }
 

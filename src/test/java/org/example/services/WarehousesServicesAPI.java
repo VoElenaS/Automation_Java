@@ -51,7 +51,7 @@ public class WarehousesServicesAPI extends BaseAPI {
     }
 
 
-    public Response addProductInWarehouseWithRespons(String accessToken, String warehouseId, String productId, int quantity) {
+    public Response addProductInWarehouseWithResponse(String accessToken, String warehouseId, String productId, int quantity) {
         RequestSpecification specification = RestAssured.given(baseRequest)
                 .basePath(WAREHOUSE_PRODUCT_ENDPOINT)
                 .queryParam("warehouse_id", warehouseId)
@@ -63,7 +63,7 @@ public class WarehousesServicesAPI extends BaseAPI {
     }
 
     public ProductsInWarehouseResponse addProductInWarehouse(String accessToken, String warehouseId, String productId, int quantity) {
-        return addProductInWarehouseWithRespons(accessToken, warehouseId, productId, quantity).as(ProductsInWarehouseResponse.class);
+        return addProductInWarehouseWithResponse(accessToken, warehouseId, productId, quantity).as(ProductsInWarehouseResponse.class);
     }
 
 }

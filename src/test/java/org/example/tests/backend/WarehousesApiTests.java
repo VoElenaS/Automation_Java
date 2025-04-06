@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class WarehousesApiTests extends BaseTest {
 
     @Test
-    @DisplayName("Create Warehouse with All Fileds")
+    @DisplayName("Create Warehouse with All Fields")
     void createWarehouse() {
         WarehouseRequest warehouse = WarehouseDataGenerator.generate();
         Response response = warehousesServicesAPI.createWarehouseWithResponse(warehouse, accessToken);
@@ -49,7 +49,7 @@ public class WarehousesApiTests extends BaseTest {
     @DisplayName("Check for duplicate location")
     void createWarehouseWithDuplicateLocation() {
         WarehouseRequest warehouse = WarehouseDataGenerator.generate();
-        WarehouseResponse response = warehousesServicesAPI.createWarehouse(warehouse, accessToken);
+        warehousesServicesAPI.createWarehouse(warehouse, accessToken);
         Response warehouseDuplicate = warehousesServicesAPI.createWarehouseWithResponse(warehouse, accessToken);
         assertEquals(422, warehouseDuplicate.statusCode(), "The warehouse at the same location couldn't be created.");
     }
@@ -73,14 +73,14 @@ public class WarehousesApiTests extends BaseTest {
 
         warehouses.forEach(warehouse -> {
             String warehouseId = warehouse.getWarehouseId();
-            String warehouselocation = warehouse.getLocation();
-            assertFalse(locations.contains(warehouselocation), "There is duplicate for location" + warehouselocation);
+            String warehouseLocation = warehouse.getLocation();
+            assertFalse(locations.contains(warehouseLocation), "There is duplicate for location" + warehouseLocation);
             assertFalse(warehouseIds.contains(warehouseId), "There is duplicate for warehouseId" + warehouseId);
             assertNotNull(warehouse.getCapacity(), "The mandatory field capacity should be filled");
             assertNotNull(warehouse.getIsActive(), "The mandatory filed IsActive should be filled automatically");
             assertNotNull(warehouse.getCurrentStock(), "The mandatory filed currentStock should be filled");
             assertNotNull(warehouse.getWarehouseId(), "The filed warehouseId should be filled");
-            locations.add(warehouselocation);
+            locations.add(warehouseLocation);
             warehouseIds.add(warehouseId);
         });
     }

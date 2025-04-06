@@ -13,4 +13,15 @@ import lombok.NoArgsConstructor;
 public class RegisterResponse {
     String message;
     UserResponse user;
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+
+    public static class UserResponse {
+        String id;
+        String name;
+        String email;
+    }
 }

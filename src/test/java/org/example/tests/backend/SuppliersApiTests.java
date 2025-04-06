@@ -28,8 +28,7 @@ public class SuppliersApiTests extends BaseTest {
     @Test
     void duplicateSupplierName() {
         SupplierRequest supplier = SupplierDataGenerator.generate();
-        SupplierResponse response = suppliersServicesAPI.createSupplier(supplier, accessToken);
-
+        suppliersServicesAPI.createSupplier(supplier, accessToken);
         Response responseDuplicateName = suppliersServicesAPI.createSupplierWithResponse(supplier, accessToken);
 
         assertEquals(422, responseDuplicateName.statusCode(), "The duplicated supplier was created");

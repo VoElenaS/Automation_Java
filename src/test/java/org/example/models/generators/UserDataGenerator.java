@@ -1,6 +1,7 @@
 package org.example.models.generators;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.example.models.request.RegisterRequest;
 
 public class UserDataGenerator {
 
@@ -15,5 +16,13 @@ public class UserDataGenerator {
 
     public static String generatePassword() {
         return RandomStringUtils.randomAlphanumeric(8, 16);
+    }
+
+    public static RegisterRequest generate() {
+        return RegisterRequest.builder()
+                .email(generateEmail())
+                .name(generateName())
+                .password(generatePassword())
+                .build();
     }
 }

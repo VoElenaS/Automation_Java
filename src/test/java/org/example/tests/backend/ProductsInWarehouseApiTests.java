@@ -14,8 +14,6 @@ import org.example.tests.BaseTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,19 +31,18 @@ public class ProductsInWarehouseApiTests extends BaseTest {
         WarehouseResponse warehouseResponse = warehousesServicesAPI.createWarehouse(warehouse, accessToken);
         int stockQuantity = productResponse.getStockQuantity();
         Response response = warehousesServicesAPI
-                .addProductInWarehouseWithRespons(accessToken, warehouseResponse.getWarehouseId(), productResponse.getProductId(), stockQuantity);
+                .addProductInWarehouseWithResponse(accessToken, warehouseResponse.getWarehouseId(), productResponse.getProductId(), stockQuantity);
         assertEquals(200, response.statusCode(), "There is an error during adding the product in warehouse");
     }
 
     @Test
     @DisplayName("Bulk Add & Quantity Check")
-    void addProdcutsInWarehouse() {
+    void addProductsInWarehouse() {
         WarehouseRequest warehouse = WarehouseDataGenerator.generateOnlyMandatoryFields();
         WarehouseResponse warehouseResponse = warehousesServicesAPI.createWarehouse(warehouse, accessToken);
         SupplierRequest supplier = SupplierDataGenerator.generateOnlyMandatoryFields();
         SupplierResponse supplierResponse = suppliersServicesAPI.createSupplier(supplier, accessToken);
 
-        List<ProductResponse> productResponse = new ArrayList<>();
         int totalProductsQuantityWh = IntStream.range(0, 3)
                 .mapToObj(d -> ProductDataGenerator.generateOnlyMandatoryFields(supplierResponse.getSupplierId()))
                 .map(p -> productsServicesAPI.createProduct(p, accessToken))

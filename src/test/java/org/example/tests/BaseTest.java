@@ -1,6 +1,7 @@
 package org.example.tests;
 
 import org.example.db.DBUtils;
+import org.example.models.generators.UserDataGenerator;
 import org.example.models.request.LoginRequest;
 import org.example.models.request.RegisterRequest;
 import org.example.models.response.LoginResponse;
@@ -29,7 +30,7 @@ public abstract class BaseTest {
 
     public static void setupUser() {
         AuthServiceAPI authServiceAPI = new AuthServiceAPI();
-        RegisterRequest generateDataUserRequest = RegisterRequest.generate();
+        RegisterRequest generateDataUserRequest = UserDataGenerator.generate();
         authServiceAPI.registerUser(generateDataUserRequest);
         LoginResponse loginResponse = authServiceAPI
                 .loginUser(LoginRequest.builder().email(generateDataUserRequest.getEmail()).password(generateDataUserRequest.getPassword()).build());
