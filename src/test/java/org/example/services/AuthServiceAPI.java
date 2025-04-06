@@ -26,28 +26,32 @@ public class AuthServiceAPI extends BaseAPI {
             .build();
 
     public RegisterResponse registerUser(RegisterRequest request) {
-        return sendRequestPost(RestAssured.given(authRequest)
+        RequestSpecification specification = RestAssured.given(authRequest)
                 .body(request)
-                .basePath(REGISTER_ENDPOINT))
+                .basePath(REGISTER_ENDPOINT);
+        return sendRequestPost(specification)
                 .as(RegisterResponse.class);
     }
 
     public LoginResponse loginUser(LoginRequest request) {
-        return sendRequestPost(RestAssured.given(authRequest)
+        RequestSpecification specification = RestAssured.given(authRequest)
                 .body(request)
-                .basePath(LOGIN_ENDPOINT))
+                .basePath(LOGIN_ENDPOINT);
+        return sendRequestPost(specification)
                 .as(LoginResponse.class);
     }
 
     public Response getPendingProducts(String accessToken) {
-        return sendRequestGet(RestAssured.given(authRequest)
+        RequestSpecification specification = RestAssured.given(authRequest)
                 .basePath(GET_PENDING_PRODUCT_ENDPOINT)
-                .header("Authorization", "bearer " + accessToken));
+                .header("Authorization", "bearer " + accessToken);
+        return sendRequestGet(specification);
     }
 
     public UserTokenResponse getUserToken(String userId) {
-        return sendRequestGet(RestAssured.given(authRequest)
+        RequestSpecification specification = RestAssured.given(authRequest)
                 .basePath(GET_USER_TOKEN_ENDPOINT)
-                .pathParams("user_id", userId)).as(UserTokenResponse.class);
+                .pathParams("user_id", userId);
+        return sendRequestGet(specification).as(UserTokenResponse.class);
     }
 }

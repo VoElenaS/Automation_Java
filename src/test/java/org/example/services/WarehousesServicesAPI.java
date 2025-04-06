@@ -30,7 +30,6 @@ public class WarehousesServicesAPI extends BaseAPI {
                 .basePath(WAREHOUSE_ENDPOINT)
                 .header("Authorization", "Bearer " + accessToken)
                 .body(request);
-
         return sendRequestPost(specification);
     }
 
@@ -38,7 +37,6 @@ public class WarehousesServicesAPI extends BaseAPI {
         RequestSpecification specification = RestAssured.given(baseRequest)
                 .basePath(WAREHOUSE_ENDPOINT)
                 .header("Authorization", "Bearer " + accessToken);
-
         return sendRequestGet(specification);
     }
 
@@ -58,7 +56,6 @@ public class WarehousesServicesAPI extends BaseAPI {
                 .queryParam("product_id", productId)
                 .queryParam("quantity", quantity)
                 .header("Authorization", "Bearer " + accessToken);
-
         return sendRequestPost(specification);
     }
 

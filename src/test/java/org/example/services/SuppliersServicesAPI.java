@@ -24,15 +24,17 @@ public class SuppliersServicesAPI extends BaseAPI {
     }
 
     public Response createSupplierWithResponse(SupplierRequest request, String accessToken) {
-        return sendRequestPost(RestAssured.given(baseRequest)
+        RequestSpecification specification = RestAssured.given(baseRequest)
                 .basePath(SUPPLIER_ENDPOINT)
                 .header("Authorization", "Bearer " + accessToken)
-                .body(request));
+                .body(request);
+        return sendRequestPost(specification);
     }
 
     public Response retrievingSuppliers(String accessToken) {
-        return sendRequestGet(RestAssured.given(baseRequest)
+        RequestSpecification specification = RestAssured.given(baseRequest)
                 .basePath(SUPPLIER_ENDPOINT)
-                .header("Authorization", "Bearer " + accessToken));
+                .header("Authorization", "Bearer " + accessToken);
+        return sendRequestGet(specification);
     }
 }

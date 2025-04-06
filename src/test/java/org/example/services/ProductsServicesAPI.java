@@ -28,18 +28,20 @@ public class ProductsServicesAPI extends BaseAPI {
     }
 
     public Response createProductWithResponse(ProductRequest request, String accessToken) {
-        return sendRequestPost(RestAssured.given(baseRequest)
+        RequestSpecification specification = RestAssured.given(baseRequest)
                 .basePath(PRODUCTS_ENDPOINT)
                 .header("Authorization", "Bearer " + accessToken)
-                .body(request));
+                .body(request);
+        return sendRequestPost(specification);
     }
 
     public Response updateProductWithResponse(ProductPatchModel request, String productId, String accessToken) {
-        return sendRequestPatch(RestAssured.given(baseRequest)
+        RequestSpecification specification = RestAssured.given(baseRequest)
                 .basePath(PRODUCTS_ENDPOINT_WITH_PRODUCT_ID)
                 .pathParams("productId", productId)
                 .header("Authorization", "Bearer " + accessToken)
-                .body(request));
+                .body(request);
+        return sendRequestPatch(specification);
     }
 
     public ProductResponse updateProductIsAvailable(ProductPatchModel request, String productId, String accessToken) {
@@ -48,40 +50,43 @@ public class ProductsServicesAPI extends BaseAPI {
     }
 
     public ProductResponse getProduct(String productId, String accessToken) {
-        return sendRequestGet(RestAssured.given(baseRequest)
+        RequestSpecification specification = RestAssured.given(baseRequest)
                 .basePath(PRODUCTS_ENDPOINT_WITH_PRODUCT_ID)
                 .pathParams("productId", productId)
-                .header("Authorization", "Bearer " + accessToken)
-        )
-                .as(ProductResponse.class);
+                .header("Authorization", "Bearer " + accessToken);
+        return sendRequestGet(specification).as(ProductResponse.class);
     }
 
     public Response retrievingProducts(String accessToken) {
-        return sendRequestGet(RestAssured.given(baseRequest)
+        RequestSpecification specification = RestAssured.given(baseRequest)
                 .basePath(PRODUCTS_ENDPOINT)
-                .header("Authorization", "Bearer " + accessToken));
+                .header("Authorization", "Bearer " + accessToken);
+        return sendRequestGet(specification);
     }
 
     public ProductResponse updateProductById(ProductRequest request, String productId, String accessToken) {
-        return sendRequestPut(RestAssured.given(baseRequest)
+        RequestSpecification specification = RestAssured.given(baseRequest)
                 .basePath(PRODUCTS_ENDPOINT_WITH_PRODUCT_ID)
                 .pathParams("productId", productId)
                 .header("Authorization", "Bearer " + accessToken)
-                .body(request)).as(ProductResponse.class);
+                .body(request);
+        return sendRequestPut(specification).as(ProductResponse.class);
     }
 
     public Response deleteProduct(String productId, String accessToken) {
-        return sendRequestDelete(RestAssured.given(baseRequest)
+        RequestSpecification specification = RestAssured.given(baseRequest)
                 .basePath(PRODUCTS_ENDPOINT_WITH_PRODUCT_ID)
                 .pathParams("productId", productId)
-                .header("Authorization", "Bearer " + accessToken));
+                .header("Authorization", "Bearer " + accessToken);
+        return sendRequestDelete(specification);
     }
 
     public Response retrievingProductByName(String name, String accessToken) {
-        return sendRequestGet(RestAssured.given(baseRequest)
+        RequestSpecification specification = RestAssured.given(baseRequest)
                 .basePath(PRODUCTS_ENDPOINT_WITH_PRODUCT_NAME)
                 .header("Authorization", "Bearer " + accessToken)
-                .queryParam("name", name));
+                .queryParam("name", name);
+        return sendRequestGet(specification);
     }
 
 }
