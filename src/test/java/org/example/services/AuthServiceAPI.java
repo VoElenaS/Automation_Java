@@ -9,8 +9,11 @@ import org.example.models.request.LoginRequest;
 import org.example.models.request.RegisterRequest;
 import org.example.models.response.LoginResponse;
 import org.example.models.response.RegisterResponse;
+import org.example.models.response.UserInfo;
 import org.example.models.response.UserTokenResponse;
 import org.example.utils.TestProperties;
+
+import java.util.List;
 
 public class AuthServiceAPI extends BaseAPI {
 
@@ -19,6 +22,7 @@ public class AuthServiceAPI extends BaseAPI {
     public static final String REGISTER_ENDPOINT = TestProperties.properties.getProperty("register_endpoint");
     public static final String GET_USER_TOKEN_ENDPOINT = TestProperties.properties.getProperty("get_user_token_endpoint");
     public static final String GET_PENDING_PRODUCT_ENDPOINT = TestProperties.properties.getProperty("get_pending_product_endpoint");
+    public static final String GET_USERS_ENDPOINT = TestProperties.properties.getProperty("get_users_endpoint");
 
     private static final RequestSpecification authRequest = new RequestSpecBuilder()
             .setBaseUri(AUTH_SERVICE_BASE_URL)
@@ -53,5 +57,12 @@ public class AuthServiceAPI extends BaseAPI {
                 .basePath(GET_USER_TOKEN_ENDPOINT)
                 .pathParams("user_id", userId);
         return validaResponse(sendRequestGet(specification), UserTokenResponse.class);
+    }
+
+    public List<UserInfo> retrieveUsers(String accessToken) {
+        RequestSpecification specification = RestAssured.given(authRequest)
+                .basePath(GET_USERS_ENDPOINT)
+                .header("Authorization", "bearer " + accessToken);
+        return sendRequestGet(specification).jsonPath().getList("$", UserInfo.class);
     }
 }

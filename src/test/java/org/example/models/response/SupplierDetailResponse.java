@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 
-public class SupplierDetailModel {
+public class SupplierDetailResponse {
     private String detail;
 }

@@ -8,12 +8,14 @@ import org.example.models.request.LoginRequest;
 import org.example.models.request.RegisterRequest;
 import org.example.models.response.LoginResponse;
 import org.example.models.response.RegisterResponse;
+import org.example.models.response.UserInfo;
 import org.example.models.response.UserTokenResponse;
 import org.example.tests.BaseTest;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AuthApiTests extends BaseTest {
 
@@ -39,43 +41,22 @@ public class AuthApiTests extends BaseTest {
 
             assertEquals(registerRequest.getName(), userFromDB.getName());
             assertEquals(registerRequest.getEmail(), userFromDB.getEmail());
-
         }
     }
 
     @Test
     void getPendingProductsSuperAdminTest() {
-        if (!isUserRegistered) {
-            registerUser();
-        }
-
-        LoginRequest loginRequest = LoginRequest.builder()
-                .email(registeredEmail)
-                .password(registeredPassword)
-                .build();
-        LoginResponse loginResponse = authServiceAPI.loginUser(loginRequest);
-        UsersQueries.setUserSuperAdminName(loginResponse.getUserId());
-        Response pendingProducts = authServiceAPI.getPendingProducts(loginResponse.getAccessToken());
+        Response pendingProducts = authServiceAPI.getPendingProducts(accessTokenSuperAdmin);
 
         assertEquals(200, pendingProducts.statusCode());
     }
 
+
     @Test
     void getPendingProductsRegularUser() {
-        if (!isUserRegistered) {
-            registerUser();
-        }
+        Response pendingProducts = authServiceAPI.getPendingProducts(accessToken);
 
-        LoginRequest loginRequest = LoginRequest.builder()
-                .email(registeredEmail)
-                .password(registeredPassword)
-                .build();
-
-        LoginResponse loginResponse = authServiceAPI.loginUser(loginRequest);
-        UsersQueries.setUserSuperAdminName(loginResponse.getUserId());
-        Response pendingProducts = authServiceAPI.getPendingProducts(loginResponse.getAccessToken());
-
-        assertEquals(200, pendingProducts.statusCode());
+        assertEquals(403, pendingProducts.statusCode());
     }
 
     @Test
@@ -94,4 +75,9 @@ public class AuthApiTests extends BaseTest {
         assertNotNull(userToken, "The token wasn't created");
     }
 
+    @Test
+    void getAllUsers() {
+        List<UserInfo> userInfos = authServiceAPI.retrieveUsers(accessTokenSuperAdmin);
+        assertTrue(userInfos.size() > 1);
+    }
 }

@@ -22,5 +22,6 @@ public class UsersQueries {
         String query = "UPDATE users SET is_superadmin = TRUE WHERE id = ?::UUID";
         new QueryRunner().execute(getConnection(), query, id);
     }
+
 }
 

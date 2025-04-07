@@ -12,8 +12,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit-jupiter-api.version>5.11.4</junit-jupiter-api.version>
-        <junit-jupiter-engine.version>5.11.4</junit-jupiter-engine.version>
+        <junit-jupiter.version>5.11.4</junit-jupiter.version>
         <selenium-java.version>4.28.</selenium-java.version>
         <rest-assured.version>5.5.0</rest-assured.version>
         <jackson-core.version>2.18.2</jackson-core.version>
@@ -26,18 +25,23 @@
     </properties>
 
     <dependencies>
-
         <!-- JUnit Jupiter API & Engine: Used for writing and executing unit tests in Java. -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit-jupiter-api.version}</version>
+            <version>${junit-jupiter.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit-jupiter-engine.version}</version>
+            <version>${junit-jupiter.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit-jupiter.version}</version>
         </dependency>
 
         <!-- Selenium Java: Used for automating web applications. -->

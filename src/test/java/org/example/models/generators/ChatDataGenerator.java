@@ -20,7 +20,7 @@ public class ChatDataGenerator {
         return ChatRequest.builder().name(name).isGroup(isGroup).participants(participants).build();
     }
 
-    public static AddMessageOnChatRequest ContentGeneration(String chatId) {
+    public static AddMessageOnChatRequest contentGeneration(String chatId) {
         String content = generateName();
         return new AddMessageOnChatRequest(chatId, content);
     }

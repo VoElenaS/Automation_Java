@@ -3,7 +3,7 @@ package org.example.tests.backend;
 import io.restassured.response.Response;
 import org.example.models.generators.SupplierDataGenerator;
 import org.example.models.request.SupplierRequest;
-import org.example.models.response.SupplierDetailModel;
+import org.example.models.response.SupplierDetailResponse;
 import org.example.models.response.SupplierResponse;
 import org.example.tests.BaseTest;
 import org.junit.jupiter.api.DisplayName;
@@ -35,7 +35,7 @@ public class SuppliersApiTests extends BaseTest {
         Response responseDuplicateName = suppliersServicesAPI.createSupplierWithResponse(supplier, accessToken);
 
         assertEquals(422, responseDuplicateName.statusCode(), "The duplicated supplier was created");
-        assertEquals("This supplier is already existed", responseDuplicateName.as(SupplierDetailModel.class).getDetail(), "The details doesn't match");
+        assertEquals("This supplier is already existed", responseDuplicateName.as(SupplierDetailResponse.class).getDetail(), "The details doesn't match");
     }
 
     @Test
