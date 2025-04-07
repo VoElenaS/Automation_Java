@@ -1,4 +1,6 @@
 //The project is not standalone, it requires StoreManager project
+
+
 Stomanager Project Automation The Stomanager Project is a warehouse and order management system that I automated from scratch. 
 I created a testing framework using various design techniques such as 
 boundary value analysis, equivalence classes, decision tables, state transitions testing, and error guessing (exploratory testing).
