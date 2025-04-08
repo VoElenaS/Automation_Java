@@ -14,6 +14,7 @@ import org.example.tests.BaseTest;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -79,5 +80,10 @@ public class AuthApiTests extends BaseTest {
     void getAllUsers() {
         List<UserInfo> userInfos = authServiceAPI.retrieveUsers(accessTokenSuperAdmin);
         assertTrue(userInfos.size() > 1);
+    }
+
+    @Test
+    void RateLimetTest() {
+        IntStream.range(0, 100).parallel().forEach(i -> authServiceAPI.retrieveUsers(accessTokenSuperAdmin));
     }
 }
