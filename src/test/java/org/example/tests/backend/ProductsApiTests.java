@@ -1,5 +1,6 @@
 package org.example.tests.backend;
 
+import io.qameta.allure.Feature;
 import io.restassured.response.Response;
 import org.example.models.generators.ProductDataGenerator;
 import org.example.models.generators.SupplierDataGenerator;
@@ -28,6 +29,7 @@ public class ProductsApiTests extends BaseTest {
     private static String supplierId;
     private static String productId;
 
+    @Feature("Product management")
     @Test
     @Order(0)
     void createSupplier() {

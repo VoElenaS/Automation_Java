@@ -4,6 +4,7 @@ import io.restassured.http.Method;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BaseAPI {
@@ -29,7 +30,27 @@ public class BaseAPI {
     }
 
     protected <T> T validaResponse(Response response, Class<T> clazz) {
-        assertTrue(response.statusCode() < 400, "Error status code " + response.statusCode());
+        assertTrue(response.statusCode() < 300, "Error status code " + response.statusCode());
+        return response.as(clazz);
+    }
+
+    protected <T> T validaResponseCreated(Response response, Class<T> clazz) {
+        assertEquals(201, response.statusCode(), "Error status code " + response.statusCode());
+        return response.as(clazz);
+    }
+
+    protected <T> T validaResponseSuccessful(Response response, Class<T> clazz) {
+        assertEquals(200, response.statusCode(), "Error status code " + response.statusCode());
+        return response.as(clazz);
+    }
+
+    protected <T> T validaResponseBadRequest(Response response, Class<T> clazz) {
+        assertEquals(400, response.statusCode(), "Error status code " + response.statusCode());
+        return response.as(clazz);
+    }
+
+    protected <T> T validaResponseUnprocessableEntity(Response response, Class<T> clazz) {
+        assertEquals(422, response.statusCode(), "Error status code " + response.statusCode());
         return response.as(clazz);
     }
 

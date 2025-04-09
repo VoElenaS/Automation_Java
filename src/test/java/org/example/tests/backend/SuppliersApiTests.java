@@ -1,5 +1,6 @@
 package org.example.tests.backend;
 
+import io.qameta.allure.Feature;
 import io.restassured.response.Response;
 import org.example.models.generators.SupplierDataGenerator;
 import org.example.models.request.SupplierRequest;
@@ -19,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SuppliersApiTests extends BaseTest {
 
+    @Feature("Supplier management")
     @Test
     @Order(1)
     void createSupplierWithAllFields() {

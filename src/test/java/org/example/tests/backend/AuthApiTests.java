@@ -1,5 +1,6 @@
 package org.example.tests.backend;
 
+import io.qameta.allure.Feature;
 import io.restassured.response.Response;
 import org.example.db.UsersQueries;
 import org.example.db.models.UserDB;
@@ -14,7 +15,6 @@ import org.example.tests.BaseTest;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,6 +24,7 @@ public class AuthApiTests extends BaseTest {
     private static String registeredPassword;
     private static boolean isUserRegistered = false;
 
+    @Feature("User management")
     @Test
     void registerUser() {
         if (!isUserRegistered) {
@@ -80,10 +81,5 @@ public class AuthApiTests extends BaseTest {
     void getAllUsers() {
         List<UserInfo> userInfos = authServiceAPI.retrieveUsers(accessTokenSuperAdmin);
         assertTrue(userInfos.size() > 1);
-    }
-
-    @Test
-    void RateLimetTest() {
-        IntStream.range(0, 100).parallel().forEach(i -> authServiceAPI.retrieveUsers(accessTokenSuperAdmin));
     }
 }

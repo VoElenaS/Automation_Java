@@ -3,6 +3,7 @@ package org.example.services;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.example.models.request.AddMessageOnChatRequest;
 import org.example.models.request.ChatRequest;
@@ -28,7 +29,8 @@ public class ChatsServicesAPI extends BaseAPI {
                 .basePath(CHATS_ENDPOINT)
                 .header("Authorization", "Bearer " + accessToken)
                 .body(chatRequest);
-        return sendRequestPost(request).as(ChatResponse.class);
+        Response response = sendRequestPost(request);
+        return validaResponseCreated(response, ChatResponse.class);
     }
 
     public AddMessageOnChatResponse addMessageOnChat(String chatId, AddMessageOnChatRequest messageOnChatRequest, String accessToken) {
@@ -38,7 +40,8 @@ public class ChatsServicesAPI extends BaseAPI {
                 .pathParam("chatId", chatId)  // Set the chatId as a path parameter
                 .header("Authorization", "Bearer " + accessToken)
                 .body(messageOnChatRequest);
-        return sendRequestPost(request).as(AddMessageOnChatResponse.class);  // Ensure correct response class
+        Response response = sendRequestPost(request);
+        return validaResponseCreated(response, AddMessageOnChatResponse.class);  // Ensure correct response class
     }
 
     public ChatAddUserResponse addUserToChat(String userId, String chatId, String accessToken) {
@@ -48,8 +51,7 @@ public class ChatsServicesAPI extends BaseAPI {
                 .queryParam("user_id", userId)
                 .queryParam("chat_id", chatId)// Set the chatId as a path parameter
                 .header("Authorization", "Bearer " + accessToken);
-        return sendRequestPatch(request).as(ChatAddUserResponse.class);  // Ensure correct response class
+        Response response = sendRequestPatch(request);
+        return validaResponseSuccessful(response, ChatAddUserResponse.class);  // Ensure correct response class
     }
-
-
 }

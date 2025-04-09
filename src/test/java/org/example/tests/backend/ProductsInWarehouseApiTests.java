@@ -1,5 +1,6 @@
 package org.example.tests.backend;
 
+import io.qameta.allure.Feature;
 import io.restassured.response.Response;
 import org.example.models.generators.ProductDataGenerator;
 import org.example.models.generators.SupplierDataGenerator;
@@ -20,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ProductsInWarehouseApiTests extends BaseTest {
 
+    @Feature("Product in Warehouse management")
     @Test
     @DisplayName("Adding product in warehouse")
     void addProductInWarehouse() {

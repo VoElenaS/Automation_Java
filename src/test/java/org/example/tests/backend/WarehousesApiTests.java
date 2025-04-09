@@ -1,5 +1,6 @@
 package org.example.tests.backend;
 
+import io.qameta.allure.Feature;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.example.models.generators.WarehouseDataGenerator;
@@ -18,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class WarehousesApiTests extends BaseTest {
 
+    @Feature("Warehouse management")
     @Test
     @DisplayName("Create Warehouse with All Fields")
     void createWarehouse() {
