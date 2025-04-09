@@ -19,10 +19,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.IntStream;
 
+@Feature("Chats management")
 public class ChatsApiTests extends BaseTest {
     public static ChatResponse chatResponse;
 
-    @Feature("Chats management")
     @Test
     @Order(0)
     void createChatTest() {
@@ -33,7 +33,7 @@ public class ChatsApiTests extends BaseTest {
         chatResponse = chatServiceAPI.createChat(chatRequest, accessTokenSuperAdmin);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Add into chat {index} {0} messages")
     @ValueSource(ints = {10, 20, 50, 100})
     @Order(1)
         //@RepeatedTest(51)

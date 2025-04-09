@@ -27,7 +27,6 @@ public class SupplierPage implements HasNavigationBar {
 
 
     public SupplierPage(WebDriver driver) {
-
         this.driver = driver;
         PageFactory.initElements(this.driver, this);
     }
@@ -40,7 +39,6 @@ public class SupplierPage implements HasNavigationBar {
     }
 
     public boolean isSupplierExistOnThePage(String name) {
-
         return suppliersTabelRows.stream()
                 .map(SuppliersTableRow::new)
                 .anyMatch(row -> row.getName().equals(name));

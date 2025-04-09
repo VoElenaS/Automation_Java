@@ -1,5 +1,6 @@
 package org.example.services;
 
+import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
@@ -23,6 +24,7 @@ public class ChatsServicesAPI extends BaseAPI {
             .setContentType(ContentType.JSON)
             .build();
 
+    @Step("Crete test")
     public ChatResponse createChat(ChatRequest chatRequest, String accessToken) {
         RequestSpecification request = RestAssured
                 .given(chatsServiceRequest)
