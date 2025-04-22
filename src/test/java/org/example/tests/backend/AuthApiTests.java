@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @lombok.extern.slf4j.Slf4j
 @Slf4j
+@Feature("User management")
 public class AuthApiTests extends BaseTest {
 
     private static String registeredEmail;
@@ -28,7 +29,6 @@ public class AuthApiTests extends BaseTest {
     private static boolean isUserRegistered = false;
 
 
-    @Feature("User management")
     @Test
     void registerUser() {
         if (!isUserRegistered) {

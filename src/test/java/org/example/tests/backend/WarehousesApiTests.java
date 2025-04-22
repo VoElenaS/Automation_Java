@@ -17,9 +17,10 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Feature("Warehouse management")
+
 public class WarehousesApiTests extends BaseTest {
 
-    @Feature("Warehouse management")
     @Test
     @DisplayName("Create Warehouse with All Fields")
     void createWarehouse() {

@@ -1,4 +1,4 @@
-# 🤖 Stomanager Project Automation
+# 🤖 StoreManager Project Automation
 
 > **Note:** This automation framework is **not standalone**. 
 
@@ -6,7 +6,7 @@
 
 ## 📦 Project Overview
 
-The **Stomanager Project** is a comprehensive warehouse and order management system. 
+The **StoreManager Project** is a comprehensive warehouse and order management system.
 This automation suite was built **from scratch** to validate the system's functionality at both API and UI levels, applying industry-standard design and testing practices.
 
 The framework emphasizes **modularity**, **readability**, and **maintainability**, making it scalable for long-term usage and easy onboarding.
@@ -65,5 +65,5 @@ The framework is organized to ensure each API service is easy to manage and exte
 
 Clone this automation framework:
    ```bash
-   git clone https://github.com/your-username/stomanager-automation.git
+   git clone https://github.com/your-username/storemanager-automation.git
    cd stomanager-automation

@@ -19,9 +19,9 @@ import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Feature("Product in Warehouse management")
 public class ProductsInWarehouseApiTests extends BaseTest {
 
-    @Feature("Product in Warehouse management")
     @Test
     @DisplayName("Adding product in warehouse")
     void addProductInWarehouse() {

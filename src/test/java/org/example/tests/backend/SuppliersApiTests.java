@@ -18,9 +18,10 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Feature("Supplier management")
+
 public class SuppliersApiTests extends BaseTest {
 
-    @Feature("Supplier management")
     @Test
     @Order(1)
     void createSupplierWithAllFields() {

@@ -23,13 +23,13 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Feature("Product management")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ProductsApiTests extends BaseTest {
 
     private static String supplierId;
     private static String productId;
 
-    @Feature("Product management")
     @Test
     @Order(0)
     void createSupplier() {
