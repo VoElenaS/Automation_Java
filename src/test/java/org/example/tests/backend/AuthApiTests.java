@@ -1,5 +1,6 @@
 package org.example.tests.backend;
 
+import groovy.util.logging.Slf4j;
 import io.qameta.allure.Feature;
 import io.restassured.response.Response;
 import org.example.db.UsersQueries;
@@ -18,11 +19,14 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@lombok.extern.slf4j.Slf4j
+@Slf4j
 public class AuthApiTests extends BaseTest {
 
     private static String registeredEmail;
     private static String registeredPassword;
     private static boolean isUserRegistered = false;
+
 
     @Feature("User management")
     @Test
@@ -30,6 +34,7 @@ public class AuthApiTests extends BaseTest {
         if (!isUserRegistered) {
             RegisterRequest registerRequest = UserDataGenerator.generate();
             RegisterResponse registerResponse = authServiceAPI.registerUser(registerRequest);
+            log.info("Create user: {}", registerRequest.getName());
 
             assertEquals("User successfully created", registerResponse.getMessage());
             assertEquals(registerRequest.getEmail(), registerResponse.getUser().getEmail());
