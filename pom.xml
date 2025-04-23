@@ -25,10 +25,9 @@
         <slf4j-api.version>2.0.16</slf4j-api.version>
         <logback-classic.version>1.5.16</logback-classic.version>
         <allure-junit5.version>2.20.0</allure-junit5.version>
-        <aspectj.version>1.9.9.1</aspectj.version>
+        <aspectj.version>1.9.23</aspectj.version>
         <javax.inject.version>1</javax.inject.version>
         <allure-maven.version>2.10.0</allure-maven.version>
-        <aspectjweaver.version>1.9.23</aspectjweaver.version>
     </properties>
     <dependencies>
         <!-- JUnit Jupiter API & Engine: Used for writing and executing unit tests in Java. -->
@@ -132,7 +131,7 @@
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
-            <version>${aspectjweaver.version}</version>
+            <version>${aspectj.version}</version>
         </dependency>
     </dependencies>
     <build>
@@ -157,7 +156,7 @@
                     <dependency>
                         <groupId>org.aspectj</groupId>
                         <artifactId>aspectjweaver</artifactId>
-                        <version>${aspectjweaver.version}</version>
+                        <version>${aspectj.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
