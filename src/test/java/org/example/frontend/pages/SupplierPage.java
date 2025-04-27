@@ -1,8 +1,8 @@
-package org.example.tests.frontend.pages;
+package org.example.frontend.pages;
 
 
 import lombok.Data;
-import org.example.tests.frontend.pages.elements.SuppliersTableRow;
+import org.example.frontend.pages.elements.SuppliersTableRow;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,7 +16,6 @@ import java.util.List;
 @Data
 
 public class SupplierPage implements HasNavigationBar {
-
     WebDriver driver;
 
     @FindBy(css = "table#suppliers-table tbody tr")
@@ -24,7 +23,6 @@ public class SupplierPage implements HasNavigationBar {
 
     @FindBy(xpath = "//*[contains(text(), 'Поставщик успешно удален')]")
     WebElement deleteSupplierNotification;
-
 
     public SupplierPage(WebDriver driver) {
         this.driver = driver;
@@ -53,6 +51,5 @@ public class SupplierPage implements HasNavigationBar {
             return false;
         }
     }
-
 
 }

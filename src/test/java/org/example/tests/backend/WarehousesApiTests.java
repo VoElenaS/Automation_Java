@@ -7,7 +7,7 @@ import org.example.models.generators.WarehouseDataGenerator;
 import org.example.models.request.WarehouseRequest;
 import org.example.models.response.ValidationResponse;
 import org.example.models.response.WarehouseResponse;
-import org.example.tests.BaseTest;
+import org.example.tests.BaseApiTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Feature("Warehouse management")
 
-public class WarehousesApiTests extends BaseTest {
+public class WarehousesApiTests extends BaseApiTest {
 
     @Test
     @DisplayName("Create Warehouse with All Fields")

@@ -8,7 +8,7 @@ import org.example.models.request.RegisterRequest;
 import org.example.models.response.ChatResponse;
 import org.example.models.response.RegisterResponse;
 import org.example.models.response.UserInfo;
-import org.example.tests.BaseTest;
+import org.example.tests.BaseApiTest;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,7 +20,7 @@ import java.util.Set;
 import java.util.stream.IntStream;
 
 @Feature("Chats management")
-public class ChatsApiTests extends BaseTest {
+public class ChatsApiTests extends BaseApiTest {
     public static ChatResponse chatResponse;
 
     @Test

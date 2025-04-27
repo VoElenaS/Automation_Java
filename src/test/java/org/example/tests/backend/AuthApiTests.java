@@ -12,7 +12,7 @@ import org.example.models.response.LoginResponse;
 import org.example.models.response.RegisterResponse;
 import org.example.models.response.UserInfo;
 import org.example.models.response.UserTokenResponse;
-import org.example.tests.BaseTest;
+import org.example.tests.BaseApiTest;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @lombok.extern.slf4j.Slf4j
 @Slf4j
 @Feature("User management")
-public class AuthApiTests extends BaseTest {
+public class AuthApiTests extends BaseApiTest {
 
     private static String registeredEmail;
     private static String registeredPassword;

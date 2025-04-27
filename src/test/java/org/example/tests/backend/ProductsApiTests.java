@@ -11,7 +11,7 @@ import org.example.models.response.ProductResponse;
 import org.example.models.response.SupplierResponse;
 import org.example.models.response.ValidationResponse;
 import org.example.services.ProductsServicesAPI;
-import org.example.tests.BaseTest;
+import org.example.tests.BaseApiTest;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Feature("Product management")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class ProductsApiTests extends BaseTest {
+public class ProductsApiTests extends BaseApiTest {
 
     private static String supplierId;
     private static String productId;

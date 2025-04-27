@@ -6,7 +6,7 @@ import org.example.models.generators.SupplierDataGenerator;
 import org.example.models.request.SupplierRequest;
 import org.example.models.response.SupplierDetailResponse;
 import org.example.models.response.SupplierResponse;
-import org.example.tests.BaseTest;
+import org.example.tests.BaseApiTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Feature("Supplier management")
 
-public class SuppliersApiTests extends BaseTest {
+public class SuppliersApiTests extends BaseApiTest {
 
     @Test
     @Order(1)

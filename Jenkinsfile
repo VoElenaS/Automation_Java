@@ -23,7 +23,6 @@ pipeline {
                   bat "mvn clean test site"
                   }
              }
-
         }
 
         stage('Generate Allure Report') {

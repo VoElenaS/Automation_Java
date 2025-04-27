@@ -1,4 +1,4 @@
-package org.example.tests.frontend.models;
+package org.example.frontend.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

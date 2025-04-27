@@ -11,7 +11,7 @@ import org.example.models.request.WarehouseRequest;
 import org.example.models.response.ProductResponse;
 import org.example.models.response.SupplierResponse;
 import org.example.models.response.WarehouseResponse;
-import org.example.tests.BaseTest;
+import org.example.tests.BaseApiTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +20,7 @@ import java.util.stream.IntStream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Feature("Product in Warehouse management")
-public class ProductsInWarehouseApiTests extends BaseTest {
+public class ProductsInWarehouseApiTests extends BaseApiTest {
 
     @Test
     @DisplayName("Adding product in warehouse")

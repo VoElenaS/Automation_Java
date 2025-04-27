@@ -10,7 +10,7 @@ import org.example.services.*;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
-public abstract class BaseTest {
+public abstract class BaseApiTest {
 
     public static final String API_UI_URL = "http://localhost:8001/login";
     public static String accessToken;

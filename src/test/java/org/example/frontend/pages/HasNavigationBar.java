@@ -1,10 +1,9 @@
-package org.example.tests.frontend.pages;
+package org.example.frontend.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public interface HasNavigationBar {
-
     WebDriver getDriver();
 
     default boolean isPersonalAccountDisplayed() {

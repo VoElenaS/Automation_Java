@@ -1,4 +1,4 @@
-package org.example.tests.frontend.pages.elements;
+package org.example.frontend.pages.elements;
 
 import org.example.models.request.SupplierRequest;
 import org.openqa.selenium.By;
