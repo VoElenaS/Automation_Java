@@ -11,8 +11,7 @@ public class BaseUiTest extends BaseApiTest {
 
     @BeforeEach
     public void setUpUI(TestInfo testInfo) {
-        int spaceIndex = testInfo.getDisplayName().lastIndexOf(' ');
-        String browserName = testInfo.getDisplayName().substring(spaceIndex + 1);
+        String browserName = testInfo.getDisplayName();
         driver = DriverFactory.getDriver(DriverFactory.Browsers.valueOf(browserName));
     }
 

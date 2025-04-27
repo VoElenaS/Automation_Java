@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 
 public class User {
-
     String email;
     String password;
 }

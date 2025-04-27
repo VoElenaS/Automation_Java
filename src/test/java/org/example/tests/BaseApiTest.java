@@ -7,12 +7,13 @@ import org.example.models.request.LoginRequest;
 import org.example.models.request.RegisterRequest;
 import org.example.models.response.LoginResponse;
 import org.example.services.*;
+import org.example.utils.TestProperties;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
 public abstract class BaseApiTest {
 
-    public static final String API_UI_URL = "http://localhost:8001/login";
+    public static final String API_UI_URL = TestProperties.properties.getProperty("api_ui_url");
     public static String accessToken;
     public static String userId;
     public static String accessTokenSuperAdmin;

@@ -1,6 +1,7 @@
 package org.example.tests.frontend;
 
 import org.example.frontend.DriverFactory;
+import org.example.frontend.UiTest;
 import org.example.frontend.models.User;
 import org.example.frontend.pages.LoginPage;
 import org.example.frontend.pages.ProductPage;
@@ -12,9 +13,6 @@ import org.example.models.request.SupplierRequest;
 import org.example.models.response.SupplierResponse;
 import org.example.tests.BaseUiTest;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,8 +25,7 @@ public class StoreManagerAutoUiTests extends BaseUiTest {
         driver.get(API_UI_URL);
     }
 
-    @ParameterizedTest
-    @EnumSource(DriverFactory.Browsers.class)
+    @UiTest
     void loginTest(DriverFactory.Browsers browser) {
         new LoginPage(driver).loginAs(testUser);
         ProductPage productPage = new ProductPage(driver);
@@ -36,24 +33,21 @@ public class StoreManagerAutoUiTests extends BaseUiTest {
         System.out.println();
     }
 
-    @Test
-    void deleteSupplierTest() {
+    @UiTest
+    void deleteSupplierTest(DriverFactory.Browsers browser) {
         SupplierResponse createdSupplier = suppliersServicesAPI.createSupplier(SupplierDataGenerator.generate(), accessToken);
-
         new LoginPage(driver).loginAs(testUser);
-        new ProductPage(driver).clickSuppliersLink();
 
         SupplierPage supplierPage = new SupplierPage(driver);
+        supplierPage.clickSuppliersLink();
         SupplierRequest actualSupplier = supplierPage.getTableRowByName(createdSupplier.getName()).getSupplierCreateModel();
-
         assertEquals(createdSupplier.getName(), actualSupplier.getName());
 
         supplierPage.getTableRowByName(createdSupplier.getName()).clickDeleteButton();
         driver.switchTo().alert().accept();
+
         assertTrue(supplierPage.isDeletedSupplierNotificationDisplayed());
-
         assertFalse(supplierPage.isSupplierExistOnThePage(createdSupplier.getName()));
-
     }
 
     private User registerTestUser() {

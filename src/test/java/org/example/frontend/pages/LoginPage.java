@@ -7,7 +7,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage {
-
     @FindBy(css = "#email")
     WebElement emailFiled;
     @FindBy(css = "#password")
