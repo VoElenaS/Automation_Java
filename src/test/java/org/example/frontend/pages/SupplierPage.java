@@ -36,12 +36,6 @@ public class SupplierPage implements HasNavigationBar {
                 .findFirst().orElseThrow();
     }
 
-    public boolean isSupplierExistOnThePage(String name) {
-        return suppliersTabelRows.stream()
-                .map(SuppliersTableRow::new)
-                .anyMatch(row -> row.getName().equals(name));
-    }
-
     public boolean isDeletedSupplierNotificationDisplayed() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         try {
@@ -50,6 +44,19 @@ public class SupplierPage implements HasNavigationBar {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public boolean isSupplierRemovedFromThePage(String name) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        return wait.until(driver1 -> {
+            try {
+                return suppliersTabelRows.stream()
+                        .map(SuppliersTableRow::new)
+                        .noneMatch(row -> row.getName().equals(name));
+            } catch (Exception e) {
+                return false;
+            }
+        });
     }
 
 }

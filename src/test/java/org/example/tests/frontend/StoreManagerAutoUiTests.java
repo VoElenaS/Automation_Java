@@ -14,7 +14,8 @@ import org.example.models.response.SupplierResponse;
 import org.example.tests.BaseUiTest;
 import org.junit.jupiter.api.BeforeEach;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StoreManagerAutoUiTests extends BaseUiTest {
     User testUser;
@@ -47,7 +48,7 @@ public class StoreManagerAutoUiTests extends BaseUiTest {
         driver.switchTo().alert().accept();
 
         assertTrue(supplierPage.isDeletedSupplierNotificationDisplayed());
-        assertFalse(supplierPage.isSupplierExistOnThePage(createdSupplier.getName()));
+        assertTrue(supplierPage.isSupplierRemovedFromThePage(createdSupplier.getName()));
     }
 
     private User registerTestUser() {
