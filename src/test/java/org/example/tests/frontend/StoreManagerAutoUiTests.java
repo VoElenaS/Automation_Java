@@ -4,6 +4,7 @@ import org.example.frontend.DriverFactory;
 import org.example.frontend.UiTest;
 import org.example.frontend.UiUtils;
 import org.example.frontend.models.User;
+import org.example.frontend.pages.CreateProductForm;
 import org.example.frontend.pages.LoginPage;
 import org.example.frontend.pages.ProductPage;
 import org.example.frontend.pages.SupplierPage;
@@ -22,8 +23,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
 import java.time.Duration;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -43,45 +44,25 @@ public class StoreManagerAutoUiTests extends BaseUiTest {
         assertTrue(productPage.isPersonalAccountDisplayed());
     }
 
-    //???
     @UiTest
     void loginTestWithRememberMe(DriverFactory.Browsers browser) throws InterruptedException {
-        //enableDevTools();
         new LoginPage(driver).loginAs(testUser, true);
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//nav//a[contains(., 'Личный кабинет')]")));
-        Set<Cookie> cookies = driver.manage().getCookies();
-        System.out.println("Number of cookies: " + cookies.size());
-
-        Cookie refreshToken = null;
-
-        for (Cookie cookie : cookies) {
-            if ("refresh_token".equals(cookie.getName())) {
-                refreshToken = cookie;
-                System.out.println("refreshToken name: " + refreshToken.getName());
-                System.out.println("refreshToken value: " + refreshToken.getValue());
-            }
-        }
-
-        assertNotNull(refreshToken, "Refresh token should be present with checkbox RememberMe");
+        Cookie refreshCookie = driver.manage().getCookieNamed("refresh_token");
+        assertNotNull(refreshCookie, "Refresh token should be present with checkbox RememberMe");
 
         String userId = UiUtils.getFromLocalStorage(driver, "user_id");
-
-
         driver.quit();
         driver = DriverFactory.getDriver(browser);
-        //enableDevTools();
         driver.get(API_UI_URL);
-        //driver.manage().addCookie(refreshToken);
         if (driver instanceof FirefoxDriver) {
-            driver.manage().addCookie(new Cookie("refresh_token", refreshToken.getValue(), "/"));
+            driver.manage().addCookie(new Cookie("refresh_token", refreshCookie.getValue(), "/"));
         } else {
-            driver.manage().addCookie(refreshToken);
+            driver.manage().addCookie(refreshCookie);
         }
         UiUtils.setValueInLocalStorage(driver, "user_id", userId);
-        //driver.get(API_UI_URL);
         driver.navigate().refresh();
-
         ProductPage productPage = new ProductPage(driver);
         new WebDriverWait(driver, Duration.ofSeconds(300))
                 .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//nav//a[contains(., 'Личный кабинет')]")));
@@ -122,6 +103,22 @@ public class StoreManagerAutoUiTests extends BaseUiTest {
         boolean productDisplayed = productPage.isProductDisplayed(productResponse.getName());
 
         assertTrue(productDisplayed, "Product should be displayed in the table.");
+    }
+
+    //TODO
+    @UiTest
+    void createProduct(DriverFactory.Browsers browser) {
+        SupplierResponse supplierResponse = suppliersServicesAPI.createSupplier(SupplierDataGenerator.generate(), accessToken);
+        // ProductResponse productResponse = productsServicesAPI.createProduct(ProductDataGenerator.generate(supplierResponse.getSupplierId()), accessToken);
+
+        new LoginPage(driver).loginAs(testUser);
+        ProductPage productPage = new ProductPage(driver);
+        productPage.clickAddProduct();
+        CreateProductForm createProductForm = new CreateProductForm(driver);
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOf(createProductForm.btnCreateProduct));
+        String imagePath = new File("src/test/resources/img/foto.jpeg").getAbsolutePath();
+        createProductForm.createProduct(ProductDataGenerator.generate(supplierResponse.getSupplierId(), imagePath));
+
     }
 
     private User registerTestUser() {

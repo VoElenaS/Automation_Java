@@ -47,6 +47,10 @@ public class ProductPage implements HasNavigationBar {
         searchProductForm.sendKeys(productName);
     }
 
+    public void clickAddProduct() {
+        waitUntilClickable(addProductButton).click();
+    }
+
     public void clickSearch() {
         waitUntilClickable(searchProductButton).click();
     }

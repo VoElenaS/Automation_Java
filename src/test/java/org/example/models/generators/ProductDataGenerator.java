@@ -47,6 +47,10 @@ public class ProductDataGenerator {
     }
 
     public static ProductRequest generate(String supplierId) {
+        return generate(supplierId, generateImageUrl());
+    }
+
+    public static ProductRequest generate(String supplierId, String pathImg) {
         return ProductRequest.builder()
                 .name(generateName())
                 .description(generateDescription())
@@ -54,7 +58,7 @@ public class ProductDataGenerator {
                 .price(generatePrice())
                 .stockQuantity(generateStockQuantity())
                 .supplierId(supplierId)
-                .imageUrl(generateImageUrl())
+                .imageUrl(pathImg)
                 .weight(generateWeight())
                 .dimensions(generateDimensions())
                 .manufacturer(generateManufacturer())
