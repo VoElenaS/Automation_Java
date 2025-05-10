@@ -37,3 +37,4 @@ build/
 /src/test/resources/test_env.properties
 
 /logs
+**/src/main/java/*

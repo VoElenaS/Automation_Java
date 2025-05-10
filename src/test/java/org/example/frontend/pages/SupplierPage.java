@@ -19,7 +19,7 @@ public class SupplierPage implements HasNavigationBar {
     WebDriver driver;
 
     @FindBy(css = "table#suppliers-table tbody tr")
-    List<WebElement> suppliersTabelRows;
+    List<WebElement> suppliersTableRows;
 
     @FindBy(xpath = "//*[contains(text(), 'Поставщик успешно удален')]")
     WebElement deleteSupplierNotification;
@@ -30,7 +30,7 @@ public class SupplierPage implements HasNavigationBar {
     }
 
     public SuppliersTableRow getTableRowByName(String name) {
-        return suppliersTabelRows.stream()
+        return suppliersTableRows.stream()
                 .map(SuppliersTableRow::new)
                 .filter(row -> row.getName().equals(name))
                 .findFirst().orElseThrow();
@@ -50,7 +50,7 @@ public class SupplierPage implements HasNavigationBar {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         return wait.until(driver1 -> {
             try {
-                return suppliersTabelRows.stream()
+                return suppliersTableRows.stream()
                         .map(SuppliersTableRow::new)
                         .noneMatch(row -> row.getName().equals(name));
             } catch (Exception e) {

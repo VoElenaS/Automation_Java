@@ -36,4 +36,5 @@ public class SuppliersTableRow {
     public void clickDeleteButton() {
         root.findElement(By.cssSelector("button.btn-outline-danger")).click();
     }
+
 }

@@ -26,13 +26,11 @@ public abstract class BaseApiTest {
 
 
     @AfterAll
-
     static void tearDown() {
         DBUtils.closeConnection();
     }
 
     @BeforeAll
-
     public static void setupRegularUser() {
         AuthServiceAPI authServiceAPI = new AuthServiceAPI();
         RegisterRequest generateDataUserRequest = UserDataGenerator.generate();
