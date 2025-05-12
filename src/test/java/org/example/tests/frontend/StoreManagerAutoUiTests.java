@@ -11,6 +11,7 @@ import org.example.frontend.pages.SupplierPage;
 import org.example.models.generators.ProductDataGenerator;
 import org.example.models.generators.SupplierDataGenerator;
 import org.example.models.generators.UserDataGenerator;
+import org.example.models.request.ProductRequest;
 import org.example.models.request.RegisterRequest;
 import org.example.models.request.SupplierRequest;
 import org.example.models.response.ProductResponse;
@@ -107,18 +108,24 @@ public class StoreManagerAutoUiTests extends BaseUiTest {
 
     //TODO
     @UiTest
-    void createProduct(DriverFactory.Browsers browser) {
+    void createProduct(DriverFactory.Browsers browser) throws InterruptedException {
         SupplierResponse supplierResponse = suppliersServicesAPI.createSupplier(SupplierDataGenerator.generate(), accessToken);
-        // ProductResponse productResponse = productsServicesAPI.createProduct(ProductDataGenerator.generate(supplierResponse.getSupplierId()), accessToken);
-
         new LoginPage(driver).loginAs(testUser);
         ProductPage productPage = new ProductPage(driver);
         productPage.clickAddProduct();
         CreateProductForm createProductForm = new CreateProductForm(driver);
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOf(createProductForm.btnCreateProduct));
+        UiUtils.waitVisible(createProductForm.headerAddProduct, driver);
         String imagePath = new File("src/test/resources/img/foto.jpeg").getAbsolutePath();
-        createProductForm.createProduct(ProductDataGenerator.generate(supplierResponse.getSupplierId(), imagePath));
+        ProductRequest product = ProductDataGenerator.generate(supplierResponse.getSupplierId(), imagePath);
+        createProductForm.createProduct(product);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.not(ExpectedConditions.visibilityOf(createProductForm.headerAddProduct)));
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button.btn.btn-outline-secondary[onclick=\"searchProduct()\"]"))).click();
+        productPage.searchProductByName(product.getName());
+        productPage.clickSearch();
+        boolean productDisplayed = wait.until(d -> productPage.isProductDisplayed(product.getName()));
 
+        assertTrue(productDisplayed, "Product should be displayed in the table.");
     }
 
     private User registerTestUser() {

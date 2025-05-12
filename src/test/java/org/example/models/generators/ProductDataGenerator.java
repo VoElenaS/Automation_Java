@@ -19,7 +19,7 @@ public class ProductDataGenerator {
     }
 
     public static String generatePrice() {
-        double price = Math.round((nextDouble() * 99999999.99) * 100) / 100.0;
+        double price = Math.round((nextDouble() * 999999.99) * 100) / 100.0;
         return String.format("%.2f", price);
     }
 

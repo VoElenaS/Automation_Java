@@ -2,6 +2,11 @@ package org.example.frontend;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class UiUtils {
     public static String getFromLocalStorage(WebDriver driver, String itemKey) {
@@ -20,5 +25,9 @@ public class UiUtils {
     public static void scrollBottomRightCornerToElement(WebDriver driver) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollTo(document.body.scrollWidth, document.body.scrollHeight);");
+    }
+
+    public static void waitVisible(WebElement webElement, WebDriver driver) {
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOf(webElement));
     }
 }

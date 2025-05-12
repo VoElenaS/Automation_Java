@@ -1,15 +1,16 @@
 package org.example.frontend.pages;
 
+import org.example.frontend.UiUtils;
 import org.example.models.request.ProductRequest;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
-public class CreateProductForm {
+public class CreateProductForm extends BasePage {
 
-    WebDriver driver;
+    @FindBy(css = ".modal-title#addProductModalLabel")
+    public WebElement headerAddProduct;
 
     @FindBy(css = "input[type='text'].form-control#add-name")
     private WebElement productName;
@@ -46,8 +47,8 @@ public class CreateProductForm {
 
 
     public CreateProductForm(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+        super(driver);
+        init();
     }
 
     public void createProduct(ProductRequest product) {
@@ -60,70 +61,81 @@ public class CreateProductForm {
                 .setProductQuantity(product.getStockQuantity())
                 .setProductWeight(product.getWeight())
                 .setSupplierId(product.getSupplierId())
-                .setProductManufacturer(product.getManufacturer())
-                .clickProductCreate();
+                .setProductManufacturer(product.getManufacturer());
+
+        UiUtils.scrollBottomRightCornerToElement(driver);
+        clickProductCreate();
     }
 
     public CreateProductForm setProductName(String name) {
-        productName.clear();
+        waitUntilVisible(productName).clear();
         productName.sendKeys(name);
         return this;
     }
 
     public CreateProductForm setProductDescription(String description) {
-        productDescription.clear();
+        waitUntilVisible(productDescription).clear();
         productDescription.sendKeys(description);
         return this;
     }
 
     public CreateProductForm setProductCategory(String category) {
-        productCategory.clear();
+        waitUntilVisible(productCategory).clear();
         productCategory.sendKeys(category);
         return this;
     }
 
     public CreateProductForm setProductPrice(String price) {
-        productPrice.clear();
+        waitUntilVisible(productPrice).clear();
         productPrice.sendKeys(price);
         return this;
     }
 
     public CreateProductForm setProductQuantity(int quantity) {
-        productQuantity.clear();
+        waitUntilVisible(productQuantity).clear();
         productQuantity.sendKeys(String.valueOf(quantity));
         return this;
     }
 
     public CreateProductForm setSupplierId(String supplier) {
-        Select supplierSelect = new Select(supplierId);
-        supplierSelect.selectByValue(supplier);
+        Select supplierSelect = new Select(waitUntilVisible(supplierId));
+        wait.until(d -> {
+            try {
+                supplierSelect.selectByValue(supplier);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        });
+
         return this;
     }
 
     public CreateProductForm setProductImage(String imgPath) {
-        productImage.sendKeys(imgPath);
+        waitUntilVisible(productImage).sendKeys(imgPath);
         return this;
     }
 
     public CreateProductForm setProductWeight(String weight) {
-        productWeight.clear();
+        waitUntilVisible(productWeight).clear();
         productWeight.sendKeys(weight);
         return this;
     }
 
     public CreateProductForm setProductDimensions(String dimensions) {
-        productDimensions.clear();
+        waitUntilVisible(productDimensions).clear();
         productDimensions.sendKeys(dimensions);
         return this;
     }
 
     public CreateProductForm setProductManufacturer(String manufacturer) {
-        productManufacturer.clear();
+        waitUntilVisible(productManufacturer).clear();
         productManufacturer.sendKeys(manufacturer);
         return this;
     }
 
     public void clickProductCreate() {
-        btnCreateProduct.click();
+        waitUntilClickable(btnCreateProduct).click();
     }
+
 }

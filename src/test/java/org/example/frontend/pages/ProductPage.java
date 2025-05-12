@@ -1,19 +1,12 @@
 package org.example.frontend.pages;
 
-
-import lombok.Data;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import java.util.List;
 
-@Data
-public class ProductPage implements HasNavigationBar {
+public class ProductPage extends BasePage implements HasNavigationBar {
 
     @FindBy(css = "#add-new-product-btn")
     private WebElement addProductButton;
@@ -33,13 +26,9 @@ public class ProductPage implements HasNavigationBar {
     @FindBy(css = "table#products-table tr")
     private List<WebElement> tableProductsRows;
 
-    private final WebDriver driver;
-    private final WebDriverWait wait;
-
     public ProductPage(WebDriver driver) {
-        this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        PageFactory.initElements(this.driver, this);
+        super(driver);
+        init();
     }
 
     public void searchProductByName(String productName) {
@@ -56,20 +45,15 @@ public class ProductPage implements HasNavigationBar {
     }
 
     public boolean isProductDisplayed(String productName) {
-        for (WebElement row : tableProductsRows) {
-            if (row.getText().contains(productName)) {
-                return true;
+        try {
+            for (WebElement row : tableProductsRows) {
+                if (row.getText().contains(productName)) {
+                    return true;
+                }
             }
+        } catch (Exception e) {
         }
         return false;
-    }
-
-    private WebElement waitUntilClickable(WebElement element) {
-        return wait.until(ExpectedConditions.elementToBeClickable(element));
-    }
-
-    private WebElement waitUntilVisible(WebElement element) {
-        return wait.until(ExpectedConditions.visibilityOf(element));
     }
 
 }
