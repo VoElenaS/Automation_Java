@@ -11,7 +11,7 @@ public class ProductDataGenerator {
     }
 
     public static String generateDescription() {
-        return generateRandomAlphanumericString(10, 50);
+        return generateRandomAlphanumericString(10, 500);
     }
 
     public static String generateCategory() {

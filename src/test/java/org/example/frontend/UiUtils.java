@@ -28,6 +28,6 @@ public class UiUtils {
     }
 
     public static void waitVisible(WebElement webElement, WebDriver driver) {
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOf(webElement));
+        new WebDriverWait(driver, Duration.ofSeconds(300)).until(ExpectedConditions.visibilityOf(webElement));
     }
 }

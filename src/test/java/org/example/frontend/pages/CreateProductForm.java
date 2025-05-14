@@ -2,6 +2,8 @@ package org.example.frontend.pages;
 
 import org.example.frontend.UiUtils;
 import org.example.models.request.ProductRequest;
+import org.junit.platform.commons.util.StringUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -27,7 +29,7 @@ public class CreateProductForm extends BasePage {
     @FindBy(css = "input[type='number'].form-control#add-stock-quantity")
     private WebElement productQuantity;
 
-    @FindBy(css = ".form-control#add-supplier-id")
+    @FindBy(css = "#add-supplier-id")
     private WebElement supplierId;
 
     @FindBy(css = "input[type='file'].form-control#add-image-url")
@@ -45,6 +47,14 @@ public class CreateProductForm extends BasePage {
     @FindBy(xpath = "//button[contains(text(), 'Создать продукт')]")
     public WebElement btnCreateProduct;
 
+    @FindBy(css = "#nameError")
+    public WebElement nameError;
+
+    @FindBy(css = "#descriptionError")
+    public WebElement descriptionError;
+
+    @FindBy(css = "#categoryError")
+    public WebElement categoryError;
 
     public CreateProductForm(WebDriver driver) {
         super(driver);
@@ -67,21 +77,72 @@ public class CreateProductForm extends BasePage {
         clickProductCreate();
     }
 
+    public String getErrorMessage(String fieldId) {
+        try {
+            WebElement errElement = driver.findElement(By.cssSelector("#" + fieldId + "Error"));
+            return errElement.isDisplayed() ? errElement.getText().trim() : "";
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    public String getNameError() {
+        return getErrorMessage("name");
+    }
+
+    public String getDescriptionError() {
+        return getErrorMessage("description");
+    }
+
+    public String getCategoryError() {
+        return getErrorMessage("category");
+    }
+
+    public boolean isNameErrorVisible() {
+        try {
+            return nameError.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean isDescriptionErrorVisible() {
+        try {
+            return descriptionError.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean isCategoryErrorVisible() {
+        try {
+            return categoryError.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public CreateProductForm setProductName(String name) {
-        waitUntilVisible(productName).clear();
-        productName.sendKeys(name);
+        if (StringUtils.isNotBlank(name)) {
+            waitUntilVisible(productName).clear();
+            productName.sendKeys(name);
+        }
         return this;
     }
 
     public CreateProductForm setProductDescription(String description) {
-        waitUntilVisible(productDescription).clear();
-        productDescription.sendKeys(description);
+        if (StringUtils.isNotBlank(description)) {
+            waitUntilVisible(productDescription).clear();
+            productDescription.sendKeys(description);
+        }
         return this;
     }
 
     public CreateProductForm setProductCategory(String category) {
-        waitUntilVisible(productCategory).clear();
-        productCategory.sendKeys(category);
+        if (StringUtils.isNotBlank(category)) {
+            waitUntilVisible(productCategory).clear();
+            productCategory.sendKeys(category);
+        }
         return this;
     }
 
@@ -98,7 +159,7 @@ public class CreateProductForm extends BasePage {
     }
 
     public CreateProductForm setSupplierId(String supplier) {
-        Select supplierSelect = new Select(waitUntilVisible(supplierId));
+        Select supplierSelect = new Select(waitUntilClickable(supplierId));
         wait.until(d -> {
             try {
                 supplierSelect.selectByValue(supplier);
@@ -110,27 +171,72 @@ public class CreateProductForm extends BasePage {
 
         return this;
     }
+//    public CreateProductForm setSupplierId(String supplierId) {
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+//
+//        JavascriptExecutor js = (JavascriptExecutor) driver;
+//        js.executeScript("loadSuppliers('#add-supplier-id');");
+//
+//        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#add-supplier-id")));
+//
+//        WebElement dropdown = driver.findElement(By.cssSelector("#add-supplier-id"));
+//        Select select = new Select(dropdown);
+//
+//        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector("#add-supplier-id option"), 1));
+//
+//        int attempts = 0;
+//        while (attempts < 3) {
+//            try {
+//                List<WebElement> options = select.getOptions();
+//                for (WebElement option : options) {
+//                    if (option.getAttribute("value").equals(supplierId)) {
+//                        select.selectByValue(supplierId);
+//                        System.out.println("Selected supplier: " + supplierId);
+//                        return this;
+//                    }
+//                }
+//                break;
+//            } catch (StaleElementReferenceException e) {
+//                System.out.println("StaleElementReferenceException encountered, retrying...");
+//                attempts++;
+//                dropdown = driver.findElement(By.cssSelector("#add-supplier-id"));
+//                select = new Select(dropdown);
+//                wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector("#add-supplier-id option"), 1));
+//            }
+//        }
+//
+//        System.out.println("Supplier '" + supplierId + "' not found in the dropdown!");
+//        return this;
+//    }
 
     public CreateProductForm setProductImage(String imgPath) {
-        waitUntilVisible(productImage).sendKeys(imgPath);
+        if (StringUtils.isNotBlank(imgPath)) {
+            waitUntilVisible(productImage).sendKeys(imgPath);
+        }
         return this;
     }
 
     public CreateProductForm setProductWeight(String weight) {
-        waitUntilVisible(productWeight).clear();
-        productWeight.sendKeys(weight);
+        if (StringUtils.isNotBlank(weight)) {
+            waitUntilVisible(productWeight).clear();
+            productWeight.sendKeys(weight);
+        }
         return this;
     }
 
     public CreateProductForm setProductDimensions(String dimensions) {
-        waitUntilVisible(productDimensions).clear();
-        productDimensions.sendKeys(dimensions);
+        if (StringUtils.isNotBlank(dimensions)) {
+            waitUntilVisible(productDimensions).clear();
+            productDimensions.sendKeys(dimensions);
+        }
         return this;
     }
 
     public CreateProductForm setProductManufacturer(String manufacturer) {
-        waitUntilVisible(productManufacturer).clear();
-        productManufacturer.sendKeys(manufacturer);
+        if (StringUtils.isNotBlank(manufacturer)) {
+            waitUntilVisible(productManufacturer).clear();
+            productManufacturer.sendKeys(manufacturer);
+        }
         return this;
     }
 
