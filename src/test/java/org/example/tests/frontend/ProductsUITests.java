@@ -27,7 +27,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class StoreManagerAutoUiTests extends BaseUiTest {
+public class ProductsUITests extends BaseUiTest {
     static String supplierId;
     static String supplierName;
 
@@ -81,11 +81,15 @@ public class StoreManagerAutoUiTests extends BaseUiTest {
         new LoginPage(driver).loginAs(testUser);
         ProductPage productPage = new ProductPage(driver);
         productPage.clickAddProduct();
+
         CreateProductForm createProductForm = new CreateProductForm(driver);
         UiUtils.waitVisible(createProductForm.headerAddProduct, driver);
+        createProductForm.waitUntilSuppliersLoaded(productPage);
+
         String imagePath = new File("src/test/resources/img/foto.jpeg").getAbsolutePath();
         ProductRequest product = ProductDataGenerator.generate(supplierResponse.getSupplierId(), imagePath);
         createProductForm.createProduct(product);
+
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.not(ExpectedConditions.visibilityOf(createProductForm.headerAddProduct)));
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button.btn.btn-outline-secondary[onclick=\"searchProduct()\"]"))).click();

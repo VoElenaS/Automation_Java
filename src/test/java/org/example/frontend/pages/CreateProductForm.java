@@ -8,6 +8,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class CreateProductForm extends BasePage {
 
@@ -55,6 +58,9 @@ public class CreateProductForm extends BasePage {
 
     @FindBy(css = "#categoryError")
     public WebElement categoryError;
+
+    @FindBy(css = "#addProductModal .btn-close")
+    private WebElement closeBtn;
 
     public CreateProductForm(WebDriver driver) {
         super(driver);
@@ -170,6 +176,31 @@ public class CreateProductForm extends BasePage {
         });
 
         return this;
+    }
+
+    public void waitUntilSuppliersLoaded(ProductPage productPage) {
+        Select supplierSelect = new Select(waitUntilClickable(supplierId));
+        waitUntilClickable(closeBtn);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        wait.until(d -> {
+            try {
+                boolean isLoaded = !supplierSelect.getOptions().isEmpty() && "Выберите поставщика".equals(supplierSelect.getOptions().getFirst().getText());
+                System.out.println(isLoaded);
+                if (isLoaded) {
+                    return true;
+                }
+                System.out.println("Closing");
+                closeBtn.click();
+                System.out.println("Closed");
+                productPage.clickAddProduct();
+                System.out.println("Opening");
+                UiUtils.waitVisible(headerAddProduct, driver);
+                System.out.println("Opened");
+                return false;
+            } catch (Exception e) {
+                return false;
+            }
+        });
     }
 //    public CreateProductForm setSupplierId(String supplierId) {
 //        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));

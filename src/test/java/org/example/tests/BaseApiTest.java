@@ -24,7 +24,6 @@ public abstract class BaseApiTest {
     public WarehousesServicesAPI warehousesServicesAPI = new WarehousesServicesAPI();
     public ChatsServicesAPI chatServiceAPI = new ChatsServicesAPI();
 
-
     @AfterAll
     static void tearDown() {
         DBUtils.closeConnection();
@@ -35,8 +34,13 @@ public abstract class BaseApiTest {
         AuthServiceAPI authServiceAPI = new AuthServiceAPI();
         RegisterRequest generateDataUserRequest = UserDataGenerator.generate();
         authServiceAPI.registerUser(generateDataUserRequest);
+
         LoginResponse loginResponse = authServiceAPI
-                .loginUser(LoginRequest.builder().email(generateDataUserRequest.getEmail()).password(generateDataUserRequest.getPassword()).build());
+                .loginUser(LoginRequest.builder()
+                        .email(generateDataUserRequest.getEmail())
+                        .password(generateDataUserRequest.getPassword())
+                        .build());
+
         accessToken = loginResponse.getAccessToken();
         userId = loginResponse.getUserId();
     }
@@ -46,8 +50,11 @@ public abstract class BaseApiTest {
         AuthServiceAPI authServiceAPI = new AuthServiceAPI();
         RegisterRequest request = UserDataGenerator.generate();
         authServiceAPI.registerUser(request);
+
         LoginResponse loginResponse = authServiceAPI.loginUser(new LoginRequest(request.getEmail(), request.getPassword()));
+
         UsersQueries.setUserSuperAdminName(loginResponse.getUserId());
+
         accessTokenSuperAdmin = loginResponse.getAccessToken();
         superAdminId = loginResponse.getUserId();
     }

@@ -1,8 +1,8 @@
 package org.example.tests.backend;
 
-import groovy.util.logging.Slf4j;
 import io.qameta.allure.Feature;
 import io.restassured.response.Response;
+import lombok.extern.slf4j.Slf4j;
 import org.example.db.UsersQueries;
 import org.example.db.models.UserDB;
 import org.example.models.generators.UserDataGenerator;
@@ -19,7 +19,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@lombok.extern.slf4j.Slf4j
 @Slf4j
 @Feature("User management")
 public class AuthApiTests extends BaseApiTest {
@@ -27,7 +26,6 @@ public class AuthApiTests extends BaseApiTest {
     private static String registeredEmail;
     private static String registeredPassword;
     private static boolean isUserRegistered = false;
-
 
     @Test
     void registerUser() {
