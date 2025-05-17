@@ -1,5 +1,7 @@
 package org.example.services;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
@@ -7,12 +9,10 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.example.models.request.LoginRequest;
 import org.example.models.request.RegisterRequest;
-import org.example.models.response.LoginResponse;
-import org.example.models.response.RegisterResponse;
-import org.example.models.response.UserInfo;
-import org.example.models.response.UserTokenResponse;
+import org.example.models.response.*;
 import org.example.utils.TestProperties;
 
+import java.io.IOException;
 import java.util.List;
 
 public class AuthServiceAPI extends BaseAPI {
@@ -45,11 +45,30 @@ public class AuthServiceAPI extends BaseAPI {
                 .as(LoginResponse.class);
     }
 
-    public Response getPendingProducts(String accessToken) {
+    public Response getPendingProductsResponse(String accessToken) {
         RequestSpecification specification = RestAssured.given(authRequest)
                 .basePath(GET_PENDING_PRODUCT_ENDPOINT)
                 .header("Authorization", "bearer " + accessToken);
         return sendRequestGet(specification);
+    }
+
+    public List<ProductResponse> getPendingProducts(String accessToken) {
+        RequestSpecification specification = RestAssured.given(authRequest)
+                .basePath(GET_PENDING_PRODUCT_ENDPOINT)
+                .header("Authorization", "Bearer " + accessToken);
+
+        Response response = sendRequestGet(specification);
+        if (response.statusCode() == 200) {
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                return mapper.readValue(response.getBody().asString(), new TypeReference<List<ProductResponse>>() {
+                });
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to parse response to list", e);
+            }
+        } else {
+            throw new RuntimeException("Failed to get pending products. Status: " + response.statusCode());
+        }
     }
 
     public UserTokenResponse getUserToken(String userId) {

@@ -28,6 +28,8 @@
         <aspectj.version>1.9.23</aspectj.version>
         <javax.inject.version>1</javax.inject.version>
         <allure-maven.version>2.10.0</allure-maven.version>
+        <jakarta.validation-api.version>3.0.2</jakarta.validation-api.version>
+        <hibernate-validator.version>8.0.2.Final</hibernate-validator.version>
     </properties>
     <dependencies>
 
@@ -62,6 +64,17 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson-databind.version}</version> <!-- You can keep the same version of jackson-core -->
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>${jakarta.validation-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate-validator.version}</version>
         </dependency>
 
         <dependency>

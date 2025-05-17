@@ -12,10 +12,7 @@ import org.example.models.response.SupplierResponse;
 import org.example.models.response.ValidationResponse;
 import org.example.services.ProductsServicesAPI;
 import org.example.tests.BaseApiTest;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -56,8 +53,12 @@ public class ProductsApiTests extends BaseApiTest {
         assertNotNull(responseProduct.getSupplierId(), "Product is not created");
     }
 
-    @Test
+    @RepeatedTest(50)
     void createProductWillMandatoryFields() {
+        SupplierRequest supplier = SupplierDataGenerator.generate();
+        SupplierResponse responseSupplier = suppliersServicesAPI.createSupplier(supplier, accessToken);
+        assertNotNull(responseSupplier.getSupplierId(), "The supplier wasn't created");
+        supplierId = responseSupplier.getSupplierId();
         ProductRequest product = ProductDataGenerator.generateOnlyMandatoryFields(supplierId);
         ProductResponse responseProduct = productsServicesAPI.createProduct(product, accessToken);
 
@@ -133,7 +134,7 @@ public class ProductsApiTests extends BaseApiTest {
 
     @Test
     void getAllProducts() {
-        Response response = productsServicesAPI.retrievingProducts(accessToken);
+        Response response = productsServicesAPI.retrievingProducts(accessTokenSuperAdmin);
 
         assertEquals(200, response.statusCode());
         assertNotNull(response.getBody(), "Expected a non-null response body");
