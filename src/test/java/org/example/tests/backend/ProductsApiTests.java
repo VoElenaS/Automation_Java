@@ -2,6 +2,7 @@ package org.example.tests.backend;
 
 import io.qameta.allure.Feature;
 import io.restassured.response.Response;
+import jakarta.validation.ConstraintViolation;
 import org.example.models.generators.ProductDataGenerator;
 import org.example.models.generators.SupplierDataGenerator;
 import org.example.models.request.ProductPatchModel;
@@ -12,6 +13,7 @@ import org.example.models.response.SupplierResponse;
 import org.example.models.response.ValidationResponse;
 import org.example.services.ProductsServicesAPI;
 import org.example.tests.BaseApiTest;
+import org.example.utils.ValidationUtils;
 import org.junit.jupiter.api.*;
 
 import java.util.HashSet;
@@ -147,16 +149,10 @@ public class ProductsApiTests extends BaseApiTest {
 
         Set<String> productNames = new HashSet<>();
         for (ProductRequest product : products) {
-            String productName = product.getName().toLowerCase();
-            boolean containsDuplicate = productNames.contains(productName);
+            Set<ConstraintViolation<ProductRequest>> violations = ValidationUtils.getValidator().validate(product);
+            assertTrue(violations.isEmpty(), "Validation error: " + violations);
 
-            assertFalse(containsDuplicate, "Duplicated name was found " + productName);
-            assertNotNull(product.getName(), "The name shouldn't be empty");
-            assertNotNull(product.getSupplierId(), "The supplier shouldn't be empty");
-            assertNotNull(product.getPrice(), "The price shouldn't be empty");
-            assertNotNull(product.getStockQuantity(), "The Stock quantity shouldn't be empty");
-
-            productNames.add(productName);
+            assertTrue(productNames.add(product.getName().toLowerCase()), "Duplicated name was found " + product.getName());
         }
     }
 

@@ -3,9 +3,6 @@ package org.example.tests.backend;
 import io.qameta.allure.Feature;
 import io.restassured.response.Response;
 import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validation;
-import jakarta.validation.Validator;
-import jakarta.validation.ValidatorFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.example.db.UsersQueries;
 import org.example.db.models.UserDB;
@@ -15,7 +12,7 @@ import org.example.models.request.RegisterRequest;
 import org.example.models.response.*;
 import org.example.services.AuthServiceAPI;
 import org.example.tests.BaseApiTest;
-import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator;
+import org.example.utils.ValidationUtils;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -57,14 +54,8 @@ public class AuthApiTests extends BaseApiTest {
     void pendingProductsValidations() {
         List<ProductResponse> products = new AuthServiceAPI().getPendingProducts(accessTokenSuperAdmin);
 
-        ValidatorFactory factory = Validation.byDefaultProvider()
-                .configure()
-                .messageInterpolator(new ParameterMessageInterpolator())
-                .buildValidatorFactory();
-        Validator validator = factory.getValidator();
-
         for (ProductResponse product : products) {
-            Set<ConstraintViolation<ProductResponse>> violations = validator.validate(product);
+            Set<ConstraintViolation<ProductResponse>> violations = ValidationUtils.getValidator().validate(product);
 
             assertTrue(violations.isEmpty(), "Validation errors: " + violations);
 
