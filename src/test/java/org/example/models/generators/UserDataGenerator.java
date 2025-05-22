@@ -2,6 +2,7 @@ package org.example.models.generators;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.example.models.request.RegisterRequest;
+import org.example.models.request.UserUpdateModel;
 
 public class UserDataGenerator {
 
@@ -23,6 +24,14 @@ public class UserDataGenerator {
                 .email(generateEmail())
                 .name(generateName())
                 .password(generatePassword())
+                .build();
+    }
+
+    public static UserUpdateModel generateNewData() {
+        return UserUpdateModel
+                .builder()
+                .name(generateName())
+                .email(generateEmail())
                 .build();
     }
 }

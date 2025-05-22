@@ -2,10 +2,14 @@ package org.example.models.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 @Data
 @NoArgsConstructor
@@ -14,6 +18,10 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 
 public class ProductRequest {
+    @NotNull(message = "Product name is required")
+    @NotBlank(message = "Product name must not be blank")
+    @Length(min = 4, max = 100, message = "Name must be between 3 and 100 characters")
+    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Name can only contain letters and numbers")
     private String name;
     private String description;
     private String category;

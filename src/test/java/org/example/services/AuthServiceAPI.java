@@ -9,6 +9,7 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.example.models.request.LoginRequest;
 import org.example.models.request.RegisterRequest;
+import org.example.models.request.UserUpdateModel;
 import org.example.models.response.*;
 import org.example.utils.TestProperties;
 
@@ -23,6 +24,7 @@ public class AuthServiceAPI extends BaseAPI {
     public static final String GET_USER_TOKEN_ENDPOINT = TestProperties.properties.getProperty("get_user_token_endpoint");
     public static final String GET_PENDING_PRODUCT_ENDPOINT = TestProperties.properties.getProperty("get_pending_product_endpoint");
     public static final String GET_USERS_ENDPOINT = TestProperties.properties.getProperty("get_users_endpoint");
+    public static final String UPDATE_USER_ENDPOINT = TestProperties.properties.getProperty("update_user_endpoint");
 
     private static final RequestSpecification authRequest = new RequestSpecBuilder()
             .setBaseUri(AUTH_SERVICE_BASE_URL)
@@ -43,6 +45,15 @@ public class AuthServiceAPI extends BaseAPI {
                 .basePath(LOGIN_ENDPOINT);
         return sendRequestPost(specification)
                 .as(LoginResponse.class);
+    }
+
+    public UpdateUserDataResponse updateUserData(UserUpdateModel request, String userId, String accessToken) {
+        RequestSpecification specification = RestAssured.given(authRequest)
+                .basePath(UPDATE_USER_ENDPOINT)
+                .pathParams("user_id", userId)
+                .body(request)
+                .header("Authorization", "bearer " + accessToken);
+        return sendRequestPut(specification).as(UpdateUserDataResponse.class);
     }
 
     public Response getPendingProductsResponse(String accessToken) {

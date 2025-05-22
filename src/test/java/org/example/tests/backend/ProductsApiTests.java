@@ -72,6 +72,8 @@ public class ProductsApiTests extends BaseApiTest {
         ProductRequest product = ProductDataGenerator.generate(supplierId);
         product.setName(product.getName().substring(2, 4));
         Response response = productsServicesAPI.createProductWithResponse(product, accessToken);
+        Set<ConstraintViolation<ProductRequest>> validate = ValidationUtils.getValidator().validate(product);
+        assertFalse(validate.isEmpty(), "Expected a validation error for name length, but none was found.");
         assertEquals(422, response.statusCode());
         ValidationResponse validationResponse = response.as(ValidationResponse.class);
         assertTrue(validationResponse.getDetail().stream().anyMatch(d -> d.getLoc().contains("name")), "There is an error of validation");
