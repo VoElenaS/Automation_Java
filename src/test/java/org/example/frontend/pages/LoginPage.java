@@ -1,9 +1,7 @@
 package org.example.frontend.pages;
 
 import org.example.frontend.models.User;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -95,6 +93,27 @@ public class LoginPage {
             System.err.println("Submit button not found: " + e.getMessage());
             return false;
         }
+    }
+
+    public boolean isAlertPresent(WebDriver driver) {
+        try {
+            Alert alert = driver.switchTo().alert();
+            return true;
+        } catch (NoAlertPresentException e) {
+            return false;
+        }
+    }
+
+    public boolean isEmailFormatValid() {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        boolean isValid;
+        try {
+            Object result = js.executeScript("return document.getElementById('email').checkValidity()");
+            isValid = result != null && (Boolean) result;
+        } catch (JavascriptException e) {
+            throw new RuntimeException("Javascript execution failed", e);
+        }
+        return isValid;
     }
 
 }

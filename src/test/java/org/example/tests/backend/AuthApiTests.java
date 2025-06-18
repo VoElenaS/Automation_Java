@@ -111,6 +111,7 @@ public class AuthApiTests extends BaseApiTest {
         for (UserInfo user : users) {
             assertTrue(names.add(user.getName().toLowerCase()), "The user name should be unique.");
         }
+
     }
 
     @Test

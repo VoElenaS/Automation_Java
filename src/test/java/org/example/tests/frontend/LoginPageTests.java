@@ -3,9 +3,14 @@ package org.example.tests.frontend;
 import org.example.frontend.DriverFactory;
 import org.example.frontend.UiTest;
 import org.example.frontend.UiUtils;
+import org.example.frontend.models.User;
 import org.example.frontend.pages.LoginPage;
 import org.example.frontend.pages.ProductPage;
+import org.example.frontend.pages.RegisterPage;
+import org.example.models.generators.UserDataGenerator;
 import org.example.tests.BaseUiTest;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -14,20 +19,27 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LoginPageTests extends BaseUiTest {
+
+    private LoginPage loginPage;
+
+    @BeforeEach
+    void setUp() {
+        loginPage = new LoginPage(driver);
+    }
+
     @UiTest
     void loginTest(DriverFactory.Browsers browser) {
-        new LoginPage(driver).loginAs(testUser);
+        loginPage.loginAs(testUser);
         ProductPage productPage = new ProductPage(driver);
         assertTrue(productPage.isPersonalAccountDisplayed());
     }
 
     @UiTest
     void loginTestWithRememberMe(DriverFactory.Browsers browser) throws InterruptedException {
-        new LoginPage(driver).loginAs(testUser, true);
+        loginPage.loginAs(testUser, true);
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//nav//a[contains(., 'Личный кабинет')]")));
         Cookie refreshCookie = driver.manage().getCookieNamed("refresh_token");
@@ -49,5 +61,33 @@ public class LoginPageTests extends BaseUiTest {
                 .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//nav//a[contains(., 'Личный кабинет')]")));
 
         assertTrue(productPage.isPersonalAccountDisplayed());
+    }
+
+    @UiTest
+    @DisplayName("loginWithWrongPassword")
+    void loginWithWrongPassword(DriverFactory.Browsers browser) {
+        User user = User.builder().email(UserDataGenerator.generateEmail()).password("1").build();
+        loginPage.loginAs(user);
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.alertIsPresent());
+
+        assertTrue(loginPage.isAlertPresent(driver), "Expected alert on wrong login");
+    }
+
+    @UiTest
+    @DisplayName("loginWithWrongEmailFormat")
+    void loginWithWrongEmailFormat(DriverFactory.Browsers browser) {
+        User user = User.builder().email("email").password(UserDataGenerator.generatePassword()).build();
+        loginPage.loginAs(user);
+
+        assertFalse(loginPage.isEmailFormatValid(), "Expected alert on wrong login");
+    }
+
+    @UiTest
+    @DisplayName("goToRegistrationPage")
+    void goToRegistrationPage(DriverFactory.Browsers browser) throws InterruptedException {
+        loginPage.clickRegisterLink();
+        RegisterPage registerPage = new RegisterPage(driver);
+
+        assertTrue(registerPage.isAt(), "Should be on Registration Page with header 'Регистрация'");
     }
 }

@@ -130,6 +130,7 @@ public class ProductsApiTests extends BaseApiTest {
         assertNotEquals(product.getCategory(), response.getCategory());
     }
 
+
     @Test
     void getProductById() {
         ProductResponse product = productsServicesAPI.getProduct(productId, accessToken);
@@ -142,7 +143,7 @@ public class ProductsApiTests extends BaseApiTest {
 
         assertEquals(200, response.statusCode());
         assertNotNull(response.getBody(), "Expected a non-null response body");
-        List<ProductRequest> products = response.jsonPath().getList("$", ProductRequest.class);
+        List<ProductResponse> products = response.jsonPath().getList("$", ProductResponse.class);
         assertNotNull(products, "Products list shouldn't be NULL");
 
         if (products.isEmpty()) {
@@ -150,8 +151,8 @@ public class ProductsApiTests extends BaseApiTest {
         }
 
         Set<String> productNames = new HashSet<>();
-        for (ProductRequest product : products) {
-            Set<ConstraintViolation<ProductRequest>> violations = ValidationUtils.getValidator().validate(product);
+        for (ProductResponse product : products) {
+            Set<ConstraintViolation<ProductResponse>> violations = ValidationUtils.getValidator().validate(product);
             assertTrue(violations.isEmpty(), "Validation error: " + violations);
 
             assertTrue(productNames.add(product.getName().toLowerCase()), "Duplicated name was found " + product.getName());
