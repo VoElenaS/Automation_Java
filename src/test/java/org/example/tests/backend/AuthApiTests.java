@@ -107,9 +107,9 @@ public class AuthApiTests extends BaseApiTest {
 
         assertTrue(users.size() > 1);
 
-        Set<String> names = new HashSet<>();
+        Set<String> email = new HashSet<>();
         for (UserInfo user : users) {
-            assertTrue(names.add(user.getName().toLowerCase()), "The user name should be unique.");
+            assertTrue(email.add(user.getEmail().toLowerCase()), "The email should be unique.");
         }
 
     }

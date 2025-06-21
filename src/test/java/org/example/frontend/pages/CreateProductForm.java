@@ -16,49 +16,34 @@ public class CreateProductForm extends BasePage {
 
     @FindBy(css = ".modal-title#addProductModalLabel")
     public WebElement headerAddProduct;
-
-    @FindBy(css = "input[type='text'].form-control#add-name")
-    private WebElement productName;
-
-    @FindBy(css = "input[type='text'].form-control#add-description")
-    private WebElement productDescription;
-
-    @FindBy(css = "input[type='text'].form-control#add-category")
-    private WebElement productCategory;
-
-    @FindBy(css = "input[type='text'].form-control#add-price")
-    private WebElement productPrice;
-
-    @FindBy(css = "input[type='number'].form-control#add-stock-quantity")
-    private WebElement productQuantity;
-
-    @FindBy(css = "#add-supplier-id")
-    private WebElement supplierId;
-
-    @FindBy(css = "input[type='file'].form-control#add-image-url")
-    private WebElement productImage;
-
-    @FindBy(css = "input[type='number'].form-control#add-weight")
-    private WebElement productWeight;
-
-    @FindBy(css = "input[type='text'].form-control#add-dimensions")
-    private WebElement productDimensions;
-
-    @FindBy(css = "input[type='text'].form-control#add-manufacturer")
-    private WebElement productManufacturer;
-
     @FindBy(xpath = "//button[contains(text(), 'Создать продукт')]")
     public WebElement btnCreateProduct;
-
     @FindBy(css = "#nameError")
     public WebElement nameError;
-
     @FindBy(css = "#descriptionError")
     public WebElement descriptionError;
-
     @FindBy(css = "#categoryError")
     public WebElement categoryError;
-
+    @FindBy(css = "input[type='text'].form-control#add-name")
+    private WebElement productName;
+    @FindBy(css = "input[type='text'].form-control#add-description")
+    private WebElement productDescription;
+    @FindBy(css = "input[type='text'].form-control#add-category")
+    private WebElement productCategory;
+    @FindBy(css = "input[type='text'].form-control#add-price")
+    private WebElement productPrice;
+    @FindBy(css = "input[type='number'].form-control#add-stock-quantity")
+    private WebElement productQuantity;
+    @FindBy(css = "#add-supplier-id")
+    private WebElement supplierId;
+    @FindBy(css = "input[type='file'].form-control#add-image-url")
+    private WebElement productImage;
+    @FindBy(css = "input[type='number'].form-control#add-weight")
+    private WebElement productWeight;
+    @FindBy(css = "input[type='text'].form-control#add-dimensions")
+    private WebElement productDimensions;
+    @FindBy(css = "input[type='text'].form-control#add-manufacturer")
+    private WebElement productManufacturer;
     @FindBy(css = "#addProductModal .btn-close")
     private WebElement closeBtn;
 

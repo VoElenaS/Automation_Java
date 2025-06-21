@@ -10,26 +10,20 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class LoginPage {
-    @FindBy(css = "#email")
-    private WebElement emailField;
-
-    @FindBy(css = "#password")
-    private WebElement passwordField;
-
-    @FindBy(css = "button.btn")
-    private WebElement submitButton;
-
-    @FindBy(css = "input.form-check-input#rememberMe")
-    private WebElement rememberMeCheckBox;
-
-    @FindBy(css = "label.form-check-label[for='rememberMe']")
-    private WebElement rememberMeLabel;
-
-    @FindBy(css = "a[href='/register']")
-    private WebElement registerLink;
-
     private final WebDriver driver;
     private final WebDriverWait wait;
+    @FindBy(css = "#email")
+    private WebElement emailField;
+    @FindBy(css = "#password")
+    private WebElement passwordField;
+    @FindBy(css = "button.btn")
+    private WebElement submitButton;
+    @FindBy(css = "input.form-check-input#rememberMe")
+    private WebElement rememberMeCheckBox;
+    @FindBy(css = "label.form-check-label[for='rememberMe']")
+    private WebElement rememberMeLabel;
+    @FindBy(css = "a[href='/register']")
+    private WebElement registerLink;
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
