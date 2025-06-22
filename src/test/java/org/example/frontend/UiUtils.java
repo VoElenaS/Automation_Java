@@ -1,5 +1,7 @@
 package org.example.frontend;
 
+import org.example.db.UsersQueries;
+import org.example.db.models.UserDB;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -35,6 +37,16 @@ public class UiUtils {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
         System.out.println("Page loaded completely");
+    }
+
+    public static UserDB waitForUserByName(String name, int maxAttempts, int delayMs) throws InterruptedException {
+        UserDB user = null;
+        for (int i = 0; i < maxAttempts; i++) {
+            user = UsersQueries.userByName(name);
+            if (user != null) break;
+            Thread.sleep(delayMs);
+        }
+        return user;
     }
 }
 

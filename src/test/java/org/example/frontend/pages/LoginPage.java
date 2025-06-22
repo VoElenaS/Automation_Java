@@ -12,6 +12,7 @@ import java.time.Duration;
 public class LoginPage {
     private final WebDriver driver;
     private final WebDriverWait wait;
+
     @FindBy(css = "#email")
     private WebElement emailField;
     @FindBy(css = "#password")

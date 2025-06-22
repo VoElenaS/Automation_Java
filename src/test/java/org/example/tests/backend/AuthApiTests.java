@@ -111,7 +111,6 @@ public class AuthApiTests extends BaseApiTest {
         for (UserInfo user : users) {
             assertTrue(email.add(user.getEmail().toLowerCase()), "The email should be unique.");
         }
-
     }
 
     @Test

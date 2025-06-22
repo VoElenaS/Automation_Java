@@ -1,6 +1,7 @@
 package org.example.frontend.pages;
 
 import lombok.Data;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -23,6 +24,10 @@ public abstract class BasePage {
 
     protected WebElement waitUntilClickable(WebElement element) {
         return wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+
+    protected WebElement waitUntilClickable(By locator) {
+        return wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
 
     protected WebElement waitUntilVisible(WebElement element) {

@@ -67,14 +67,14 @@ public class ProductsUITests extends BaseUiTest {
         productPage.clickProductsLink();
         productPage.searchProductByName(productResponse.getName());
         productPage.clickSearch();
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector("table#products-table"), productResponse.getName()));
+        String productName = productResponse.getName();
+        By productLocator = By.xpath("//a[@class='product-name' and text()='" + productName + "']/ancestor::tr");
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(productLocator));
         boolean productDisplayed = productPage.isProductDisplayed(productResponse.getName());
 
         assertTrue(productDisplayed, "Product should be displayed in the table.");
     }
 
-    //TODO
     @UiTest
     void createProduct(DriverFactory.Browsers browser) throws InterruptedException {
         SupplierResponse supplierResponse = suppliersServicesAPI.createSupplier(SupplierDataGenerator.generate(), accessToken);
@@ -84,7 +84,7 @@ public class ProductsUITests extends BaseUiTest {
 
         CreateProductForm createProductForm = new CreateProductForm(driver);
         UiUtils.waitVisible(createProductForm.headerAddProduct, driver);
-        createProductForm.waitUntilSuppliersLoaded(productPage);
+        createProductForm.waitUntilSuppliersLoaded();  // <-- FIXED here: removed argument
 
         String imagePath = new File("src/test/resources/img/foto.jpeg").getAbsolutePath();
         ProductRequest product = ProductDataGenerator.generate(supplierResponse.getSupplierId(), imagePath);
@@ -101,25 +101,28 @@ public class ProductsUITests extends BaseUiTest {
     }
 
     @UiTest
-    void createProductWithInvalidName(DriverFactory.Browsers browsers) {
+    public void createProductWithInvalidName(DriverFactory.Browsers browsers) {
         SupplierResponse supplier = suppliersServicesAPI.createSupplier(SupplierDataGenerator.generate(), accessToken);
         new LoginPage(driver).loginAs(testUser);
         ProductPage productPage = new ProductPage(driver);
         productPage.clickAddProduct();
+
         CreateProductForm createProductForm = new CreateProductForm(driver);
         ProductRequest product = ProductDataGenerator.generateOnlyMandatoryFields(supplier.getSupplierId());
-        product.setName("ab");
-        createProductForm.createProduct(product);
-        createProductForm.clickProductCreate();
+        product.setName("ab"); // invalid name
+
+        createProductForm.createProduct(product); // this calls clickProductCreate() internally, no need to call again
+
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOf(createProductForm.nameError));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#nameError")));
 
         String actualError = createProductForm.getNameError();
         String expectedError = "Название продукта обязательно, от 3 до 100 символов, только буквы и цифры.";
 
-        assertEquals(expectedError, actualError, "The error massage for product name is incorrect");
-        assertTrue(createProductForm.isNameErrorVisible(), "the error message should be visible for wrong product name");
+        assertEquals(expectedError, actualError, "The error message for product name is incorrect");
+        assertTrue(createProductForm.isNameErrorVisible(), "The error message should be visible for wrong product name");
     }
+
 
     @UiTest
     void createProductWithInvalidDescription(DriverFactory.Browsers browsers) {
@@ -144,13 +147,6 @@ public class ProductsUITests extends BaseUiTest {
 
         assertEquals(expectedError, actualError, "The error massage for product name is incorrect");
         assertTrue(createProductForm.isDescriptionErrorVisible(), "The error message should be visible for wrong product name");
-    }
-
-
-    @UiTest
-    void createProductWithInvalidCategory() {
-
-
     }
 
 }

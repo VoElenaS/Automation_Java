@@ -15,14 +15,15 @@ public class DriverFactory {
     }
 
     public static WebDriver getDriver(Browsers browser) {
-
-        FirefoxOptions options = new FirefoxOptions();
-        options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
         WebDriver webDriver =
                 switch (browser) {
                     case CHROME -> new ChromeDriver();
                     case EDGE -> new EdgeDriver();
-                    case FIREFOX -> new FirefoxDriver(options);
+                    case FIREFOX -> {
+                        FirefoxOptions options = new FirefoxOptions();
+                        options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+                        yield new FirefoxDriver(options);
+                    }
                 };
         webDriver.manage().window().maximize();
         webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));

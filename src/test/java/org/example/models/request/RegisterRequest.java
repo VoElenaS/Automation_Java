@@ -9,9 +9,7 @@ import lombok.Data;
 @Builder
 
 public class RegisterRequest {
-
     String name;
     String email;
     String password;
-
 }

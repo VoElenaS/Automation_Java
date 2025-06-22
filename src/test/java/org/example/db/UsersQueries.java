@@ -2,6 +2,7 @@ package org.example.db;
 
 import lombok.SneakyThrows;
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.example.db.models.UserDB;
 
@@ -23,5 +24,10 @@ public class UsersQueries {
         new QueryRunner().execute(getConnection(), query, id);
     }
 
+    @SneakyThrows
+    public static UserDB userByName(String name) {
+        return new QueryRunner().query(
+                getConnection(), "SELECT * FROM users WHERE name ILIKE ?", new BeanHandler<>(UserDB.class), name);
+    }
 }
 
