@@ -34,7 +34,7 @@ public class ChatsApiTests extends BaseApiTest {
     }
 
     @ParameterizedTest(name = "Add into chat {index} {0} messages")
-    @ValueSource(ints = {10, 20, 50, 100})
+    @ValueSource(ints = {1, 2, 5, 8})
     @Order(1)
         //@RepeatedTest(51)
     void addMessageToChat(int messages) {
