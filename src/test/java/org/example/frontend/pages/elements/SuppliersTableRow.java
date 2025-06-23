@@ -1,12 +1,16 @@
 package org.example.frontend.pages.elements;
 
+import org.example.frontend.UiUtils;
 import org.example.models.request.SupplierRequest;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WrapsDriver;
 
 public class SuppliersTableRow {
-
     WebElement root;
+
+    private final By supplierRowsLocator = By.cssSelector("table#suppliers-table tbody tr");
 
     public SuppliersTableRow(WebElement root) {
         this.root = root;
@@ -14,6 +18,10 @@ public class SuppliersTableRow {
 
     public String getName() {
         return root.findElement(By.xpath(".//td[1]")).getText();
+    }
+
+    public WebElement getDeleteBtn() {
+        return root.findElement(By.cssSelector("button.btn-outline-danger"));
     }
 
     public SupplierRequest getSupplierCreateModel() {
@@ -33,8 +41,10 @@ public class SuppliersTableRow {
         root.findElement(By.cssSelector("button.btn-outline-warning")).click();
     }
 
-    public void clickDeleteButton() {
-        root.findElement(By.cssSelector("button.btn-outline-danger")).click();
+    public void clickDeleteBtn() {
+        WebElement deleteBtn = root.findElement(By.cssSelector("button.btn-outline-danger"));
+        WebDriver driver = ((WrapsDriver) root).getWrappedDriver();
+        UiUtils.smartClick(driver, deleteBtn);
     }
 
 }

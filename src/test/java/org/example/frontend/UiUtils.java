@@ -5,6 +5,7 @@ import org.example.db.models.UserDB;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -29,6 +30,17 @@ public class UiUtils {
         js.executeScript("window.scrollTo(document.body.scrollWidth, document.body.scrollHeight);");
     }
 
+    public static void scrollToElement(WebDriver driver, WebElement element) {
+        ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].scrollIntoView({block: 'center', inline: 'center'});", element);
+    }
+
+    public static void scrollToBottom(WebDriver driver) {
+        ((JavascriptExecutor) driver).executeScript(
+                "window.scrollTo(0, document.body.scrollHeight);");
+    }
+
+
     public static void waitVisible(WebElement webElement, WebDriver driver) {
         new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOf(webElement));
     }
@@ -47,6 +59,25 @@ public class UiUtils {
             Thread.sleep(delayMs);
         }
         return user;
+    }
+
+    public static void smartClick(WebDriver driver, WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        try {
+            js.executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        String browser = ((RemoteWebDriver) driver).getCapabilities().getBrowserName().toLowerCase();
+        if (browser.contains("firefox")) {
+            js.executeScript("arguments[0].click();", element);
+        } else {
+            new WebDriverWait(driver, Duration.ofSeconds(5))
+                    .until(ExpectedConditions.elementToBeClickable(element))
+                    .click();
+        }
     }
 }
 
