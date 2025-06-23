@@ -27,6 +27,7 @@ public class SupplierPage implements HasNavigationBar {
         return driver.findElements(supplierRowsLocator);
     }
 
+
     public SuppliersTableRow getRowByName(String name) {
         String xpath = String.format(
                 "//table[@id='suppliers-table']//tr[td[1][normalize-space(text())='%s']]",
@@ -54,7 +55,6 @@ public class SupplierPage implements HasNavigationBar {
             throw new RuntimeException(e);
         }
     }
-
 
     public boolean isDeletedSupplierNotificationDisplayed() {
         try {

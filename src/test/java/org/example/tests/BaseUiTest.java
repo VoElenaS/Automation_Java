@@ -8,39 +8,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class BaseUiTest extends BaseApiTest {
     protected WebDriver driver;
     protected User testUser;
-
-//    public void enableDevTools() {
-//        DevTools devTools = ((HasDevTools) driver).getDevTools();
-//        devTools.createSession();
-//
-//        // Enable network logging
-//        devTools.send(Network.enable(Optional.empty(), Optional.empty(), Optional.empty()));
-//        //devTools.send(Console.enable());
-//
-//        // Add event listeners for requests and responses
-//        devTools.addListener(Network.requestWillBeSent(), request -> {
-//            Request req = request.getRequest();
-//            System.out.println("Request URL: " + req.getUrl());
-//            System.out.println("Method: " + req.getMethod());
-//            System.out.println("Headers: " + req.getHeaders());
-//        });
-//
-//        devTools.addListener(Network.responseReceived(), response -> {
-//            Response res = response.getResponse();
-//            System.out.println("Response URL: " + res.getUrl());
-//            System.out.println("Status: " + res.getStatus());
-//            System.out.println("Headers: " + res.getHeaders());
-//        });
-//
-//        devTools.addListener(Console.messageAdded(), response -> {
-//            String res = response.getText();
-//            System.out.println("Console: " + res);
-//        });
-//    }
 
     @BeforeEach
     public void setUpUI(TestInfo testInfo) {
@@ -59,6 +33,14 @@ public class BaseUiTest extends BaseApiTest {
         RegisterRequest registerRequest = UserDataGenerator.generate();
         authServiceAPI.registerUser(registerRequest);
         return User.builder().email(registerRequest.getEmail()).password(registerRequest.getPassword()).build();
+    }
+
+    protected WebDriverWait getWait(Duration time) {
+        return new WebDriverWait(driver, time);
+    }
+
+    protected WebDriverWait getWait() {
+        return new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 }
 

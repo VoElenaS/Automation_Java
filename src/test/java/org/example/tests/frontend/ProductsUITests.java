@@ -58,11 +58,12 @@ public class ProductsUITests extends BaseUiTest {
         assertTrue(supplierPage.isSupplierRemoved(supplierName));
     }
 
+    //TODO
     @UiTest
     void searchProductByName(DriverFactory.Browsers browser) throws InterruptedException {
         SupplierResponse supplierResponse = suppliersServicesAPI.createSupplier(SupplierDataGenerator.generate(), accessToken);
-        ProductResponse productResponse = productsServicesAPI
-                .createProduct(ProductDataGenerator.generate(supplierResponse.getSupplierId()), accessToken);
+        ProductRequest product = ProductDataGenerator.generate(supplierResponse.getSupplierId());
+        ProductResponse productResponse = productsServicesAPI.createProduct(product, accessToken);
         new LoginPage(driver).loginAs(testUser);
 
         ProductPage productPage = new ProductPage(driver);
@@ -70,13 +71,14 @@ public class ProductsUITests extends BaseUiTest {
         productPage.searchProductByName(productResponse.getName());
         productPage.clickSearch();
         String productName = productResponse.getName();
-        By productLocator = By.xpath("//a[@class='product-name' and text()='" + productName + "']/ancestor::tr");
+        By productLocator = productPage.getProductNameBy(productName);
         new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.visibilityOfElementLocated(productLocator));
         boolean productDisplayed = productPage.isProductDisplayed(productResponse.getName());
 
         assertTrue(productDisplayed, "Product should be displayed in the table.");
     }
 
+    //TODO
     @UiTest
     void createProduct(DriverFactory.Browsers browser) throws InterruptedException {
         SupplierResponse supplierResponse = suppliersServicesAPI.createSupplier(SupplierDataGenerator.generate(), accessToken);
@@ -93,7 +95,7 @@ public class ProductsUITests extends BaseUiTest {
         ProductRequest product = ProductDataGenerator.generate(supplierResponse.getSupplierId(), imagePath);
         createProductForm.createProduct(product);
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = getWait();
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".modal")));
         wait.until(ExpectedConditions.not(ExpectedConditions.visibilityOf(createProductForm.headerAddProduct)));
 
@@ -131,7 +133,7 @@ public class ProductsUITests extends BaseUiTest {
 
         createProductForm.createProduct(product); // this calls clickProductCreate() internally, no need to call again
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = getWait();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#nameError")));
 
         String actualError = createProductForm.getNameError();
@@ -141,7 +143,7 @@ public class ProductsUITests extends BaseUiTest {
         assertTrue(createProductForm.isNameErrorVisible(), "The error message should be visible for wrong product name");
     }
 
-
+    //TODO
     @UiTest
     void createProductWithInvalidDescription(DriverFactory.Browsers browsers) {
         SupplierResponse supplier = suppliersServicesAPI.createSupplier(SupplierDataGenerator.generate(), accessToken);
@@ -157,7 +159,7 @@ public class ProductsUITests extends BaseUiTest {
         product.setDescription(newDescription.toString());
         createProductForm.createProduct(product);
         createProductForm.clickProductCreate();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = getWait(Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOf(createProductForm.descriptionError));
 
         String actualError = createProductForm.getDescriptionError();

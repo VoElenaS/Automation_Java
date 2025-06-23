@@ -1,5 +1,6 @@
 package org.example.frontend.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -42,6 +43,10 @@ public class ProductPage extends BasePage implements HasNavigationBar {
 
     public void clickSearch() {
         waitUntilClickable(searchProductButton).click();
+    }
+
+    public By getProductNameBy(String productName) {
+        return By.xpath("//a[@class='product-name' and text()='" + productName + "']/ancestor::tr");
     }
 
     public boolean isProductDisplayed(String productName) {
