@@ -14,6 +14,7 @@ import java.util.NoSuchElementException;
 @Data
 public class SupplierPage implements HasNavigationBar {
     private final WebDriver driver;
+    private final String format = "//table[@id='suppliers-table']//tr[td[1][normalize-space(text())='%s']]";
 
     private final By supplierRowsLocator = By.cssSelector("table#suppliers-table tbody tr");
     private final By deleteNotificationLocator = By.xpath("//*[contains(text(), 'Поставщик успешно удален')]");
@@ -27,33 +28,32 @@ public class SupplierPage implements HasNavigationBar {
         return driver.findElements(supplierRowsLocator);
     }
 
-
     public SuppliersTableRow getRowByName(String name) {
-        String xpath = String.format(
-                "//table[@id='suppliers-table']//tr[td[1][normalize-space(text())='%s']]",
-                name
-        );
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        String rowXPath = String.format(format, name);
 
-        try {
-            wait.until(driver ->
-                    ((JavascriptExecutor) driver)
-                            .executeScript("return document.readyState")
-                            .equals("complete")
-            );
+        WebElement table = driver.findElement(By.id("suppliers-table"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
 
-            // Add a short pause before searching (only for debugging)
-            Thread.sleep(1000);  // <-- Here, 500 milliseconds pause
+        WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(1));
+        WebDriverWait longWait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-            WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+        longWait.until(ExpectedConditions.presenceOfElementLocated(By.id("suppliers-table")));
 
-            return new SuppliersTableRow(element);
-        } catch (TimeoutException e) {
-            throw new NoSuchElementException("Supplier not found: " + name + " | XPath: " + xpath, e);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            throw new RuntimeException(e);
+        int scrollAttempts = 0;
+        int maxScrolls = 50;
+
+        while (scrollAttempts < maxScrolls) {
+            try {
+                WebElement row = shortWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(rowXPath)));
+                longWait.until(ExpectedConditions.visibilityOf(row));
+                js.executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'center'});", row);
+                return new SuppliersTableRow(row);
+            } catch (TimeoutException e) {
+                js.executeScript("arguments[0].scrollTop += 300;", table);
+                scrollAttempts++;
+            }
         }
+        throw new NoSuchElementException("Supplier not found after scrolling: " + name);
     }
 
     public boolean isDeletedSupplierNotificationDisplayed() {
@@ -67,16 +67,12 @@ public class SupplierPage implements HasNavigationBar {
     }
 
     public boolean isSupplierRemoved(String name) {
-        String xpath = String.format(
-                "//table[@id='suppliers-table']//tr[td[1][normalize-space(text())='%s']]",
-                name
-        );
+        String xpath = String.format(format, name);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         try {
-            // Wait until the row is not found in the DOM
             return wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(xpath)));
         } catch (TimeoutException e) {
-            return false; // If timeout occurs, the element is still visible
+            return false;
         }
     }
 

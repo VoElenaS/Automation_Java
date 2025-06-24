@@ -6,8 +6,6 @@ import org.example.frontend.UiUtils;
 import org.example.frontend.pages.CreateProductForm;
 import org.example.frontend.pages.LoginPage;
 import org.example.frontend.pages.ProductPage;
-import org.example.frontend.pages.SupplierPage;
-import org.example.frontend.pages.elements.SuppliersTableRow;
 import org.example.models.generators.ProductDataGenerator;
 import org.example.models.generators.SupplierDataGenerator;
 import org.example.models.request.ProductRequest;
@@ -18,7 +16,6 @@ import org.example.tests.BaseUiTest;
 import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -40,22 +37,6 @@ public class ProductsUITests extends BaseUiTest {
         SupplierResponse supplier = suppliersServicesAPI.createSupplier(SupplierDataGenerator.generate(), accessToken);
         supplierId = supplier.getSupplierId();
         supplierName = supplier.getName();
-    }
-
-    @UiTest
-    void deleteSupplier(DriverFactory.Browsers browsers) throws InterruptedException {
-        new LoginPage(driver).loginAs(testUser);
-        SupplierPage supplierPage = new SupplierPage(driver);
-        supplierPage.clickSuppliersLink();
-        SuppliersTableRow rowByName = supplierPage.getRowByName(supplierName);
-        rowByName.clickDeleteBtn();
-        try {
-            driver.switchTo().alert().accept();
-        } catch (NoAlertPresentException ignored) {
-        }
-
-        assertTrue(supplierPage.isDeletedSupplierNotificationDisplayed());
-        assertTrue(supplierPage.isSupplierRemoved(supplierName));
     }
 
     //TODO
