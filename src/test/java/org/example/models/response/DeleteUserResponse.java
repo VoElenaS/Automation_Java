@@ -1,4 +1,4 @@
-package org.example.models.request;
+package org.example.models.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,12 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@NoArgsConstructor
-
-public class RegisterRequest {
-    String name;
-    String email;
-    String password;
+public class DeleteUserResponse {
+    String detail;
 }

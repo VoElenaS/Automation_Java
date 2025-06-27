@@ -13,8 +13,12 @@ import org.example.models.request.RegisterRequest;
 import org.example.models.request.UserUpdateModel;
 import org.example.models.response.*;
 import org.example.tests.BaseApiTest;
+import org.example.utils.JsonReader;
 import org.example.utils.ValidationUtils;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -28,20 +32,29 @@ import static org.junit.jupiter.api.Assertions.*;
 @Feature("User management")
 public class AuthApiTests extends BaseApiTest {
 
-    @Test
-    void registerUser() {
-        RegisterRequest registerRequest = UserDataGenerator.generate();
+    private String createdUserId;
+
+    static List<RegisterRequest> validUsers() throws Exception {
+        return JsonReader.getRegisterRequests("data/register_valid_data.json");
+    }
+
+    @ParameterizedTest(name = "Registering user: {0}")
+    @MethodSource("validUsers")
+    void registerUser(RegisterRequest registerRequest) {
         RegisterResponse registerResponse = authServiceAPI.registerUser(registerRequest);
+
         log.info("User was created: {}", registerRequest.getName());
 
+        createdUserId = registerResponse.getUser().getId();
+
         assertEquals("User successfully created", registerResponse.getMessage());
-        assertEquals(registerRequest.getEmail(), registerResponse.getUser().getEmail());
+        assertEquals(registerRequest.getEmail().toLowerCase(), registerResponse.getUser().getEmail());
         assertEquals(registerRequest.getName(), registerResponse.getUser().getName());
 
         UserDB userFromDB = UsersQueries.getUserByName(registerResponse.getUser().getName());
 
         assertEquals(registerRequest.getName(), userFromDB.getName());
-        assertEquals(registerRequest.getEmail(), userFromDB.getEmail());
+        assertEquals(registerRequest.getEmail().toLowerCase(), userFromDB.getEmail());
     }
 
     @Test
@@ -126,5 +139,19 @@ public class AuthApiTests extends BaseApiTest {
         assertNotEquals(registerResponse.getUser().getEmail(), updateUserDataResponse.getUser().getEmail(), "The email wasn't updated");
         assertEquals(registerResponse.getUser().getId(), updateUserDataResponse.getUser().getId(), "The userId is incorrect");
         assertEquals("User successfully updated", updateUserDataResponse.getDetail(), "User data wasn't updated");
+    }
+
+    @AfterEach
+    void deleteUser() {
+        if (createdUserId != null && accessTokenSuperAdmin != null) {
+            try {
+                DeleteUserResponse response = authServiceAPI.deleteUser(createdUserId, accessTokenSuperAdmin);
+                log.info("Cleanup response: " + response.getDetail());
+            } catch (Exception e) {
+                log.error("Cleanup failed: " + e);
+            } finally {
+                createdUserId = null;
+            }
+        }
     }
 }

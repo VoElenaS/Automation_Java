@@ -5,13 +5,14 @@ import org.example.db.UsersQueries;
 import org.example.models.generators.UserDataGenerator;
 import org.example.models.request.LoginRequest;
 import org.example.models.request.RegisterRequest;
+import org.example.models.response.DeleteUserResponse;
 import org.example.models.response.LoginResponse;
 import org.example.services.*;
 import org.example.utils.TestProperties;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
-public abstract class BaseApiTest {
+public class BaseApiTest {
 
     public static final String API_UI_URL = TestProperties.properties.getProperty("api_ui_url");
     public static String accessToken;
@@ -58,5 +59,19 @@ public abstract class BaseApiTest {
         accessTokenSuperAdmin = loginResponse.getAccessToken();
         superAdminId = loginResponse.getUserId();
     }
+
+    @AfterAll
+    public static void cleanUpUser() {
+        try {
+            if (userId != null && accessToken != null) {
+                AuthServiceAPI authServiceAPI = new AuthServiceAPI();
+                DeleteUserResponse response = authServiceAPI.deleteUser(userId, accessToken);
+                System.out.println("Cleanup response: " + response.getDetail());
+            }
+        } catch (Exception e) {
+            System.err.println("Cleanup failed: " + e.getMessage());
+        }
+    }
+
 }
 

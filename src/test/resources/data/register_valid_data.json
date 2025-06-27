@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Nina",
+    "email": "nina.boundary+1@example.com",
+    "password": "Password123!"
+  },
+  {
+    "name": "ExactlyFiftyCharactersUserName___________50xyzxyz",
+    "email": "long.name2@example.com",
+    "password": "LongerPass456"
+  },
+  {
+    "name": "MiddleUser",
+    "email": "middle.user@example.org",
+    "password": "MidPass321"
+  },
+  {
+    "name": "MaxLengthUserWith_48_Char__Name__Test__Max48",
+    "email": "boundary.test48@example.net",
+    "password": "Boundary456!"
+  },
+  {
+    "name": "DemoUser",
+    "email": "demo.user.2025@example.io",
+    "password": "DemoPass876"
+  },
+  {
+    "name": "Eva Johnson",
+    "email": "eva.johnson_25@example.co.uk",
+    "password": "EvaPass909"
+  },
+  {
+    "name": "Samuel Green",
+    "email": "sam.green_qa@sub.testing.org",
+    "password": "S@mu3lTest"
+  },
+  {
+    "name": "CaseyTester",
+    "email": "casey.tester+qa@example.io",
+    "password": "CaseyTest2025"
+  },
+  {
+    "name": "CaseSensitivity",
+    "email": "Case.Sensitive.NEW@Example.com",
+    "password": "CasePASS123"
+  },
+  {
+    "name": "User2025Numeric",
+    "email": "user202512345@example.dev",
+    "password": "Numb3rPASS123"
+  }
+]

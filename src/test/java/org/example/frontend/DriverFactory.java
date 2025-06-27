@@ -26,7 +26,7 @@ public class DriverFactory {
                     }
                 };
         webDriver.manage().window().maximize();
-        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         return webDriver;
     }
 }
